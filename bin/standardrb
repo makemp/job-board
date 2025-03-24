@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'standard'
+
+load Gem.bin_path("standard", "standardrb")
