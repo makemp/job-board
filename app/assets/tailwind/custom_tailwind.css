@@ -1,0 +1,113 @@
+@theme  {
+    /* Accent & Text Colors */
+    --accent: #b68e3a; /* Rich gold */
+    --text: #4e3b1f;
+    --text-link: #a16f2d;
+    --text-weak: #8a7a66;
+    --text-weaker: #a99d8c;
+    --text-weakest: #c4baad;
+    --text-on-accent: #ffffff;
+    --text-error: #8b2f1a;
+    --text-danger: #9c301c;
+    --text-success: #4a6432;
+    --text-neutral: #665544;
+    --text-neutral-strong: #3e2f22;
+    --text-warning: #9a6b2f;
+    --text-warning-strong: #8f5c1f;
+    --text-highlight: #c29500;
+    --text-info: #3b5e80;
+    --text-progress: #997f4c;
+
+    /* Navigation Colors */
+    --nav-surface: #f6f1e8;
+    --nav-heading: #543f1f;
+    --nav-hover: #e4d4bd;
+
+    /* Border Colors */
+    --border: #d0c2ae;
+    --border-strong: #a39276;
+    --border-neutral: #dcd2c4;
+    --border-warning: #b48a3d;
+    --border-highlight: #e0b343;
+    --border-danger: #b24c2e;
+    --border-success: #6e8c54;
+    --border-info: #6a8da8;
+    --border-progress: #c4aa75;
+
+    /* Surface / Background Colors */
+    --surface: #fcf9f2;
+    --background: #fffdf7;
+    --surface-raised: #f1e7d6;
+    --surface-lowered: #eae2d5;
+    --overlay: rgba(100, 85, 60, 0.2);
+
+    /* Status Colors */
+    --status-neutral: #a89987;
+    --status-warning: #d4a03f;
+    --status-highlight: #f0c550;
+    --status-danger: #c14322;
+    --status-success: #709f3a;
+    --status-info: #6c9ed4;
+    --status-progress: #c8ab66;
+    --status-notification: #c8b46a;
+
+    /* Status Weak Colors */
+    --status-neutral-weak: #e5ded4;
+    --status-warning-weak: #f4e2b8;
+    --status-highlight-weak: #f7e8aa;
+    --status-danger-weak: #f3c1b5;
+    --status-success-weak: #d3e4c1;
+    --status-info-weak: #c5ddef;
+    --status-progress-weak: #eee3c4;
+}
+
+/* Define utility classes for common box-shadow styles */
+.shadow-default {
+    box-shadow: 0 0 4px rgba(85, 65, 40, 0.1);
+}
+.shadow-card {
+    box-shadow: 0 1px 4px rgba(120, 95, 50, 0.15);
+}
+.shadow-header {
+    box-shadow: 0 2px 4px rgba(90, 70, 40, 0.1);
+}
+.shadow-modal {
+    box-shadow: 0 4px 12px rgba(60, 45, 30, 0.2);
+}
+.shadow-popout {
+    box-shadow: 0 2px 8px rgba(80, 60, 35, 0.1);
+}
+.shadow-nav {
+    box-shadow: 0 2px 6px rgba(80, 60, 35, 0.1);
+}
+
+/* Example utility classes using these variables */
+.bg-accent {
+    background-color: var(--accent);
+}
+.text-accent {
+    color: var(--accent);
+}
+.bg-background {
+    background-color: var(--background);
+}
+.text-text {
+    color: var(--text);
+}
+
+/* For example, a class to style a header */
+.header {
+    background-color: var(--nav-surface);
+    color: var(--nav-heading);
+    padding: 1rem;
+    box-shadow: var(--shadow-header);
+}
+
+/* And a basic layout style for body */
+body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+}
