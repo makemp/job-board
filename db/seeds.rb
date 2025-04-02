@@ -7,27 +7,45 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+ActiveRecord::Tasks::DatabaseTasks.truncate_all
+
 
 owl_labs = Employer.create!(display_name: "Owl Labs",
   email: "owl@labs.com",
-  password: "password",
+  password: "Password1!",
   confirmed_at: 1.day.ago,
   approved_at: 1.day.ago)
 pelican_studios = Employer.create!(display_name: "Pelican Studios",
   email: "john@pelican-studios.com",
-  password: "password",
+  password: "Password1!",
   confirmed_at: 12.days.ago,
   approved_at: 3.days.ago)
 dis_man = Employer.create!(display_name: "Dis Man",
   email: "dis@man.com",
-  password: "password",
+  password: "Password1!",
   confirmed_at: 4.days.ago,
   approved_at: 2.days.ago,
   disabled_at: 1.day.ago)
 
-owl_labs.jobs.create!(title: "Digger", location: "UAE", salary: "90000 AED/month", description: "Digging stuff")
-owl_labs.jobs.create!(title: "Geologist", location: "UAE", salary: "120000 AED/month", description: "Finding rocks")
+employers = [owl_labs, pelican_studios, dis_man]
+titles = ['Digger', 'Geologist', 'Rock Developer', 'Miner']
+descriptions = ['Lorem ipsum dolor sit ament']
 
-pelican_studios.jobs.create!(title: "Rock Developer", location: "USA", salary: "120000 USD/year", description: "Developing stuff")
 
-dis_man.jobs.create!(title: "Miner", location: "Canada", salary: "120000 CUSD/year", description: "Mining stuff")
+employers.each do |employer|
+  titles.each do |title|
+    (Job::HIGHLIGHTED_REGIONS + Job::REGIONS.sample(5)).each do |region|
+      descriptions.each do |description|
+        Job::CATEGORIES.each do |category|
+          Job.create!(
+          title: title,
+          location: region,
+          description: description,
+          employer_id: employer.id,
+          category: category
+          )
+        end
+      end
+    end
+  end
+end
