@@ -1,0 +1,3 @@
+<%= turbo_stream.update "jobs" do %>
+  <%= render partial: "job_list", locals: { jobs: @jobs } %>
+<% end %> 
