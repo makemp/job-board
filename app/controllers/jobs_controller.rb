@@ -6,18 +6,22 @@ class JobsController < ApplicationController
     @jobs = @jobs.where(category: params[:category]) if params[:category].present?
     @jobs = @jobs.where(location: params[:region]) if params[:region].present?
     @jobs = @jobs.order(created_at: :desc)
+
     # Handle pagination
-    @per_page = if params[:per_page].present? && params[:per_page] != "all"
-      params[:per_page].to_i
+    @per_page = if params[:per_page].present?
+      (params[:per_page] == "all") ? nil : params[:per_page].to_i
     else
       20 # Default per page
     end
 
-    if params[:per_page] == "all"
-      # No pagination needed
+    if @per_page.nil?
+      # Show all results
       @pagy = nil
     else
-      @pagy, @jobs = pagy(@jobs, items: @per_page)
+      # Ensure page parameter is valid
+      page_param = params[:page].present? ? params[:page].to_i : 1
+      @pagy, @jobs = pagy(@jobs, limit: @per_page, page: page_param)
+      # raise @pagy.inspect
     end
 
     # Respond to both HTML and Turbo requests

@@ -44,14 +44,20 @@ export default class extends Controller {
     const formData = new FormData(form)
     const params = new URLSearchParams(formData)
     
+    // When filters change, reset to page 1
+    params.delete('page')
+    
     // Generate the new URL
     const newUrl = `${form.action}?${params.toString()}`
     
-    // Submit the form via Turbo - use replace action to ensure full replacement
-    Turbo.visit(newUrl, { frame: "jobs", action: "replace" })
-    
-    // Update the browser history so the URL reflects the filter state
-    history.pushState({}, "", newUrl)
+    // Do a full page visit for per_page changes and other filters
+    if (event.target.id === 'per_page' || event.target.id === 'category' || event.target.id === 'region') {
+      Turbo.visit(newUrl)
+    } else {
+      // Use frame updates for other changes
+      Turbo.visit(newUrl, { frame: "jobs" })
+      history.pushState({}, "", newUrl)
+    }
   }
   
   paginate(event) {
@@ -60,8 +66,8 @@ export default class extends Controller {
     // Get the target URL from the link
     const url = event.currentTarget.href
     
-    // Visit the URL with Turbo - use replace action to ensure full replacement
-    Turbo.visit(url, { frame: "jobs", action: "replace" })
+    // Use frame updates for pagination
+    Turbo.visit(url, { frame: "jobs" })
     
     // Update the browser history
     history.pushState({}, "", url)

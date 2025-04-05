@@ -51,11 +51,11 @@
 
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Top Pagination -->
-    <%= render partial: "pagination" %>
-
-    <!-- Jobs List -->
     <%= turbo_frame_tag "jobs" do %>
+      <!-- Top Pagination -->
+      <%= render partial: "pagination" %>
+
+      <!-- Jobs List -->
       <%= render partial: "job_list", locals: { jobs: @jobs } %>
       
       <!-- Bottom Pagination -->
