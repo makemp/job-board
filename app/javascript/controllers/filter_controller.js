@@ -21,9 +21,9 @@ export default class extends Controller {
         // Get the top position of the filter section
         const filterSection = document.querySelector(".bg-amber-100")
         if (filterSection) {
-          const filterBottom = filterSection.offsetTop + filterSection.offsetHeight
+          const filterTop = filterSection.offsetTop
           window.scrollTo({
-            top: filterBottom - 20, // Scroll to just below the filters
+            top: filterTop,
             behavior: "smooth"
           })
         }
