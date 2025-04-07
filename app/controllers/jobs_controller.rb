@@ -30,4 +30,35 @@ class JobsController < ApplicationController
       format.turbo_stream
     end
   end
+
+  def new
+    @job = Job.new
+  end
+
+  def create
+    @job = Job.new(job_params)
+
+    # Create a temporary employer for the job using the provided email
+    employer = Employer.create!(
+      email: params[:job][:email],
+      password: SecureRandom.hex(8),
+      confirmed_at: Time.current,
+      approved_at: Time.current
+    )
+
+    @job.employer = employer
+
+    if @job.save
+      redirect_to jobs_path, notice: "Job was successfully posted."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def job_params
+    params.require(:job).expect(:title, :description, :category, :location)
+    # Note: we don't include :email in job_params as it's used for employer creation
+  end
 end

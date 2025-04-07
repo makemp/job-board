@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "jobs#index"
-  resources :jobs, only: %i[index show]
+  resources :jobs, only: %i[index show new create]
   namespace :employers do
     resources :jobs
   end
