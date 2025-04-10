@@ -70,6 +70,6 @@ gem "devise", "~> 4.9"
 
 gem "ahoy_matey", "~> 5.3"
 
-gem "stripe", "~> 13.5"
+gem "stripe", "~> 15.0"
 
 gem "tailwindcss-rails", "~> 4.0"
