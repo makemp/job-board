@@ -1,5 +1,5 @@
 require_relative "regions"
-class Job < ApplicationRecord
+class JobOffer < ApplicationRecord
   CATEGORIES = %w[Drilling Mining Engineering Safety Technicians].freeze
 
   HIGHLIGHTED_REGIONS = ["Australia",

@@ -75,3 +75,5 @@ gem "stripe", "~> 13.5"
 gem "tailwindcss-rails", "~> 4.0"
 
 gem "pagy"
+
+gem "interactor", "~> 3.0"

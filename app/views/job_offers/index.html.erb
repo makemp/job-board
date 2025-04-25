@@ -2,7 +2,7 @@
 <div class="min-h-screen bg-amber-50">
   <!-- Filters -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-amber-100 border-b border-amber-200">
-    <%= form_with(url: jobs_path, method: :get, 
+    <%= form_with(url: job_offers_path, method: :get,
                   data: { controller: "filter", turbo_frame: "jobs" },
                   class: "space-y-4 sm:space-y-0 sm:flex sm:flex-wrap sm:gap-4") do %>
       
@@ -10,7 +10,7 @@
       <div class="w-full sm:w-[30%]">
         <%= label_tag :category, 'Category', class: "block text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :category,
-            options_for_select(Job::CATEGORIES, selected: params[:category]),
+            options_for_select(JobOffer::CATEGORIES, selected: params[:category]),
             include_blank: "All Categories",
             class: "w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
@@ -21,11 +21,11 @@
         <%= label_tag :region, 'Region', class: "block text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :region,
             content_tag(:optgroup, 
-              options_for_select(Job::HIGHLIGHTED_REGIONS, selected: params[:region]),
+              options_for_select(JobOffer::HIGHLIGHTED_REGIONS, selected: params[:region]),
               label: "Featured Regions"
             ) +
             content_tag(:optgroup,
-              options_for_select(Job::REGIONS.reject { |r| Job::HIGHLIGHTED_REGIONS.include?(r) }, selected: params[:region]),
+              options_for_select(JobOffer::REGIONS.reject { |r| JobOffer::HIGHLIGHTED_REGIONS.include?(r) }, selected: params[:region]),
               label: "All Regions"
             ),
             include_blank: "All Locations",
@@ -44,7 +44,7 @@
       
       <!-- Reset Filters -->
       <div class="w-full sm:w-[15%] flex justify-end items-end">
-        <%= link_to "Reset", jobs_path, 
+        <%= link_to "Reset", job_offers_path,
             class: "inline-flex items-center px-4 py-2 border border-transparent text-lg font-medium rounded-md shadow-sm text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300" %>
       </div>
     <% end %>

@@ -1,6 +1,6 @@
-class JobsController < ApplicationController
+class JobOffersController < ApplicationController
   def index
-    @jobs = Job.valid.includes(:employer)
+    @jobs = JobOffer.valid.includes(:employer)
 
     # Apply filters
     @jobs = @jobs.where(category: params[:category]) if params[:category].present?
@@ -28,30 +28,6 @@ class JobsController < ApplicationController
     respond_to do |format|
       format.html
       format.turbo_stream
-    end
-  end
-
-  def new
-    @job = Job.new
-  end
-
-  def create
-    @job = Job.new(job_params)
-
-    # Create a temporary employer for the job using the provided email
-    employer = Employer.create!(
-      email: params[:job][:email],
-      password: SecureRandom.hex(8),
-      confirmed_at: Time.current,
-      approved_at: Time.current
-    )
-
-    @job.employer = employer
-
-    if @job.save
-      redirect_to jobs_path, notice: "Job was successfully posted."
-    else
-      render :new, status: :unprocessable_entity
     end
   end
 
