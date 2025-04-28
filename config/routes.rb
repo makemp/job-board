@@ -13,8 +13,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "job_offers#index"
   resources :job_offers, only: %i[index show]
-  resource :job_offer_forms, only: %i[new create], controller: "job_offer_forms"
+  resource :job_offer_forms, only: %i[new create] do
+    patch :update, on: :collection
+  end
   namespace :employers do
-    resources :jobs
+    resources :job_offers
   end
 end

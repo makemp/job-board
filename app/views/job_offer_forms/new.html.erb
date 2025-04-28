@@ -32,6 +32,10 @@
       </ul>
     </div>
 
+    <%= turbo_frame_tag "voucher_applied_modal" do %>
+
+    <% end %>
+
     <!-- Job Form -->
     <%= turbo_frame_tag "job_form" do %>
      <%= render 'form', job: @job %>

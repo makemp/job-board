@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "voucher" do %>
+<%= form_with url: job_offer_forms_path,
+              method: :patch,
+              model: job,
+              local: false do |g| %>
+  <div id="voucher_section" class="space-y-1">
+    <%= g.label :voucher_code, "Voucher code", class: "block text-sm font-medium text-amber-900" %>
+    <div class="flex space-x-2">
+      <%= g.text_field :voucher_code,
+                       class: "mt-1 block w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+      <%= g.submit "Apply voucher",
+                   name: "apply_voucher",
+                   value: "Apply voucher",
+                   class: "py-2 px-4 bg-amber-600 text-white rounded-md hover:bg-amber-500" %>
+    </div>
+    <%= error_messages_for(g, :voucher_code) %>
+  </div>
+<% end %>
+<% end %>
