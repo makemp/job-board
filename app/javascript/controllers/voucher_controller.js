@@ -18,8 +18,8 @@ export default class extends Controller {
         const url = '/job_offer_forms'; // The collection path for your update action
 
         // Clear previous status messages and show "Applying..."
-        this.statusTarget.textContent = "Applying...";
-        this.statusTarget.style.color = 'grey'; // Optional: style the applying message
+        // this.statusTarget.textContent = "Applying...";
+        // this.statusTarget.style.color = 'grey'; // Optional: style the applying message
 
         // Prepare the data in the format expected by your Rails controller's strong parameters
         // { job_offer_form: { voucher_code: 'YOUR_CODE' } }

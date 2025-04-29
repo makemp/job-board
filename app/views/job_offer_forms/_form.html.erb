@@ -2,21 +2,9 @@
     <div class="bg-white rounded-lg shadow-xl p-8">
       <div class="space-y-6">
         <div>
-          <%= f.label :title, class: "block text-sm font-medium text-amber-900" %>
+          <%= f.label :title, "Job Title", class: "block text-sm font-medium text-amber-900" %>
           <%= f.text_field :title, class: "mt-1 block w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
           <%= error_messages_for(f, :title) %>
-        </div>
-
-        <div>
-          <%= f.label :email, "Contact Email", class: "block text-sm font-medium text-amber-900" %>
-          <%= f.email_field :email, class: "mt-1 block w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
-          <%= error_messages_for(f, :email) %>
-        </div>
-
-        <div>
-          <%= f.label :email_confirmation, "Confirm Email Address", class: "block text-sm font-medium text-amber-900" %>
-          <%= f.email_field :email_confirmation, class: "mt-1 block w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
-          <%= error_messages_for(f, :email_confirmation) %>
         </div>
 
 
@@ -35,10 +23,9 @@
         </div>
 
         <div>
-          <%= f.label :description, class: "block text-sm font-medium text-amber-900" %>
+          <%= f.label :description, "Job Description", class: "block text-sm font-medium text-amber-900" %>
           <%= f.text_area :description, rows: 10, class: "mt-1 block w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
           <%= error_messages_for(f, :description) %>
-          <p class="mt-2 text-sm text-amber-600">Markdown is supported</p>
         </div>
 
         <div>
@@ -53,6 +40,18 @@
                       hover:file:bg-amber-200" %>
           <%= error_messages_for(f, :logo) %>
           <p class="mt-2 text-sm text-amber-600">Upload a square image(max 1MB)</p>
+        </div>
+
+        <div>
+          <%= f.label :email, "Contact Email", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.email_field :email, class: "mt-1 block w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <%= error_messages_for(f, :email) %>
+        </div>
+
+        <div>
+          <%= f.label :email_confirmation, "Confirm Email Address", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.email_field :email_confirmation, class: "mt-1 block w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <%= error_messages_for(f, :email_confirmation) %>
         </div>
       </div>
 
