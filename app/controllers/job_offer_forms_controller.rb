@@ -4,7 +4,6 @@ class JobOfferFormsController < ApplicationController
   end
 
   def update
-    puts job_offer_form_params.inspect
     @job = JobOfferForm.new(job_offer_form_params)
     @job.valid?
 
