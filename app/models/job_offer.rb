@@ -22,7 +22,7 @@ class JobOffer < ApplicationRecord
     joins(:employer).where.not(employers: {confirmed_at: nil}).where.not(employers: {approved_at: nil}).where(employers: {disabled_at: nil})
   end
 
-  delegate :logo, to: :employer
+  has_rich_text :description
 
-  # validates :title, :location, :company, :description, presence: true
+  delegate :logo, to: :employer
 end

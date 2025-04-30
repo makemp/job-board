@@ -3,7 +3,6 @@ class CreateJobOffers < ActiveRecord::Migration[8.0]
     create_table :job_offers, id: :uuid do |t|
       t.string :title
       t.string :location
-      t.text :description
       t.string :category
       t.boolean :apply_with_job_board
       t.boolean :is_featured

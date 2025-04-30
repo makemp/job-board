@@ -1,2 +1,84 @@
 @import "tailwindcss";
 @import "./custom_tailwind";
+@import "../stylesheets/actiontext";
+
+
+trix-editor {
+    @apply block w-full rounded-b-md border border-t-0 border-amber-300 shadow-sm min-h-[200px];
+    /* Note: border-t-0 assumes the toolbar provides the top border */
+    /* Trix handles focus styling well, usually best not to override directly */
+    /* Apply background if needed, default is usually white */
+    @apply bg-white;
+}
+
+/* Style the toolbar */
+.trix-toolbar {
+    @apply bg-amber-50 border border-b-0 border-amber-300 rounded-t-md p-2 sticky top-0 z-10;
+    /* Makes the toolbar stick to the top when scrolling within the editor container */
+    /* Adjust padding/background as needed */
+}
+
+/* Style button groups within the toolbar */
+.trix-toolbar .trix-button-group {
+    @apply border-gray-300 mr-2 mb-1 border-l pl-2 first:border-l-0 first:pl-0;
+    /* Adds subtle separators and spacing */
+}
+/* Hide the default Trix ::before arrow if you don't like it */
+.trix-toolbar .trix-button-group::before {
+    display: none;
+}
+
+/* Style individual toolbar buttons */
+.trix-toolbar .trix-button {
+    @apply border border-transparent rounded-md p-1.5 transition duration-150 ease-in-out hover:bg-amber-100;
+    /* Reset Trix's default height for better padding control */
+    height: auto;
+    /* Ensure minimum size */
+    min-width: 2.5em;
+    display: inline-flex; /* Helps align icons if present */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style active/selected toolbar buttons */
+.trix-toolbar .trix-button--active {
+    /* Match your submit button style */
+    @apply bg-amber-600 text-white rounded-md;
+}
+/* Ensure active state overrides hover */
+.trix-toolbar .trix-button--active:hover {
+    @apply bg-amber-700; /* Slightly darker on hover */
+}
+
+/* Style the content area *within* the editor */
+
+
+/* --- Optional: More detailed styling for content within the editor using Typography --- */
+/* Tailwind Typography (@apply prose) handles most of this, but you can override */
+
+/* Example: Ensure links within the editor match your theme */
+.trix-content a {
+    @apply text-amber-700 hover:text-amber-800;
+}
+
+/* Example: Style code blocks */
+.trix-content pre {
+    @apply bg-gray-100 text-gray-800 rounded p-3 text-sm overflow-x-auto;
+}
+
+/* Style figure attachments (images, etc) */
+.trix-content figure {
+    @apply my-4; /* Add some margin */
+}
+.trix-content figcaption {
+    @apply text-sm text-center text-gray-600 mt-1;
+}
+.trix-content .attachment {
+    @apply border rounded p-2 my-2 block bg-gray-50; /* Style file attachments */
+}
+.trix-content .attachment__name {
+    @apply font-medium;
+}
+.trix-content .attachment__size {
+    @apply text-sm text-gray-600 ml-2;
+}

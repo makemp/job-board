@@ -24,21 +24,29 @@ employers = [owl_labs, pelican_studios, dis_man]
 titles = ["Digger", "Geologist", "Rock Developer", "Miner"]
 descriptions = ["Lorem ipsum dolor sit ament"]
 
+employers.each do |employer|
+  employer.logo.attach(io: File.open(Rails.root.join("app/assets/images/dev_logos", "#{employer.display_name}.png")),
+    filename: "logo.png")
+end
+
 (JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS.sample(5)).each do |region|
   employers.each do |employer|
-    employer.logo.attach(io: File.open(Rails.root.join("app/assets/images/dev_logos", "#{employer.display_name}.png")),
-      filename: "logo.png")
     titles.each do |title|
       descriptions.each do |description|
         JobOffer::CATEGORIES.each do |category|
-          job = JobOffer.create!(
-            title: title,
-            location: region,
-            description: description,
-            employer_id: employer.id,
-            category: category
-          )
-          job.update_column(:created_at, rand(1..10).days.ago)
+          JobOffer::CATEGORIES.each do |category|
+            job = JobOffer.new(
+              title: title,
+              location: region,
+              employer_id: employer.id,
+              category: category
+            )
+            job.description = description
+            # Remove existing rich text if present to avoid duplicate error.
+            job.rich_text_description&.destroy
+            job.save!
+            job.update_column(:created_at, rand(1..10).days.ago)
+          end
         end
       end
     end

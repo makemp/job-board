@@ -1,5 +1,5 @@
   <%= form_with(url: job_offer_forms_path, method: :post, model: job,  class: "space-y-6") do |f| %>
-    <div class="bg-white rounded-lg shadow-xl p-8">
+    <div class="bg-white rounded-lg shadow-xl p-9">
       <div class="space-y-6">
         <div>
           <%= f.label :title, "Job Title", class: "block text-sm font-medium text-amber-900" %>
@@ -22,10 +22,16 @@
           <%= error_messages_for(f, :location) %>
         </div>
 
-        <div>
-          <%= f.label :description, "Job Description", class: "block text-sm font-medium text-amber-900" %>
-          <%= f.text_area :description, rows: 10, class: "mt-1 block w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
-          <%= error_messages_for(f, :description) %>
+        <div class="mb-6"> <%# Add appropriate bottom margin %>
+          <%= f.label :description, "Job Description", class: "block text-sm font-medium text-amber-900 mb-1" %>
+
+          <%# Pass a wrapper class - effects might be subtle, main styling is via CSS below %>
+          <%= f.rich_text_area :description, class: "trix-custom-wrapper mt-1" %>
+
+          <%# Style the error message area (adjust based on your helper's output HTML) %>
+          <div class="mt-1 text-sm text-red-600" id="description_errors">
+            <%= error_messages_for(f, :description) %>
+          </div>
         </div>
 
         <div>
