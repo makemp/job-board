@@ -4,7 +4,7 @@
 
 
 trix-editor {
-    @apply block w-full rounded-b-md border border-t-0 border-amber-300 shadow-sm min-h-[200px];
+    @apply block w-full rounded-b-md border border-t-0 border-amber-300 shadow-sm min-h-[300px];
     /* Note: border-t-0 assumes the toolbar provides the top border */
     /* Trix handles focus styling well, usually best not to override directly */
     /* Apply background if needed, default is usually white */
