@@ -7,18 +7,15 @@ Voucher.create!(enable: false, code: "DISCOUNT", options: {price: 199})
 owl_labs = Employer.create!(display_name: "Owl Drills",
   email: "owl@owldrills.com",
   password: "Password1!",
-  confirmed_at: 1.day.ago,
-  approved_at: 1.day.ago)
+  confirmed_at: 1.day.ago)
 pelican_studios = Employer.create!(display_name: "Pelican Studio Cranes",
   email: "john@pelican-studio-cranes.com",
   password: "Password1!",
-  confirmed_at: 12.days.ago,
-  approved_at: 3.days.ago)
+  confirmed_at: 12.days.ago)
 dis_man = Employer.create!(display_name: "Dis Man Hammer",
   email: "dis@dismanhammer.com",
   password: "Password1!",
-  confirmed_at: 4.days.ago,
-  approved_at: 2.days.ago)
+  confirmed_at: 4.days.ago)
 
 employers = [owl_labs, pelican_studios, dis_man]
 titles = ["Digger", "Geologist", "Rock Developer", "Miner"]

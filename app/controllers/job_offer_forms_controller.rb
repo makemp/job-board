@@ -50,7 +50,7 @@ class JobOfferFormsController < ApplicationController
   def create
     @job = JobOfferForm.new(job_offer_form_params)
     if @job.valid?
-      redirect_to @job, notice: "Job offer was successfully created."
+      redirect_to @job.submit
     else
       respond_to do |format|
         format.turbo_stream do

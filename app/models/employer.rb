@@ -1,5 +1,5 @@
 class Employer < ApplicationRecord
-  has_many :jobs  # dependent: :destroy hide?
+  has_many :job_offers  # dependent: :destroy hide?
 
   has_one_attached :logo
 

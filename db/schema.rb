@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_29_215020) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_01_135010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pg_catalog.plpgsql"
@@ -99,7 +99,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_215020) do
 
   create_table "employers", force: :cascade do |t|
     t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
+    t.string "encrypted_password"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -111,12 +111,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_215020) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.datetime "approved_at"
-    t.datetime "disabled_at"
     t.string "display_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -137,6 +134,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_215020) do
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
   end
 
+  create_table "order_placements", force: :cascade do |t|
+    t.boolean "free_order", default: false, null: false
+    t.datetime "paid_at"
+    t.integer "price", null: false
+    t.uuid "job_offer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_offer_id"], name: "index_order_placements_on_job_offer_id"
+  end
+
   create_table "vouchers", force: :cascade do |t|
     t.string "code", null: false
     t.hstore "options", default: {}
@@ -149,4 +156,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_215020) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "job_offers", "employers"
+  add_foreign_key "order_placements", "job_offers"
 end

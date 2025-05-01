@@ -31,6 +31,21 @@ class JobOfferForm
   validate :logo_type_and_size
   validate :voucher_code_check
 
+  validate :employer_check
+
+  data class SubmitObject
+         attr_reader :redirect_url, :message
+       end
+
+  def employer_check
+    return unless email.present?
+    employer = Employer.find_by(email: email.strip)
+    return if employer.nil?
+
+    errors.add(:email, "is locked") if employer.locked_at.present?
+    errors.add(:email, "has invalid domain") if Registrations::BlockedDomainsService.on_list?(employer.email)
+  end
+
   def logo_type_and_size
     return unless logo
     unless logo.respond_to?(:content_type) &&
@@ -64,6 +79,19 @@ class JobOfferForm
   def reset_price
     @price = Voucher.default_price
   end
+
+  def submit # returns SubmitObject
+    return false unless valid?
+    return PlaceFreeOrder.call(info: self).redirect_path if voucher.type == "FreeVoucher"
+    true # TODO: logic here with stripe and stuff
+  end
+
+  def voucher
+    return unless voucher_code.present?
+    @voucher ||= Voucher.find_by(code: voucher_code.strip)
+  end
+
+  private
 
   attr_writer :price
 end

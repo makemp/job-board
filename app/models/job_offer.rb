@@ -2,6 +2,8 @@ require_relative "regions"
 class JobOffer < ApplicationRecord
   CATEGORIES = %w[Drilling Mining Engineering Safety Technicians].freeze
 
+  has_one :order_placement
+
   HIGHLIGHTED_REGIONS = ["Australia",
     "Canada",
     "USA",

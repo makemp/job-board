@@ -19,4 +19,7 @@ Rails.application.routes.draw do
   namespace :employers do
     resources :job_offers
   end
+
+  get "/confirm", to: "confirmations#confirm", as: :confirm
+  post "/confirm/resend", to: "confirmations#resend", as: :resend_confirmation
 end

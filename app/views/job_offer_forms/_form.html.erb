@@ -14,9 +14,14 @@
           <%= error_messages_for(f, :category) %>
         </div>
 
+        <% regions = {
+          "Highlighted Regions" => JobOffer::HIGHLIGHTED_REGIONS,
+          "Other Regions" => JobOffer::REGIONS
+        } %>
+
         <div>
           <%= f.label :location, "Job Location", class: "block text-sm font-medium text-amber-900" %>
-          <%= f.select :location, JobOffer::REGIONS, { prompt: "Select location" },
+          <%= f.select :location, grouped_options_for_select(regions, f.object.location), { prompt: "Select location" },
                        class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
           <%= error_messages_for(f, :location) %>
         </div>
