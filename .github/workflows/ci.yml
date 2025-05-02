@@ -53,6 +53,9 @@ jobs:
       - name: Lint code for consistent style
         run: bin/standardrb
 
+      - name: Run Zeitwerk Check so all files are loaded
+        run: bin/zeitwerk_check
+
   test:
     runs-on: ubuntu-latest
 
