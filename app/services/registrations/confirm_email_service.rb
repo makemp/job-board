@@ -2,6 +2,10 @@ module Registrations
   class ConfirmEmailService
     ConfirmationError = Class.new(StandardError)
 
+    def self.call!(token)
+      new(token).call!
+    end
+
     def initialize(token)
       @token = token
     end

@@ -48,10 +48,17 @@ class JobOfferFormsController < ApplicationController
 
   def create
     @job = JobOfferForm.new(job_offer_form_params)
-    if @job.valid?
-      redirect_to @job.submit
-    else
-      respond_to do |format|
+    respond_to do |format|
+      if @job.valid?
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update(
+            "new_job_offer",
+            partial: "job_offer_forms/redirect",
+            locals: {location: @job.submit}
+          )
+        end
+        format.html { redirect_to @job.submit }
+      else
         format.turbo_stream do
           render turbo_stream: turbo_stream.update(
             "job_form",
