@@ -1,5 +1,5 @@
-class ConfirmationsController < ApplicationController
-  def confirm
+class EmailConfirmationsController < ApplicationController
+  def confirm_email
     Registrations::ConfirmEmailService.call!(params[:token])
     flash[:notice] = "Email confirmed successfully."
     redirect_to root_path
@@ -8,7 +8,7 @@ class ConfirmationsController < ApplicationController
     redirect_to root_path
   end
 
-  def resend
+  def resend_confirmation_email
     Registrations::SendConfirmationEmailService.call!(params[:email])
     flash[:notice] = "Confirmation email resent."
     redirect_to root_path

@@ -3,7 +3,11 @@ class Employer < ApplicationRecord
 
   has_one_attached :logo
 
-  scope :valid, -> { where.not(confirmed_at: nil).where.not(approved_at: nil).where(disabled_at: nil) }
+  scope :valid, -> { where.not(confirmed_at: nil) }
+
+  def password_required?
+    false
+  end
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

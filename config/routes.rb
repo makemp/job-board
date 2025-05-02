@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     resources :job_offers
   end
 
-  get "/confirm", to: "confirmations#confirm", as: :confirm
-  post "/confirm/resend", to: "confirmations#resend", as: :resend_confirmation
+  resources :first_orders, only: %i[index]
+
+  resources :next_orders, only: %i[index create]
+
+  get "/confirm_email", to: "email_confirmations#confirm_email", as: :confirm_email
+  post "/confirm/resend", to: "email_confirmations#resend_confirmation_email", as: :resend_confirmation_email
 end

@@ -2,7 +2,7 @@ module Registrations
   class SendConfirmationEmailService
     ResendConfirmationError = Class.new(StandardError)
 
-    def initialise(email)
+    def initialize(email)
       @email = email
     end
 

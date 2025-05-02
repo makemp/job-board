@@ -3,7 +3,7 @@ class PlaceFreeOrder
     include Interactor
 
     def call
-      job_offer.order_placement.create!(price: price, free_order: true)
+      job_offer.create_order_placement!(price: price, free_order: true)
     end
 
     private

@@ -9,7 +9,6 @@ class JobOfferFormsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        puts @job.errors.inspect
         if @job.errors.include?(:voucher_code)
           # voucher validation failed: re-render only the voucher frame
           render turbo_stream:
@@ -67,6 +66,8 @@ class JobOfferFormsController < ApplicationController
   private
 
   def job_offer_form_params
-    params.require(:job_offer_form).permit!
+    params.require(:job_offer_form).permit!.tap do |whitelisted|
+      whitelisted[:voucher_code] = params[:voucher_code] if params[:voucher_code].present?
+    end
   end
 end

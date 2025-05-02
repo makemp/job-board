@@ -33,10 +33,6 @@ class JobOfferForm
 
   validate :employer_check
 
-  data class SubmitObject
-         attr_reader :redirect_url, :message
-       end
-
   def employer_check
     return unless email.present?
     employer = Employer.find_by(email: email.strip)
@@ -83,12 +79,12 @@ class JobOfferForm
   def submit # returns SubmitObject
     return false unless valid?
     return PlaceFreeOrder.call(info: self).redirect_path if voucher.type == "FreeVoucher"
-    true # TODO: logic here with stripe and stuff
+    raise "Not implemented"
   end
 
   def voucher
-    return unless voucher_code.present?
-    @voucher ||= Voucher.find_by(code: voucher_code.strip)
+    return Voucher.default_voucher if voucher_code.blank?
+    Voucher.find_by(code: voucher_code.strip)
   end
 
   private

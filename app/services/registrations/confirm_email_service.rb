@@ -1,4 +1,4 @@
-class Registrations
+module Registrations
   class ConfirmEmailService
     ConfirmationError = Class.new(StandardError)
 

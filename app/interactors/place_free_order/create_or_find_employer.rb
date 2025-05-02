@@ -4,10 +4,11 @@ class PlaceFreeOrder
 
     def call
       # Find or create the employer based on the provided parameters
-      employer = Employer.find_or_create_by(email:)
+      employer = Employer.find_by(email:)
 
-      context.fail!(error: "Email is locked.") if employer.locked_at.present?
-      # TODO use list of wonky emails to not send emails to these people
+      context.is_new_employer = true unless employer
+
+      employer ||= Employer.create!(email:)
 
       context.employer = employer
     end
