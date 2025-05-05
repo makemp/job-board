@@ -68,7 +68,7 @@ end
 
 gem "devise", "~> 4.9"
 
-gem "ahoy_matey", "~> 5.3"
+gem "ahoy_matey", "~> 5.4"
 
 gem "stripe", "~> 13.5"
 
