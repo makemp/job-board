@@ -40,6 +40,7 @@ class JobOfferForm
 
     errors.add(:email, "is locked") if employer.locked_at.present?
     errors.add(:email, "has invalid domain") if Registrations::BlockedDomainsService.on_list?(employer.email)
+    errors.add(:email, "is not confirmed yet. Check your mailbox for email or resend the confirmation email <a href=\"#\" onclick=\"event.preventDefault(); Turbo.visit('/confirm_email')\"><b>HERE</b></a>".html_safe) if employer.confirmed_at.blank?
   end
 
   def logo_type_and_size
