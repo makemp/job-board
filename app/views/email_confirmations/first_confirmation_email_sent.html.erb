@@ -1,0 +1,14 @@
+<div class="min-h-screen bg-gradient-to-r from-amber-100 to-amber-200 flex items-center justify-center py-12">
+  <div class="max-w-md w-full bg-white rounded-xl shadow-2xl p-8 space-y-6">
+    <h1 class="text-3xl font-bold text-center text-amber-700">Confirmation Email Sent</h1>
+    <p class="text-center text-gray-700">We sent you a confirmation email. Check your mailbox.</p>
+    <% if params[:free_order] == "true" %>
+      <p class="text-center text-gray-700">When you confirm your email, your free job listing will be added to the page.</p>
+      <% if params[:needs_approval] == "true" %>
+        <p class="text-center text-gray-700">Once we review your job listing, it will be published shortly.</p>
+      <% end %>
+    <% else %>
+      <p class="text-center text-gray-700">When you confirm your email, you will be redirected to the checkout.</p>
+    <% end %>
+  </div>
+</div>

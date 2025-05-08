@@ -5,6 +5,10 @@ class Voucher < ApplicationRecord
     options["price"]
   end
 
+  def required_approval?
+    options["required_approval"] || false
+  end
+
   class << self
     def default_voucher
       @default_voucher ||= find_by!(code: DEFAULT_CODE)

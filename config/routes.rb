@@ -22,9 +22,10 @@ Rails.application.routes.draw do
 
   resources :first_orders, only: %i[index]
 
-  resources :next_orders, only: %i[index create]
+  resources :order_placements, only: %i[show create]
 
   get "/email_confirmed", to: "email_confirmations#email_confirmed", as: :email_confirmed
+  get "/first_confirmation_email_sent", to: "email_confirmations#first_confirmation_email_sent", as: :first_confirmation_email_sent
   get "/confirm_email", to: "email_confirmations#confirm_email", as: :confirm_email
   post "/confirm/resend", to: "email_confirmations#resend_confirmation_email", as: :resend_confirmation_email
 end

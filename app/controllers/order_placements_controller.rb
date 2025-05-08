@@ -1,5 +1,5 @@
-class NextOrdersController < ApplicationController
-  def index
+class OrderPlacementsController < ApplicationController
+  def show
     # form with code to be entered
   end
 

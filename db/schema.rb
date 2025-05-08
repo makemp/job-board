@@ -127,8 +127,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_135010) do
     t.string "location"
     t.string "category"
     t.boolean "apply_with_job_board"
-    t.boolean "is_featured"
-    t.boolean "is_approved", default: false, null: false
+    t.boolean "featured"
+    t.boolean "approved", default: false, null: false
     t.bigint "employer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -140,6 +140,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_135010) do
     t.datetime "paid_at"
     t.integer "price", null: false
     t.uuid "job_offer_id", null: false
+    t.string "voucher_code", default: "STANDARD", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_offer_id"], name: "index_order_placements_on_job_offer_id"

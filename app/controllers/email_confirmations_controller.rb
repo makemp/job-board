@@ -12,6 +12,9 @@ class EmailConfirmationsController < ApplicationController
   def confirm_email
   end
 
+  def first_confirmation_email_sent
+  end
+
   def resend_confirmation_email
     email = resend_confirmation_params[:email]
     Registrations::SendConfirmationEmailService.call!(email)

@@ -5,8 +5,8 @@ class CreateJobOffers < ActiveRecord::Migration[8.0]
       t.string :location
       t.string :category
       t.boolean :apply_with_job_board
-      t.boolean :is_featured
-      t.boolean :is_approved, default: false, null: false
+      t.boolean :featured
+      t.boolean :approved, default: false, null: false
       t.references :employer, null: false, foreign_key: true
 
       t.timestamps
