@@ -1,0 +1,21 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
+  <h1 class="text-3xl font-semibold text-amber-900 mb-4"><%= @job_offer.title %></h1>
+
+  <% if @job_offer.logo.attached? %>
+    <div class="mb-4">
+      <%= image_tag @job_offer.logo, alt: @job_offer.title, class: "h-16 w-16 object-contain" %>
+    </div>
+  <% end %>
+
+  <p class="text-lg text-amber-800 mb-2"><strong>Location:</strong> <%= @job_offer.location %></p>
+  <p class="text-lg text-amber-800 mb-2"><strong>Category:</strong> <%= @job_offer.category %></p>
+  <p class="text-lg text-amber-800 mb-4"><strong>Description:</strong> <%= @job_offer.description %></p>
+
+  <p class="text-sm text-amber-600 mb-4">
+    <strong>Posted:</strong> <%= time_ago_in_words(@job_offer.created_at) %> ago
+  </p>
+
+  <button class="inline-block bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); window.history.back();">
+    Back to Job Offers
+  </button>
+</div>

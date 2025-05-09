@@ -32,16 +32,15 @@ end
       descriptions.each do |description|
         JobOffer::CATEGORIES.each do |category|
           JobOffer::CATEGORIES.each do |category|
-            job = JobOffer.new(
+            job = JobOffer.create!(
               title: title,
               location: region,
-              employer_id: employer.id,
-              category: category
+              employer: employer,
+              category: category,
+              description: description
             )
-            job.description = description
+
             # Remove existing rich text if present to avoid duplicate error.
-            job.rich_text_description&.destroy
-            job.save!
             job.update_column(:created_at, rand(1..10).days.ago)
           end
         end

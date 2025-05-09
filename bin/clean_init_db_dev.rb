@@ -10,4 +10,5 @@ return unless Rails.env.development?
 `rails db:setup`
 `rails db:migrate`
 `rails db:migrate`
+`rails db:reset`
 `rails db:seeds:dev`

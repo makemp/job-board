@@ -31,6 +31,10 @@ class JobOffersController < ApplicationController
     end
   end
 
+  def show
+    @job_offer = JobOffer.find(params[:id])
+  end
+
   private
 
   def job_params
