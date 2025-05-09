@@ -12,6 +12,7 @@ export default class extends Controller {
     // Clean up event listener
     document.removeEventListener("turbo:frame-render", this.handleFrameRender)
   }
+
   
   handleFrameRender = (event) => {
     // Check if it's our jobs frame
@@ -19,7 +20,7 @@ export default class extends Controller {
       // Use requestAnimationFrame to ensure browser has finished rendering
       requestAnimationFrame(() => {
         // Get the top position of the filter section
-        const filterSection = document.querySelector(".bg-amber-100")
+        const filterSection = document.querySelector("header")
         if (filterSection) {
           const filterTop = filterSection.offsetTop
           window.scrollTo({
