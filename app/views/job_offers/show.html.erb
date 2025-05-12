@@ -15,7 +15,18 @@
     <strong>Posted:</strong> <%= time_ago_in_words(@job_offer.created_at) %> ago
   </p>
 
-  <button class="inline-block bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); window.history.back();">
+  <button class="inline-block bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-700 transition-colors duration-300" onclick="handleBackClick(event)">
     Back to Job Offers
   </button>
+  <script>
+      function handleBackClick(event) {
+          event.preventDefault();
+          const { referrer } = document;
+          if (referrer && new URL(referrer).origin === window.location.origin) {
+              window.history.back();
+          } else {
+              window.location.href = '/';
+          }
+      }
+  </script>
 </div>

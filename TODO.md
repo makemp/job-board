@@ -7,4 +7,3 @@
 #### Employer form for create password/edit jobs offers
 #### In the job offer form two options: application url or application email where send cvs. 
 #### Cookies stuff to accept
-#### problems with back button 
