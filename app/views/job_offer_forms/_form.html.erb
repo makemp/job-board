@@ -1,4 +1,15 @@
-  <%= form_with(url: job_offer_forms_path, method: :post, model: job,  class: "space-y-6") do |f| %>
+<script>
+    document.addEventListener("trix-file-accept", function(event) {
+        event.preventDefault();
+    });
+</script>
+
+<style>
+    .trix-button-group--file-tools {
+        display: none !important;
+    }
+</style>
+<%= form_with(url: job_offer_forms_path, method: :post, model: job,  class: "space-y-6") do |f| %>
     <div class="bg-white rounded-lg shadow-xl p-12">
       <div class="space-y-6">
         <div>

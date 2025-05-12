@@ -1,0 +1,17 @@
+<div id="cookieNotice" class="fixed bottom-0 left-0 right-0 bg-amber-800 text-white p-4 flex justify-between items-center" style="display: none;">
+  <span>This website uses essential cookies to ensure you get the best experience.</span>
+  <button onclick="acceptCookies()" class="bg-amber-700 hover:bg-amber-600 text-white px-4 py-2 rounded transition-colors duration-300">
+    Got It
+  </button>
+</div>
+<script>
+    function acceptCookies() {
+        document.cookie = "cookiesAccepted=true; path=/; max-age=" + (60 * 60 * 24 * 365);
+        document.getElementById("cookieNotice").style.display = "none";
+    }
+    window.addEventListener("load", function() {
+        if (!document.cookie.match(/cookiesAccepted=true/)) {
+            document.getElementById("cookieNotice").style.display = "flex";
+        }
+    });
+</script>
