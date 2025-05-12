@@ -5,7 +5,7 @@ require "rails"
 require APP_PATH
 
 return unless Rails.env.development?
-`rm db/schema.rb` if File.exist?("db/schema.rb")
+`rm db/schema.sql` if File.exist?("db/schema.sql")
 `rails db:drop`
 `rails db:setup`
 `rails db:migrate`

@@ -1,6 +1,6 @@
 class CreateAhoyVisitsAndEvents < ActiveRecord::Migration[8.0]
   def change
-    create_table :ahoy_visits do |t|
+    create_table :ahoy_visits, id: :ulid, default: -> { "generate_ulid()" } do |t|
       t.string :visit_token
       t.string :visitor_token
 

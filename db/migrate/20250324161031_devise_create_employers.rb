@@ -2,7 +2,7 @@
 
 class DeviseCreateEmployers < ActiveRecord::Migration[8.0]
   def change
-    create_table :employers do |t|
+    create_table :employers, id: :ulid, default: -> { "generate_ulid()" } do |t|
       ## Database authenticatable
       t.string :email, null: false, default: ""
       t.string :encrypted_password, null: true
