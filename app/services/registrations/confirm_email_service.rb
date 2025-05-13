@@ -16,6 +16,7 @@ module Registrations
       raise ConfirmationError, "Token expired" if confirmation_expired?(employer)
 
       employer.update!(confirmed_at: Time.current, confirmation_token: nil)
+      employer.job_offers.first
     end
 
     private

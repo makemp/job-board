@@ -21,6 +21,10 @@
   <script>
       function handleBackClick(event) {
           event.preventDefault();
+          const params = new URLSearchParams(window.location.search);
+          if (params.has('success')) {
+              return window.location.href = '/';
+          }
           const { referrer } = document;
           if (referrer && new URL(referrer).origin === window.location.origin) {
               window.history.back();
