@@ -1,5 +1,5 @@
 class FreeVoucher < Voucher
-  def apply(job)
-    job.errors.add(:base, "Voucher is not enabled") unless enable?
+  def free_voucher?
+    true
   end
 end

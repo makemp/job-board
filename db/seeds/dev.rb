@@ -1,8 +1,8 @@
 ActiveRecord::Tasks::DatabaseTasks.truncate_all
 
-Voucher.create!(enable: true, code: Voucher::DEFAULT_CODE, options: {price: 299})
-FreeVoucher.create!(enable: true, code: "FREE", options: {price: 0})
-Voucher.create!(enable: false, code: "DISCOUNT", options: {price: 199})
+Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 299})
+FreeVoucher.create!(code: "FREE", options: {price: 0})
+Voucher.create!(enabled_till: 3.days.ago, code: "DISCOUNT", options: {price: 199})
 
 owl_labs = Employer.create!(display_name: "Owl Drills",
   email: "owl@owldrills.com",

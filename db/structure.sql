@@ -303,9 +303,10 @@ CREATE TABLE public.order_placements (
     id bigint NOT NULL,
     free_order boolean DEFAULT false NOT NULL,
     paid_at timestamp(6) without time zone,
-    price integer NOT NULL,
+    price integer,
     job_offer_id public.ulid NOT NULL,
     voucher_code character varying DEFAULT 'STANDARD'::character varying NOT NULL,
+    ready_to_be_placed boolean DEFAULT false,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -347,7 +348,7 @@ CREATE TABLE public.vouchers (
     id public.ulid DEFAULT public.generate_ulid() NOT NULL,
     code character varying NOT NULL,
     options public.hstore DEFAULT ''::public.hstore,
-    enable boolean DEFAULT false NOT NULL,
+    enabled_till timestamp(6) without time zone DEFAULT '2225-05-13 13:51:35.408764'::timestamp without time zone,
     type character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL

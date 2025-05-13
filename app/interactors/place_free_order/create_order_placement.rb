@@ -3,7 +3,8 @@ class PlaceFreeOrder
     include Interactor
 
     def call
-      context.order_placement = job_offer.create_order_placement!(price: price, free_order: true, voucher_code: code)
+      # context.order_placement = job_offer.create_order_placement!(price: price, free_order: true, voucher_code: code)
+      context.order_placement = job_offer.create_order_placement!
     end
 
     delegate "voucher", to: :"context.info"

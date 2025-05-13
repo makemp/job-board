@@ -6,8 +6,7 @@ class PlaceFreeOrder
       context.job_offer = context.employer.job_offers.create!(title:,
         description:,
         location:,
-        category:,
-        approved: !voucher.required_approval?)
+        category:)
     end
 
     delegate :employer, to: :context

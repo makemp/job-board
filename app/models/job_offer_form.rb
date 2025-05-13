@@ -58,12 +58,9 @@ class JobOfferForm
     voucher_code_ = voucher_code.strip if voucher_code
     return if voucher_code_.blank?
     voucher = Voucher.find_by(code: voucher_code_)
-    if voucher.nil?
+    if voucher.nil? || !voucher.enable?
       reset_price
-      errors.add(:voucher_code, "is not valid")
-    elsif !voucher.enable
-      reset_price
-      errors.add(:voucher_code, "is not enabled")
+      errors.add(:voucher_code, "is not valid or disabled")
     else
       self.price = voucher.options["price"]
     end
@@ -77,10 +74,9 @@ class JobOfferForm
     @price = Voucher.default_price
   end
 
-  def submit # returns SubmitObject
+  def submit # returns redirect_url
     return false unless valid?
-    return PlaceFreeOrder.call(info: self).redirect_path if voucher.type == "FreeVoucher"
-    raise "Not implemented"
+    JobOffers::Submit.call!(info: self)
   end
 
   def voucher
