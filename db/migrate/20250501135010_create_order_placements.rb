@@ -1,6 +1,6 @@
 class CreateOrderPlacements < ActiveRecord::Migration[8.0]
   def change
-    create_table :order_placements do |t|
+    create_table :order_placements, id: :ulid, default: -> { "ulid()" } do |t|
       t.boolean :free_order, default: false, null: false
       t.datetime :paid_at
       t.integer :price

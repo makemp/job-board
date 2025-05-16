@@ -1,6 +1,6 @@
 class CreateAhoyVisitsAndEvents < ActiveRecord::Migration[8.0]
   def change
-    create_table :ahoy_visits, id: :ulid, default: -> { "generate_ulid()" } do |t|
+    create_table :ahoy_visits, id: :ulid, default: -> { "ulid()" } do |t|
       t.string :visit_token
       t.string :visitor_token
 
@@ -52,7 +52,7 @@ class CreateAhoyVisitsAndEvents < ActiveRecord::Migration[8.0]
       t.references :user
 
       t.string :name
-      t.jsonb :properties
+      t.json :properties
       t.datetime :time
     end
 
