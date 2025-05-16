@@ -12,10 +12,14 @@ module JobOffers
       Employer.transaction do
         JobOffer.transaction do
           OrderPlacement.transaction do
-            PlaceFreeOrder.call(**params).redirect_url
+            return PlaceFreeOrder.call(**params).redirect_path
           end
         end
       end
     end
+
+    private
+
+    attr_reader :params
   end
 end

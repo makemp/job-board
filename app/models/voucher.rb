@@ -20,13 +20,8 @@ class Voucher < ApplicationRecord
   alias_method :enable?, :enabled?
 
   def apply(order_placement:, job_offer:)
-    JobOffer.transaction do
-      OrderPlacement.transaction do
-        order_placement.update!(voucher_code: code, price: price, free_order: free_voucher?,
-          ready_to_be_placed: true)
-        job_offer.update!(approved: !required_approval?)
-      end
-    end
+    order_placement.update!(voucher_code: code, price: price, free_order: free_voucher?, ready_to_be_placed: true)
+    job_offer.update!(approved: !required_approval?)
   end
 
   class << self

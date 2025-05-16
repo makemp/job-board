@@ -1,5 +1,15 @@
 <div class="mt-8 max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
-  <h1 class="text-3xl font-semibold text-amber-900 mb-4"><%= @job_offer.title %></h1>
+  <h1 class="text-3xl font-semibold text-amber-900 mb-4">
+    <%= @job_offer.title %>
+    <% if current_employer && current_employer.id == @job_offer.employer_id %>
+      <%= link_to edit_job_offer_path(@job_offer), title: 'Edit Job Offer', class: 'ml-2' do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15.232 5.232l3.536 3.536M16.5 3.5a2.121 2.121 0 013 3L7 19.5H4.5v-2.5L16.5 3.5z"/>
+        </svg>
+      <% end %>
+    <% end %>
+  </h1>
 
   <% if @job_offer.logo.attached? %>
     <div class="mb-4">
