@@ -3,7 +3,7 @@ class CreateActionTextTables < ActiveRecord::Migration[6.0]
   def change
     # Use Active Record's configured type for primary and foreign keys
 
-    create_table :action_text_rich_texts, id: :ulid, default: -> { "generate_ulid()" } do |t|
+    create_table :action_text_rich_texts, id: :ulid, default: -> { "ulid()" } do |t|
       t.string :name, null: false
       t.text :body, size: :long
       t.references :record, null: false, polymorphic: true, index: false, type: :ulid

@@ -1,6 +1,6 @@
 class CreateJobOffers < ActiveRecord::Migration[8.0]
   def change
-    create_table :job_offers, id: :ulid, default: -> { "generate_ulid()" } do |t|
+    create_table :job_offers, id: :ulid, default: -> { "ulid()" } do |t|
       t.string :title
       t.string :location
       t.string :category
