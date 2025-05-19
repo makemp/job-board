@@ -15,6 +15,11 @@ module JobBoard
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+    config.active_record.schema_format = :sql
+
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :ulid   # any `rails g model` now uses ULID
+    end
 
     # Configuration for the application, engines, and railties goes here.
     #

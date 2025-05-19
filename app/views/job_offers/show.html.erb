@@ -1,0 +1,46 @@
+<div class="mt-8 max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
+  <h1 class="text-3xl font-semibold text-amber-900 mb-4">
+    <%= @job_offer.title %>
+    <% if current_employer && current_employer.id == @job_offer.employer_id %>
+      <%= link_to edit_job_offer_path(@job_offer), title: 'Edit Job Offer', class: 'ml-2' do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15.232 5.232l3.536 3.536M16.5 3.5a2.121 2.121 0 013 3L7 19.5H4.5v-2.5L16.5 3.5z"/>
+        </svg>
+      <% end %>
+    <% end %>
+  </h1>
+
+  <% if @job_offer.logo.attached? %>
+    <div class="mb-4">
+      <%= image_tag @job_offer.logo, alt: @job_offer.title, class: "h-16 w-16 object-contain" %>
+    </div>
+  <% end %>
+
+  <p class="text-lg text-amber-800 mb-2"><strong>Location:</strong> <%= @job_offer.location %></p>
+  <p class="text-lg text-amber-800 mb-2"><strong>Category:</strong> <%= @job_offer.category %></p>
+  <p class="text-lg text-amber-800 mb-4"><strong>Description:</strong> <%= @job_offer.description %></p>
+
+  <p class="text-sm text-amber-600 mb-4">
+    <strong>Posted:</strong> <%= time_ago_in_words(@job_offer.created_at) %> ago
+  </p>
+
+  <button class="inline-block bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-700 transition-colors duration-300" onclick="handleBackClick(event)">
+    Back to Job Offers
+  </button>
+  <script>
+      function handleBackClick(event) {
+          event.preventDefault();
+          const params = new URLSearchParams(window.location.search);
+          if (params.has('success')) {
+              return window.location.href = '/';
+          }
+          const { referrer } = document;
+          if (referrer && new URL(referrer).origin === window.location.origin) {
+              window.history.back();
+          } else {
+              window.location.href = '/';
+          }
+      }
+  </script>
+</div>

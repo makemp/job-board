@@ -1,0 +1,94 @@
+<script>
+    document.addEventListener("trix-file-accept", function(event) {
+        event.preventDefault();
+    });
+</script>
+
+<style>
+    .trix-button-group--file-tools {
+        display: none !important;
+    }
+</style>
+<%= form_with(url: job_offer_forms_path, method: :post, model: job,  class: "space-y-6") do |f| %>
+    <div class="bg-white rounded-lg shadow-xl p-12">
+      <div class="space-y-6">
+        <div>
+          <%= f.label :title, "Job Title", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.text_field :title, class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>          <%= error_messages_for(f, :title) %>
+        </div>
+
+
+        <div>
+          <%= f.label :category, "Job Category", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.select :category, JobOffer::CATEGORIES, { prompt: "Select a category" },
+                       class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <%= error_messages_for(f, :category) %>
+        </div>
+
+        <% regions = {
+          "Highlighted Regions" => JobOffer::HIGHLIGHTED_REGIONS,
+          "Other Regions" => JobOffer::REGIONS
+        } %>
+
+        <div>
+          <%= f.label :location, "Job Location", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.select :location, grouped_options_for_select(regions, f.object.location), { prompt: "Select location" },
+                       class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <%= error_messages_for(f, :location) %>
+        </div>
+
+        <div class="mb-6"> <%# Add appropriate bottom margin %>
+          <%= f.label :description, "Job Description", class: "block text-sm font-medium text-amber-900 mb-1" %>
+
+          <%# Pass a wrapper class - effects might be subtle, main styling is via CSS below %>
+          <%= f.rich_text_area :description, class: "trix-custom-wrapper mt-1" %>
+
+          <%# Style the error message area (adjust based on your helper's output HTML) %>
+          <div class="mt-1 text-sm text-red-600" id="description_errors">
+            <%= error_messages_for(f, :description) %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :logo, "Company Logo", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.file_field :logo,
+                           accept: 'image/*',
+                           class: "mt-1 block w-full text-sm text-amber-900
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-full file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-amber-100 file:text-amber-700
+                      hover:file:bg-amber-200" %>
+          <%= error_messages_for(f, :logo) %>
+          <p class="mt-2 text-sm text-amber-600">Upload a square image(max 1MB)</p>
+        </div>
+
+        <div>
+          <%= f.label :email, "Contact Email", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.email_field :email, class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <%= error_messages_for(f, :email) %>
+        </div>
+
+        <div>
+          <%= f.label :email_confirmation, "Confirm Email Address", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.email_field :email_confirmation, class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <%= error_messages_for(f, :email_confirmation) %>
+        </div>
+      </div>
+
+      <div id="voucher-temp">
+        <%= render 'voucher', job: job %>
+      </div>
+
+      <%= turbo_frame_tag "submit" do %>
+        <div class="mt-8">
+          <%= f.submit "Post Job - $#{job.price}", class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500" %>
+        </div>
+      <% end %>
+
+
+    </div>
+
+  <% end %>
+
+

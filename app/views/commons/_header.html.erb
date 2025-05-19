@@ -1,0 +1,36 @@
+<!-- file: `app/views/commons/_header.html.erb` -->
+<header class="bg-amber-900 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
+    <h1 class="text-3xl font-bold flex items-center">
+      <span class="text-amber-100">drill</span>
+      <span class="text-amber-300">J</span>
+      <span class="text-amber-100">obs.</span>
+      <span class="text-amber-400">X</span>
+      <span class="text-amber-300">Y</span>
+      <span class="text-amber-200">Z</span>
+    </h1>
+
+    <div class="flex items-center space-x-4">
+      <% if employer_signed_in? %>
+        <%= button_to destroy_employer_session_path,
+                      method: :delete,
+                      class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-red-900 bg-red-100 hover:bg-red-200 transition-colors duration-300" do %>
+          Sign out
+        <% end %>
+      <% else %>
+        <%= link_to new_employer_session_path,
+                    class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" do %>
+          Sign in
+        <% end %>
+      <% end %>
+
+      <%= link_to new_job_offer_forms_path,
+                  class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" do %>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Post a Job
+      <% end %>
+    </div>
+  </div>
+</header>

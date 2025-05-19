@@ -1,0 +1,35 @@
+<%# --- Voucher Section using Stimulus (Controls inside main form) --- %>
+<%# Connects to app/javascript/controllers/voucher_controller.js %>
+<div data-controller="voucher" class="space-y-1 py-5">
+
+  <%# Use label_tag as 'voucher_code' isn't assumed to be part of the main model 'f' %>
+  <%# Using a specific ID for the 'for' attribute %>
+  <%= label_tag :voucher_code_input_id, "Voucher code", class: "block text-sm font-medium text-amber-900" %>
+
+  <div class="flex space-x-2 space-y-4">
+    <%# Use text_field_tag for an input not directly tied to the main model 'f' %>
+    <%# Add Stimulus target data attribute %>
+    <%# The name attribute ('voucher_code') might not be strictly necessary if only JS uses it %>
+    <%= text_field_tag :voucher_code, # Can be any unique name/id
+                       nil, # Initial value (can be pre-filled if needed, e.g. from params or session)
+                       id: :voucher_code_input_id, # Match the label's 'for'
+                       class: "mt-5 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50",
+                       data: { voucher_target: "codeInput" } %>
+
+    <%# Use button_tag with type="button" and Stimulus action %>
+    <%# This button will NOT submit the main form %>
+    <%= button_tag type: :button,
+                   class: "py-1 px-4 bg-amber-600 text-white rounded-md hover:bg-amber-500",
+                   data: { action: "click->voucher#apply" } do %>
+      Apply voucher
+    <% end %>
+  </div>
+
+  <%# Dedicated element for status/error messages, targeted by Stimulus %>
+  <%# Replaces the need for error_messages_for here %>
+  <div data-voucher-target="status" class="mt-1 text-sm text-red-600">
+    <%# Status messages will appear here via Stimulus controller %>
+  </div>
+
+</div>
+<%# --- End Voucher Section --- %>

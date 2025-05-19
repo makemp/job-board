@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :employers
+  devise_for :employers, skip: [:registrations, :confirmations, :unlocks]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -11,9 +11,21 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "jobs#index"
-  resources :jobs, only: %i[index show]
-  namespace :employers do
-    resources :jobs
+  root "job_offers#index"
+  resources :job_offers, only: %i[index show edit]
+  resource :job_offer_forms, only: %i[new create] do
+    patch :update, on: :collection
   end
+  namespace :employers do
+    resources :job_offers
+  end
+
+  resources :first_orders, only: %i[index]
+
+  resources :order_placements, only: %i[show create]
+
+  get "/email_confirmed", to: "email_confirmations#email_confirmed", as: :email_confirmed
+  get "/first_confirmation_email_sent", to: "email_confirmations#first_confirmation_email_sent", as: :first_confirmation_email_sent
+  get "/confirm_email", to: "email_confirmations#confirm_email", as: :confirm_email
+  post "/confirm/resend", to: "email_confirmations#resend_confirmation_email", as: :resend_confirmation_email
 end

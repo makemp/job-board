@@ -2,10 +2,10 @@
 
 class DeviseCreateEmployers < ActiveRecord::Migration[8.0]
   def change
-    create_table :employers do |t|
+    create_table :employers, id: :ulid, default: -> { "generate_ulid()" } do |t|
       ## Database authenticatable
       t.string :email, null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
+      t.string :encrypted_password, null: true
 
       ## Recoverable
       t.string :reset_password_token
@@ -33,8 +33,8 @@ class DeviseCreateEmployers < ActiveRecord::Migration[8.0]
       t.datetime :locked_at
 
       ## Custom
-      t.datetime :approved_at
-      t.datetime :disabled_at
+      # t.datetime :approved_at
+      # t.datetime :disabled_at
       t.string :display_name
 
       t.timestamps null: false

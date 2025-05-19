@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# remove old schema dump (change to schema.rb or structure.sql as needed)
+if [ -f db/schema.rb ]; then
+  rm db/schema.rb
+fi
+
+# completely rebuild the DB and run migrations
+rails db:migrate:reset
+
+# seed the development dataset
+rails db:seeds:dev

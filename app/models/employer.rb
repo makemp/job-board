@@ -1,10 +1,15 @@
 class Employer < ApplicationRecord
-  has_many :jobs  # dependent: :destroy hide?
+  has_many :job_offers  # dependent: :destroy hide?
 
-  scope :valid, -> { where.not(confirmed_at: nil).where.not(approved_at: nil).where(disabled_at: nil) }
+  has_one_attached :logo
+
+  scope :valid, -> { where.not(confirmed_at: nil) }
+
+  def password_required?
+    false
+  end
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable, :confirmable, :lockable
+  devise :database_authenticatable
 end
