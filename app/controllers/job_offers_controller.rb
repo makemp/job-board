@@ -1,6 +1,4 @@
 class JobOffersController < ApplicationController
-  before_action :set_job_offer, only: %i[show edit update]
-
   def index
     @jobs = JobOffer.valid.includes(:employer)
 
@@ -34,16 +32,16 @@ class JobOffersController < ApplicationController
   end
 
   def show
-    @job_offer = JobOffer.find(params[:id])
+    job_offer
   end
 
   def edit
-    # renders edit form
+    job_offer
   end
 
   def update
-    if @job_offer.update(job_offer_params)
-      redirect_to job_offer_path(@job_offer), notice: "Job offer updated successfully."
+    if job_offer.update(job_offer_params)
+      redirect_to job_offer_path(job_offer), notice: "Job offer updated successfully."
     else
       render :edit
     end
@@ -51,8 +49,8 @@ class JobOffersController < ApplicationController
 
   private
 
-  def set_job_offer
-    @job_offer = JobOffer.find(params[:id])
+  def job_offer
+    @job_offer ||= JobOffer.find(params[:id])
   end
 
   def job_offer_params
