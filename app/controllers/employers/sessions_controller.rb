@@ -23,7 +23,7 @@ class Employers::SessionsController < Devise::SessionsController
         sign_in(:employer, employer)
         redirect_to after_sign_in_path_for(employer)
       else
-        flash.now[:alert] = 'Invalid or expired code'
+        flash.now[:alert] = "Invalid or expired code"
         render :verify_code
       end
     else
@@ -32,6 +32,7 @@ class Employers::SessionsController < Devise::SessionsController
   end
 
   protected
+
   def after_sign_in_path_for(resource)
     employers_dashboard_path
   end

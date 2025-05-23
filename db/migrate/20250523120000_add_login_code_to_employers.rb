@@ -4,4 +4,3 @@ class AddLoginCodeToEmployers < ActiveRecord::Migration[6.1]
     add_column :employers, :login_code_sent_at, :datetime
   end
 end
-

@@ -43,7 +43,7 @@ class JobOffersController < ApplicationController
 
   def update
     if @job_offer.update(job_offer_params)
-      redirect_to job_offer_path(@job_offer), notice: 'Job offer updated successfully.'
+      redirect_to job_offer_path(@job_offer), notice: "Job offer updated successfully."
     else
       render :edit
     end

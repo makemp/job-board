@@ -9,7 +9,7 @@ module Employers
     def update_password
       if current_employer.update(password_params)
         bypass_sign_in(current_employer)
-        redirect_to employers_dashboard_path, notice: 'Password updated successfully.'
+        redirect_to employers_dashboard_path, notice: "Password updated successfully."
       else
         flash.now[:alert] = current_employer.errors.full_messages.to_sentence
         render :index
@@ -19,7 +19,7 @@ module Employers
     def update_billing
       detail = current_employer.billing_detail || current_employer.build_billing_detail
       if detail.update(billing_params)
-        redirect_to employers_dashboard_path, notice: 'Billing details saved.'
+        redirect_to employers_dashboard_path, notice: "Billing details saved."
       else
         flash.now[:alert] = detail.errors.full_messages.to_sentence
         render :index
@@ -28,7 +28,7 @@ module Employers
 
     def close_account
       current_employer.destroy
-      redirect_to root_path, notice: 'Your account has been closed.'
+      redirect_to root_path, notice: "Your account has been closed."
     end
 
     private
