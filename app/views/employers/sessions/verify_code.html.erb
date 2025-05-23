@@ -1,0 +1,21 @@
+<div class="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow">
+  <h2 class="text-2xl font-semibold mb-6 text-center text-amber-900">Verify Your Code</h2>
+  <p class="text-gray-600 mb-4 text-center">Enter the 5-digit code sent to <strong><%= params[:email] %></strong>.</p>
+  <%= form_with url: verify_code_employers_path, local: true do |f| %>
+    <%= f.hidden_field :email, value: params[:email] %>
+    <div class="mb-4">
+      <%= f.label :code, 'Verification Code', class: "block text-gray-700" %>
+      <%= f.text_field :code, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+    </div>
+    <%= f.submit 'Verify and Sign In', class: "w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-amber-900 hover:bg-amber-700 transition-colors duration-300" %>
+  <% end %>
+
+  <div class="mt-4 text-center">
+    <p class="text-gray-700">Didn't receive a code? <%= link_to 'Resend', login_code_employers_path, class: "text-blue-600 hover:underline" %></p>
+  </div>
+
+  <div class="mt-8 text-center">
+    <p class="text-gray-700">Don't have an account? <%= link_to 'Place an order', new_job_offer_forms_path, class: "text-blue-600 hover:underline" %></p>
+  </div>
+</div>
+

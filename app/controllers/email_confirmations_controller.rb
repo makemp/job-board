@@ -3,7 +3,7 @@ class EmailConfirmationsController < ApplicationController
   def email_confirmed
     job_offer = Registrations::ConfirmEmailService.call!(params[:token])
     flash[:notice] = "Email confirmed successfully. Your job offer is now visible!"
-    sign_in job_offer.employer
+    sign_in(job_offer.employer)
     redirect_to job_offer_path(job_offer, success: true)
   rescue Registrations::ConfirmEmailService::ConfirmationError => e
     flash[:alert] = e.message

@@ -1,0 +1,46 @@
+<div class="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow" data-controller="tabs" data-tabs-initial-tab="code">
+  <h2 class="text-2xl font-semibold mb-6 text-center text-amber-900">Employer Sign In</h2>
+
+  <nav class="mb-6 flex border-b border-gray-200">
+    <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="code" class="px-4 py-2 -mb-px border-b-2 border-amber-900 text-gray-600">Email Code</button>
+    <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="password" class="px-4 py-2 -mb-px border-b-2 border-transparent text-gray-600">Email & Password</button>
+  </nav>
+
+  <div data-tabs-target="pane" data-tab-name="code">
+    <h3 class="text-xl font-medium mb-4 text-gray-800">Login with Email Code</h3>
+    <p class="text-gray-600 mb-4">Enter your email to receive a 5-digit code.</p>
+    <%= form_with url: login_code_employers_path, local: true do |f| %>
+      <div class="mb-4">
+        <%= f.label :email, 'Email', class: "block text-gray-700" %>
+        <%= f.email_field :email, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+      </div>
+      <%= f.submit 'Send Code', class: "w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" %>
+    <% end %>
+  </div>
+
+  <div data-tabs-target="pane" data-tab-name="password" class="hidden">
+    <h3 class="text-xl font-medium mb-4 text-gray-800">Login with Email & Password</h3>
+    <%= form_with url: employer_session_path, scope: :employer, local: true do |f| %>
+      <div class="mb-4">
+        <%= f.label :email, class: "block text-gray-700" %>
+        <%= f.email_field :email, required: true, autofocus: true, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+      </div>
+      <div class="mb-4">
+        <%= f.label :password, class: "block text-gray-700" %>
+        <%= f.password_field :password, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
+      </div>
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me, class: "ml-2 text-gray-600" %>
+        </div>
+      </div>
+      <%= f.submit 'Sign in', class: "w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-amber-900 hover:bg-amber-700 transition-colors duration-300" %>
+    <% end %>
+  </div>
+
+  <div class="mt-8 text-center">
+    <p class="text-gray-700">Don't have an account? <%= link_to 'Place an order', new_job_offer_forms_path, class: "text-blue
+-600 hover:underline" %></p>
+  </div>
+</div>

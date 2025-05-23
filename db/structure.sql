@@ -9,7 +9,7 @@ CREATE INDEX "index_ahoy_events_on_visit_id" ON "ahoy_events" ("visit_id") /*app
 CREATE INDEX "index_ahoy_events_on_user_id" ON "ahoy_events" ("user_id") /*application='JobBoard'*/;
 CREATE INDEX "index_ahoy_events_on_name_and_time" ON "ahoy_events" ("name", "time") /*application='JobBoard'*/;
 CREATE INDEX "index_ahoy_events_on_properties" ON "ahoy_events" ("properties") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "employers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar, "reset_password_token" varchar, "reset_password_sent_at" datetime(6), "remember_created_at" datetime(6), "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime(6), "last_sign_in_at" datetime(6), "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "confirmation_token" varchar, "confirmed_at" datetime(6), "confirmation_sent_at" datetime(6), "unconfirmed_email" varchar, "failed_attempts" integer DEFAULT 0 NOT NULL, "unlock_token" varchar, "locked_at" datetime(6), "display_name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE TABLE IF NOT EXISTS "employers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar, "reset_password_token" varchar, "reset_password_sent_at" datetime(6), "remember_created_at" datetime(6), "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime(6), "last_sign_in_at" datetime(6), "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "confirmation_token" varchar, "confirmed_at" datetime(6), "confirmation_sent_at" datetime(6), "unconfirmed_email" varchar, "failed_attempts" integer DEFAULT 0 NOT NULL, "unlock_token" varchar, "locked_at" datetime(6), "display_name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "login_code" varchar /*application='JobBoard'*/, "login_code_sent_at" datetime /*application='JobBoard'*/);
 CREATE UNIQUE INDEX "index_employers_on_email" ON "employers" ("email") /*application='JobBoard'*/;
 CREATE UNIQUE INDEX "index_employers_on_reset_password_token" ON "employers" ("reset_password_token") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "job_offers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "title" varchar, "location" varchar, "category" varchar, "apply_with_job_board" boolean, "featured" boolean, "approved" boolean DEFAULT 0 NOT NULL, "employer_id" ulid NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_5aaea6c8db"
@@ -39,6 +39,7 @@ FOREIGN KEY ("job_offer_id")
 );
 CREATE INDEX "index_order_placements_on_job_offer_id" ON "order_placements" ("job_offer_id") /*application='JobBoard'*/;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250523120000'),
 ('20250501135010'),
 ('20250429215020'),
 ('20250425092912'),

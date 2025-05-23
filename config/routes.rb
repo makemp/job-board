@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :employers, skip: [:registrations, :confirmations, :unlocks]
+  devise_for :employers, controllers: { sessions: 'employers/sessions' }, skip: [:registrations, :confirmations, :unlocks]
+  devise_scope :employer do
+    post 'employers/login_code', to: 'employers/sessions#send_code', as: :login_code_employers
+    get  'employers/verify_code', to: 'employers/sessions#verify_code', as: :verify_code_employers
+    post 'employers/verify_code', to: 'employers/sessions#verify_code'
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -17,6 +22,7 @@ Rails.application.routes.draw do
     patch :update, on: :collection
   end
   namespace :employers do
+    get 'dashboard', to: 'dashboard#index', as: :dashboard
     resources :job_offers
   end
 

@@ -12,13 +12,20 @@
 
     <div class="flex items-center space-x-4">
       <% if employer_signed_in? %>
-        <%= button_to 'Sign out', destroy_employer_session_path,
-                      method: :delete,
-                      data: { turbo: false },
-                      class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-red-900 bg-red-100 hover:bg-red-200 transition-colors duration-300" %>
+        <div class="relative group">
+          <button type="button" class="inline-flex items-center px-6 py-3 rounded-full bg-amber-800 text-amber-100 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 cursor-pointer">
+            <span class="mr-2">Menu</span>
+            <svg class="w-4 h-4 transform transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transform translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-20 divide-y divide-gray-100">
+            <%= link_to 'Dashboard', employers_dashboard_path, class: "block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" %>
+            <%= button_to 'Sign out', destroy_employer_session_path, method: :delete, data: { turbo: false }, class: "w-full text-left block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" %>
+          </div>
+        </div>
       <% else %>
-        <%= link_to new_employer_session_path,
-                    class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" do %>
+        <%= link_to new_employer_session_path, class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" do %>
           Sign in
         <% end %>
       <% end %>
