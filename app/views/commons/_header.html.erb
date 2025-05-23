@@ -1,14 +1,16 @@
 <!-- file: `app/views/commons/_header.html.erb` -->
 <header class="bg-amber-900 shadow-lg">
   <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
-    <h1 class="text-3xl font-bold flex items-center">
-      <span class="text-amber-100">drill</span>
-      <span class="text-amber-300">J</span>
-      <span class="text-amber-100">obs.</span>
-      <span class="text-amber-400">X</span>
-      <span class="text-amber-300">Y</span>
-      <span class="text-amber-200">Z</span>
-    </h1>
+    <%= link_to root_path, class: "block" do %>
+      <h1 class="text-3xl font-bold flex items-center">
+        <span class="text-amber-100">drill</span>
+        <span class="text-amber-300">J</span>
+        <span class="text-amber-100">obs.</span>
+        <span class="text-amber-400">X</span>
+        <span class="text-amber-300">Y</span>
+        <span class="text-amber-200">Z</span>
+      </h1>
+    <% end %>
 
     <div class="flex items-center space-x-4">
       <% if employer_signed_in? %>

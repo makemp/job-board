@@ -38,7 +38,13 @@ FOREIGN KEY ("job_offer_id")
   REFERENCES "job_offers" ("id")
 );
 CREATE INDEX "index_order_placements_on_job_offer_id" ON "order_placements" ("job_offer_id") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "billing_details" ("id"  NOT NULL PRIMARY KEY, "employer_id" varchar NOT NULL, "company_name" varchar, "tax_id" varchar, "address" varchar, "city" varchar, "zip" varchar, "country" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_da7d41f7c1"
+FOREIGN KEY ("employer_id")
+  REFERENCES "employers" ("id")
+);
+CREATE UNIQUE INDEX "index_billing_details_on_employer_id" ON "billing_details" ("employer_id") /*application='JobBoard'*/;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250523130000'),
 ('20250523120000'),
 ('20250501135010'),
 ('20250429215020'),

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   end
   namespace :employers do
     get 'dashboard', to: 'dashboard#index', as: :dashboard
+    patch 'dashboard/password', to: 'dashboard#update_password', as: :update_password
+    patch 'dashboard/billing', to: 'dashboard#update_billing', as: :update_billing
+    delete 'dashboard/close_account', to: 'dashboard#close_account', as: :close_account
     resources :job_offers
   end
 
@@ -34,4 +37,9 @@ Rails.application.routes.draw do
   get "/first_confirmation_email_sent", to: "email_confirmations#first_confirmation_email_sent", as: :first_confirmation_email_sent
   get "/confirm_email", to: "email_confirmations#confirm_email", as: :confirm_email
   post "/confirm/resend", to: "email_confirmations#resend_confirmation_email", as: :resend_confirmation_email
+
+  # Explicit named routes for dashboard updates (ensure correct path helpers)
+  patch '/employers/dashboard/password', to: 'employers/dashboard#update_password', as: :update_password_employers
+  patch '/employers/dashboard/billing', to: 'employers/dashboard#update_billing', as: :update_billing_employers
+  delete '/employers/dashboard/close_account', to: 'employers/dashboard#close_account', as: :close_account_employers
 end

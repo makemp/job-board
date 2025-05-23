@@ -1,4 +1,6 @@
 class JobOffersController < ApplicationController
+  before_action :set_job_offer, only: %i[show edit update]
+
   def index
     @jobs = JobOffer.valid.includes(:employer)
 
@@ -35,10 +37,25 @@ class JobOffersController < ApplicationController
     @job_offer = JobOffer.find(params[:id])
   end
 
+  def edit
+    # renders edit form
+  end
+
+  def update
+    if @job_offer.update(job_offer_params)
+      redirect_to job_offer_path(@job_offer), notice: 'Job offer updated successfully.'
+    else
+      render :edit
+    end
+  end
+
   private
 
-  def job_params
-    params.require(:job).expect(:title, :description, :category, :location)
-    # Note: we don't include :email in job_params as it's used for employer creation
+  def set_job_offer
+    @job_offer = JobOffer.find(params[:id])
+  end
+
+  def job_offer_params
+    params.require(:job_offer).permit(:title, :description, :category, :location)
   end
 end
