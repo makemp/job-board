@@ -73,7 +73,7 @@ class JobOfferFormsController < ApplicationController
   private
 
   def job_offer_form_params
-    params.require(:job_offer_form).permit!.tap do |whitelisted|
+    params.require(:job_offer_form).permit(**JobOfferForm.attribute_names).tap do |whitelisted|
       whitelisted[:voucher_code] = params[:voucher_code] if params[:voucher_code].present?
     end
   end

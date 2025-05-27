@@ -35,6 +35,11 @@ class JobOfferForm
 
   validate :employer_check
 
+  # Include attr_accessor attributes in attribute_names
+  def self.attribute_names
+    super + ["logo"]
+  end
+
   def self.from_job_offer(job_offer)
     new.tap do |instance|
       JobOffer.attribute_names.each { |name| instance.send("#{name}=", job_offer.send(name)) if job_offer.respond_to?(name) && instance.respond_to?("#{name}=") }
