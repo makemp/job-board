@@ -17,6 +17,11 @@
           <%= f.text_field :title, class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>          <%= error_messages_for(f, :title) %>
         </div>
 
+        <div>
+          <%= f.label :company_name, "Company Name", class: "block text-sm font-medium text-amber-900" %>
+          <%= f.text_field :company_name, class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <%= error_messages_for(f, :company_name) %>
+        </div>
 
         <div>
           <%= f.label :category, "Job Category", class: "block text-sm font-medium text-amber-900" %>
@@ -90,5 +95,4 @@
     </div>
 
   <% end %>
-
 

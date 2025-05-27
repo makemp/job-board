@@ -10,7 +10,7 @@
       <% end %>
     <% end %>
   </h1>
-
+  <p class="text-lg text-amber-800 mb-2"><strong>Company:</strong> <%= @job_offer.company_name %></p>
   <% if @job_offer.logo.attached? %>
     <div class="mb-4">
       <%= image_tag @job_offer.logo, alt: @job_offer.title, class: "h-16 w-16 object-contain" %>
@@ -44,3 +44,4 @@
       }
   </script>
 </div>
+

@@ -6,6 +6,7 @@ class JobOfferForm
   attribute :voucher_code, :string
 
   attribute :title, :string
+  attribute :company_name, :string
 
   attribute :email, :string
   attribute :email_confirmation, :string
@@ -20,6 +21,7 @@ class JobOfferForm
 
   validates :description, presence: true
   validates :title, presence: true
+  validates :company_name, presence: true
   validates :email, presence: true,
     format: {with: /@/, message: "must look like an email"},
     confirmation: {case_sensitive: false}
@@ -32,6 +34,18 @@ class JobOfferForm
   validate :voucher_code_check
 
   validate :employer_check
+
+  def self.from_job_offer(job_offer)
+    new.tap do |instance|
+      JobOffer.attribute_names.each { |name| instance.send("#{name}=", job_offer.send(name)) if job_offer.respond_to?(name) && instance.respond_to?("#{name}=") }
+      instance.valid?
+    end
+  end
+
+  def initialize(attributes = {})
+    super
+    @price = nil
+  end
 
   def employer_check
     return unless email.present?
