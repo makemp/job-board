@@ -63,6 +63,6 @@ class JobOffersController < ApplicationController
   end
 
   def job_offer_form_params
-    params.require(:job_offer).permit(**JobOfferForm.attribute_names)
+    params.require(:job_offer).permit(*JobOfferForm.attribute_names)
   end
 end

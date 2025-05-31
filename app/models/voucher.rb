@@ -24,6 +24,14 @@ class Voucher < ApplicationRecord
     job_offer.update!(approved: !required_approval?)
   end
 
+  def soft_apply(job_offer_form)
+    job_offer_form.price = price
+  end
+
+  def can_apply?(job_offer_form_)
+    enabled?
+  end
+
   class << self
     def default_voucher
       @default_voucher ||= find_by!(code: DEFAULT_CODE)

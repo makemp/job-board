@@ -77,13 +77,15 @@ class JobOfferForm
     voucher_code_ = voucher_code.strip if voucher_code
     return if voucher_code_.blank?
     voucher = Voucher.find_by(code: voucher_code_)
-    if voucher.nil? || !voucher.enable?
+    if voucher.nil? || !voucher.can_apply?(self)
       reset_price
       errors.add(:voucher_code, "is not valid or disabled")
     else
-      self.price = voucher.options["price"]
+      voucher.soft_apply(self)
     end
   end
+
+  attr_writer :price
 
   def price
     @price ||= Voucher.default_price
@@ -102,8 +104,4 @@ class JobOfferForm
     return Voucher.default_voucher if voucher_code.blank?
     Voucher.find_by(code: voucher_code.strip)
   end
-
-  private
-
-  attr_writer :price
 end
