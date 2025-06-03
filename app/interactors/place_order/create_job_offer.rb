@@ -1,4 +1,4 @@
-class PlaceFreeOrder
+class PlaceOrder
   class CreateJobOffer
     include Interactor
 

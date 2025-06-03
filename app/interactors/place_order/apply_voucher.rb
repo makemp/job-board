@@ -1,4 +1,4 @@
-class PlaceFreeOrder
+class PlaceOrder
   class ApplyVoucher
     include Interactor
 

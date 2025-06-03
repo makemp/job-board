@@ -1,4 +1,4 @@
-class PlaceFreeOrder
+class PlaceOrder
   class DetermineCustomerRoute
     include Interactor
     include Rails.application.routes.url_helpers

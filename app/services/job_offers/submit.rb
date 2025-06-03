@@ -12,7 +12,7 @@ module JobOffers
       Employer.transaction do
         JobOffer.transaction do
           OrderPlacement.transaction do
-            return PlaceFreeOrder.call(**params).redirect_path
+            return PlaceOrder.call(**params).redirect_path
           end
         end
       end
