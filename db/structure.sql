@@ -33,7 +33,7 @@ CREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active
 CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-05-23 13:35:52.576309', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE TABLE IF NOT EXISTS "action_text_rich_texts" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "body" text, "record_type" varchar NOT NULL, "record_id" ulid NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE UNIQUE INDEX "index_action_text_rich_texts_uniqueness" ON "action_text_rich_texts" ("record_type", "record_id", "name") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "order_placements" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "free_order" boolean DEFAULT 0 NOT NULL, "paid_at" datetime(6), "price" integer, "job_offer_id" ulid NOT NULL, "voucher_code" varchar DEFAULT 'STANDARD' NOT NULL, "ready_to_be_placed" boolean DEFAULT 0, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_de023b5fe1"
+CREATE TABLE IF NOT EXISTS "order_placements" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "free_order" boolean DEFAULT 0 NOT NULL, "paid_at" datetime(6), "price" integer, "job_offer_id" ulid NOT NULL, "voucher_code" varchar DEFAULT 'STANDARD' NOT NULL, "ready_to_be_placed" boolean DEFAULT 0, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "stripe_session_id" varchar /*application='JobBoard'*/, CONSTRAINT "fk_rails_de023b5fe1"
 FOREIGN KEY ("job_offer_id")
   REFERENCES "job_offers" ("id")
 );
@@ -43,7 +43,9 @@ FOREIGN KEY ("employer_id")
   REFERENCES "employers" ("id")
 );
 CREATE UNIQUE INDEX "index_billing_details_on_employer_id" ON "billing_details" ("employer_id") /*application='JobBoard'*/;
+CREATE UNIQUE INDEX "index_order_placements_on_stripe_session_id" ON "order_placements" ("stripe_session_id") /*application='JobBoard'*/;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250603121000'),
 ('20250524120000'),
 ('20250523130000'),
 ('20250523120000'),

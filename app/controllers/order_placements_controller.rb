@@ -1,6 +1,6 @@
 class OrderPlacementsController < ApplicationController
   def show
-    # form with code to be entered
+    @order_placement = OrderPlacement.find(params[:id])
   end
 
   def create

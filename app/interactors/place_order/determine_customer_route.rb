@@ -13,7 +13,8 @@ class PlaceOrder
           flash_notice: "Your job offer is now visible",
           success: true)
       else
-        context.redirect_path = next_orders_path
+        session = Stripe::CheckoutSessionService.call(order_placement: context.order_placement)
+        context.redirect_path = session.url
       end
     end
   end
