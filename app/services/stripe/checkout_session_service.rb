@@ -9,9 +9,9 @@ module Stripe
         line_items: [{
           price_data: {
             currency: Rails.configuration.stripe[:currency],
-            unit_amount: order_placement.price,
+            unit_amount: order_placement.price * 100, # Convert to cents
             product_data: {
-              name: order_placement.job_offer.title
+              name: order_placement
             }
           },
           quantity: 1
