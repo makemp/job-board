@@ -74,7 +74,7 @@ RSpec.describe "job_offers/index", type: :feature do
   context "while visiting root page at the first time" do
     it do
       visit "/"
-      expect(page).to match_snapshot("root_page")
+      expect(page.html).to match_snapshot("root_page")
     end
   end
 
@@ -82,7 +82,7 @@ RSpec.describe "job_offers/index", type: :feature do
     it do
       visit "/"
       all("a", text: "2").first.click
-      expect(page).to match_snapshot("root_page_page_2")
+      expect(page.html).to match_snapshot("root_page_page_2")
     end
   end
 end
