@@ -11,11 +11,15 @@ module Stripe
             currency: Rails.configuration.stripe[:currency],
             unit_amount: order_placement.price * 100, # Convert to cents
             product_data: {
-              name: order_placement
+              name: "Job Offer Placement"
             }
           },
           quantity: 1
         }],
+        billing_address_collection: "required",
+        tax_id_collection: {
+          enabled: true
+        },
         mode: "payment",
         success_url: @url_helpers.order_placement_url(order_placement, host: @host) + "?success=true",
         cancel_url: @url_helpers.job_offer_url(order_placement.job_offer, host: @host)

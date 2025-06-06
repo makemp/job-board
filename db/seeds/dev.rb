@@ -31,18 +31,16 @@ end
     titles.each do |title|
       descriptions.each do |description|
         JobOffer::CATEGORIES.each do |category|
-          JobOffer::CATEGORIES.each do |category|
-            job = JobOffer.create!(
-              title: title,
-              location: region,
-              employer: employer,
-              category: category,
-              description: description
-            )
+          job = JobOffer.create!(
+            company_name: employer.display_name,
+            title: title,
+            location: region,
+            employer: employer,
+            category: category,
+            description: description
+          )
 
-            # Remove existing rich text if present to avoid duplicate error.
-            job.update_column(:created_at, rand(1..10).days.ago)
-          end
+          job.update_column(:created_at, rand(1..10).days.ago)
         end
       end
     end
