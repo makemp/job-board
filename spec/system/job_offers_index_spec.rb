@@ -1,11 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "job_offers/index", type: :feature do
+RSpec.describe "job_offers/index", type: :feature, js: true, driver: :selenium_chrome_headless do
   after(:all) do
     ActiveRecord::Tasks::DatabaseTasks.truncate_all
   end
 
   before(:all) do
+    ActiveRecord::Tasks::DatabaseTasks.truncate_all
     Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 299})
     FreeVoucher.create!(code: "FREE", options: {price: 0})
     Voucher.create!(enabled_till: 3.days.ago, code: "DISCOUNT", options: {price: 199})
@@ -24,14 +25,13 @@ RSpec.describe "job_offers/index", type: :feature do
       confirmed_at: 4.days.ago)
 
     employers = [owl_labs, pelican_studios, dis_man]
-    titles = ["Digger", "Geologist", "Rock Developer", "Miner"]
+    titles = ["Digger", "Geologist", "Rock Developer", "Miner", "Driller", "Drilling Engineer", "Drilling Supervisor"]
     descriptions = ["Lorem ipsum dolor sit ament"]
 
     employers.each do |employer|
       employer.logo.attach(io: File.open(Rails.root.join("app/assets/images/dev_logos", "#{employer.display_name}.png")),
         filename: "logo.png")
     end
-    id = 0
 
     ["Australia",
       "Canada",
@@ -50,7 +50,6 @@ RSpec.describe "job_offers/index", type: :feature do
                 category: category,
                 description: description
               )
-              job.update_column(:id, id += 1)
 
               job.update_column(:created_at, (t_index + index).days.ago)
             end
@@ -60,29 +59,34 @@ RSpec.describe "job_offers/index", type: :feature do
     end
   end
 
-  before do
-    Employer.all.each do |employer|
-      if employer.logo.attached?
-        allow_any_instance_of(ActionView::Helpers::AssetTagHelper)
-          .to receive(:image_tag)
-          .with(have_attributes(blob: employer.logo.blob), anything)
-          .and_return('<img src="/assets/rails_logo_placeholder.png" />')
+  context "when visiting job offers index and changing the page and filter" do
+    it do
+      visit "/"
+      match_snapshot!(page, "root_page")
+      within("#pagination-top") do
+        find("a", exact_text: "2", wait: 1).click
       end
-    end
-  end
+      match_snapshot!(page, "root_page_page2")
 
-  context "while visiting root page at the first time" do
-    it do
-      visit "/"
-      expect(page.html).to match_snapshot("root_page")
-    end
-  end
+      select "Drilling", from: "Category"
+      match_snapshot!(page, "root_page_drilling")
+      select "10", from: "Results per page"
+      within("#pagination-top") do
+        find("a", exact_text: "2", wait: 1).click
+      end
 
-  context "when visiting job offers index and changing the page" do
-    it do
-      visit "/"
-      all("a", text: "2").first.click
-      expect(page.html).to match_snapshot("root_page_page_2")
+      match_snapshot!(page, "root_page_drilling_page_2")
+      select "Colombia", from: "Region"
+
+      match_snapshot!(page, "root_page_colombia")
+      within("#pagination-top") do
+        find("a", exact_text: "2", wait: 1).click
+      end
+
+      match_snapshot!(page, "root_page_colombia_page_2")
+      select "Colombia", from: "Region"
+      select "Drilling", from: "Category"
+      match_snapshot!(page, "root_page_colombia_drilling")
     end
   end
 end

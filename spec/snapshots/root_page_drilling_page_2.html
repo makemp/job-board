@@ -1,0 +1,1061 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css" data-tag-name="trix-editor">trix-editor {
+    display: block;
+}
+
+trix-editor:empty::before {
+    content: attr(placeholder);
+    color: graytext;
+    cursor: text;
+    pointer-events: none;
+    white-space: pre-line;
+}
+
+trix-editor a[contenteditable=false] {
+    cursor: text;
+}
+
+trix-editor img {
+    max-width: 100%;
+    height: auto;
+}
+
+trix-editor [data-trix-attachment] figcaption textarea {
+    resize: none;
+}
+
+trix-editor [data-trix-attachment] figcaption textarea.trix-autoresize-clone {
+    position: absolute;
+    left: -9999px;
+    max-height: 0px;
+}
+
+trix-editor [data-trix-attachment] figcaption[data-trix-placeholder]:empty::before {
+    content: attr(data-trix-placeholder);
+    color: graytext;
+}
+
+trix-editor [data-trix-cursor-target] {
+    display: inline-block !important;
+    width: 1px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+trix-editor [data-trix-cursor-target=left] {
+    vertical-align: top !important;
+    margin-left: -1px !important;
+}
+
+trix-editor [data-trix-cursor-target=right] {
+    vertical-align: bottom !important;
+    margin-right: -1px !important;
+}</style>
+<style type="text/css" data-tag-name="trix-toolbar">trix-toolbar {
+  display: block;
+}
+
+trix-toolbar {
+  white-space: nowrap;
+}
+
+trix-toolbar [data-trix-dialog] {
+  display: none;
+}
+
+trix-toolbar [data-trix-dialog][data-trix-active] {
+  display: block;
+}
+
+trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
+  background-color: #ffdddd;
+}</style>
+<style type="text/css">.turbo-progress-bar {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #0076ff;
+  z-index: 2147483647;
+  transition:
+    width 300ms ease-out,
+    opacity 150ms 150ms ease-in;
+  transform: translate3d(0, 0, 0);
+}
+</style>
+    <title>Job Board</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    
+
+    
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link rel="stylesheet" href="/assets/tailwind-[hash].css" data-turbo-track="reload">
+
+    <link rel="stylesheet" href="/assets/application-[hash].css" data-turbo-track="reload">
+
+    <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "/assets/application-4212c486.js",
+    "@hotwired/turbo-rails": "/assets/turbo.min-1262d735.js",
+    "@hotwired/stimulus": "/assets/stimulus.min-4b1e420e.js",
+    "@hotwired/stimulus-loading": "/assets/stimulus-loading-1fc53fe7.js",
+    "@rails/request.js": "/assets/@rails--request.js-22cecb25.js",
+    "trix": "/assets/trix-4b540cb5.js",
+    "@rails/actiontext": "/assets/actiontext.esm-f1c04d34.js",
+    "controllers/application": "/assets/controllers/application-3affb389.js",
+    "controllers/filter_controller": "/assets/controllers/filter_controller-6b0c6e24.js",
+    "controllers": "/assets/controllers/index-ee64e1f1.js",
+    "controllers/modal_controller": "/assets/controllers/modal_controller-82335ae1.js",
+    "controllers/tabs_controller": "/assets/controllers/tabs_controller-28c63dba.js",
+    "controllers/voucher_controller": "/assets/controllers/voucher_controller-882f64a0.js"
+  }
+}</script>
+<link rel="modulepreload" href="/assets/application-[hash].js">
+<link rel="modulepreload" href="/assets/turbo.min-[hash].js">
+<link rel="modulepreload" href="/assets/stimulus.min-[hash].js">
+<link rel="modulepreload" href="/assets/stimulus-loading-[hash].js">
+<link rel="modulepreload" href="/assets/@rails--request.js-[hash].js">
+<link rel="modulepreload" href="/assets/trix-[hash].js">
+<link rel="modulepreload" href="/assets/actiontext.esm-[hash].js">
+<link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
+<link rel="modulepreload" href="/assets/controllers/filter_controller-6b0c6e24.js">
+<link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
+<link rel="modulepreload" href="/assets/controllers/modal_controller-82335ae1.js">
+<link rel="modulepreload" href="/assets/controllers/tabs_controller-28c63dba.js">
+<link rel="modulepreload" href="/assets/controllers/voucher_controller-882f64a0.js">
+<script type="module">import "application"</script>
+  </head>
+
+  <body>
+
+  <!-- file: `app/views/commons/_header.html.erb` -->
+<header class="bg-amber-900 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
+    <a class="block" href="/">
+      <h1 class="text-3xl font-bold flex items-center">
+        <span class="text-amber-100">drill</span>
+        <span class="text-amber-300">J</span>
+        <span class="text-amber-100">obs.</span>
+        <span class="text-amber-400">X</span>
+        <span class="text-amber-300">Y</span>
+        <span class="text-amber-200">Z</span>
+      </h1>
+</a>
+    <div class="flex items-center space-x-4">
+        <a class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" href="/employers/sign_in">
+          Sign in
+</a>
+      <a class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" href="/job_offer_forms/new">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Post a Job
+</a>    </div>
+  </div>
+</header>
+
+
+      <div class="min-h-screen bg-amber-50">
+  <!-- Filters -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-amber-100 border-b border-amber-200">
+    <form class="space-y-4 sm:space-y-0 sm:flex sm:flex-wrap sm:gap-4" data-controller="filter" data-turbo-frame="jobs" action="/job_offers" accept-charset="UTF-8" method="get">
+      
+      <!-- Category Filter -->
+      <div class="w-full sm:w-[30%]">
+        <label class="block text-lg font-medium text-amber-800 mb-1" for="category">Category</label>
+        <select name="category" id="category" class="w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white" data-action="change-&gt;filter#submit"><option value="">All Categories</option>
+<option selected value="Drilling">Drilling</option>
+<option value="Mining">Mining</option>
+<option value="Engineering">Engineering</option>
+<option value="Safety">Safety</option>
+<option value="Technicians">Technicians</option></select>
+      </div>
+      
+      <!-- Region Filter -->
+      <div class="w-full sm:w-[30%]">
+        <label class="block text-lg font-medium text-amber-800 mb-1" for="region">Region</label>
+        <select name="region" id="region" class="w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white" data-action="change-&gt;filter#submit"><option value="">All Locations</option>
+<optgroup label="Featured Regions">
+<option value="Australia">Australia</option>
+<option value="Canada">Canada</option>
+<option value="USA">USA</option>
+<option value="UAE">UAE</option>
+<option value="Chile">Chile</option>
+<option value="South Africa">South Africa</option>
+<option value="Kazakhstan">Kazakhstan</option>
+<option value="North Sea - Offshore">North Sea - Offshore</option>
+<option value="Gulf of America (Mexico) - Offshore">Gulf of America (Mexico) - Offshore</option>
+<option value="West Africa - Offshore">West Africa - Offshore</option>
+<option value="Remote/Rotational">Remote/Rotational</option>
+<option value="Other">Other</option>
+</optgroup>
+<optgroup label="All Regions">
+<option value="Afghanistan">Afghanistan</option>
+<option value="Albania">Albania</option>
+<option value="Algeria">Algeria</option>
+<option value="Andorra">Andorra</option>
+<option value="Angola">Angola</option>
+<option value="Anguilla">Anguilla</option>
+<option value="Antarctica">Antarctica</option>
+<option value="Antigua and Barbuda">Antigua and Barbuda</option>
+<option value="Argentina">Argentina</option>
+<option value="Armenia">Armenia</option>
+<option value="Aruba">Aruba</option>
+<option value="Austria">Austria</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Bahamas">Bahamas</option>
+<option value="Bahrain">Bahrain</option>
+<option value="Bangladesh">Bangladesh</option>
+<option value="Barbados">Barbados</option>
+<option value="Belarus">Belarus</option>
+<option value="Belgium">Belgium</option>
+<option value="Belize">Belize</option>
+<option value="Benin">Benin</option>
+<option value="Bermuda">Bermuda</option>
+<option value="Bhutan">Bhutan</option>
+<option value="Bolivia">Bolivia</option>
+<option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+<option value="Botswana">Botswana</option>
+<option value="Bouvet Island">Bouvet Island</option>
+<option value="Brazil">Brazil</option>
+<option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+<option value="Brunei Darussalam">Brunei Darussalam</option>
+<option value="Bulgaria">Bulgaria</option>
+<option value="Burkina Faso">Burkina Faso</option>
+<option value="Burundi">Burundi</option>
+<option value="Cabo Verde">Cabo Verde</option>
+<option value="Cambodia">Cambodia</option>
+<option value="Cameroon">Cameroon</option>
+<option value="Cayman Islands">Cayman Islands</option>
+<option value="Central African Republic">Central African Republic</option>
+<option value="Chad">Chad</option>
+<option value="China">China</option>
+<option value="Colombia">Colombia</option>
+<option value="Comoros">Comoros</option>
+<option value="Congo">Congo</option>
+<option value="Congo (Democratic Republic)">Congo (Democratic Republic)</option>
+<option value="Cook Islands">Cook Islands</option>
+<option value="Costa Rica">Costa Rica</option>
+<option value="Croatia">Croatia</option>
+<option value="Cuba">Cuba</option>
+<option value="Curaçao">Curaçao</option>
+<option value="Cyprus">Cyprus</option>
+<option value="Czechia">Czechia</option>
+<option value="Côte d'Ivoire">Côte d'Ivoire</option>
+<option value="Denmark">Denmark</option>
+<option value="Djibouti">Djibouti</option>
+<option value="Dominica">Dominica</option>
+<option value="Dominican Republic">Dominican Republic</option>
+<option value="Ecuador">Ecuador</option>
+<option value="Egypt">Egypt</option>
+<option value="El Salvador">El Salvador</option>
+<option value="Equatorial Guinea">Equatorial Guinea</option>
+<option value="Eritrea">Eritrea</option>
+<option value="Estonia">Estonia</option>
+<option value="Eswatini">Eswatini</option>
+<option value="Ethiopia">Ethiopia</option>
+<option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+<option value="Faroe Islands">Faroe Islands</option>
+<option value="Fiji">Fiji</option>
+<option value="Finland">Finland</option>
+<option value="France">France</option>
+<option value="French Guiana">French Guiana</option>
+<option value="French Polynesia">French Polynesia</option>
+<option value="French Southern Territories">French Southern Territories</option>
+<option value="Gabon">Gabon</option>
+<option value="Gambia">Gambia</option>
+<option value="Georgia">Georgia</option>
+<option value="Germany">Germany</option>
+<option value="Ghana">Ghana</option>
+<option value="Gibraltar">Gibraltar</option>
+<option value="Greece">Greece</option>
+<option value="Greenland">Greenland</option>
+<option value="Grenada">Grenada</option>
+<option value="Guadeloupe">Guadeloupe</option>
+<option value="Guam">Guam</option>
+<option value="Guatemala">Guatemala</option>
+<option value="Guernsey">Guernsey</option>
+<option value="Guinea">Guinea</option>
+<option value="Guinea-Bissau">Guinea-Bissau</option>
+<option value="Guyana">Guyana</option>
+<option value="Haiti">Haiti</option>
+<option value="Heard Island and McDonald Islands">Heard Island and McDonald Islands</option>
+<option value="Holy See">Holy See</option>
+<option value="Honduras">Honduras</option>
+<option value="Hong Kong">Hong Kong</option>
+<option value="Hungary">Hungary</option>
+<option value="Iceland">Iceland</option>
+<option value="India">India</option>
+<option value="Indonesia">Indonesia</option>
+<option value="Iran">Iran</option>
+<option value="Iraq">Iraq</option>
+<option value="Ireland">Ireland</option>
+<option value="Isle of Man">Isle of Man</option>
+<option value="Israel">Israel</option>
+<option value="Italy">Italy</option>
+<option value="Jamaica">Jamaica</option>
+<option value="Japan">Japan</option>
+<option value="Jersey">Jersey</option>
+<option value="Jordan">Jordan</option>
+<option value="Kenya">Kenya</option>
+<option value="Kiribati">Kiribati</option>
+<option value="Korea (North)">Korea (North)</option>
+<option value="Korea (South)">Korea (South)</option>
+<option value="Kuwait">Kuwait</option>
+<option value="Kyrgyzstan">Kyrgyzstan</option>
+<option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+<option value="Latvia">Latvia</option>
+<option value="Lebanon">Lebanon</option>
+<option value="Lesotho">Lesotho</option>
+<option value="Liberia">Liberia</option>
+<option value="Libya">Libya</option>
+<option value="Liechtenstein">Liechtenstein</option>
+<option value="Lithuania">Lithuania</option>
+<option value="Luxembourg">Luxembourg</option>
+<option value="Macao">Macao</option>
+<option value="Madagascar">Madagascar</option>
+<option value="Malawi">Malawi</option>
+<option value="Malaysia">Malaysia</option>
+<option value="Maldives">Maldives</option>
+<option value="Mali">Mali</option>
+<option value="Malta">Malta</option>
+<option value="Marshall Islands">Marshall Islands</option>
+<option value="Martinique">Martinique</option>
+<option value="Mauritania">Mauritania</option>
+<option value="Mauritius">Mauritius</option>
+<option value="Mayotte">Mayotte</option>
+<option value="Mexico">Mexico</option>
+<option value="Micronesia (Federated States of)">Micronesia (Federated States of)</option>
+<option value="Moldova">Moldova</option>
+<option value="Monaco">Monaco</option>
+<option value="Mongolia">Mongolia</option>
+<option value="Montenegro">Montenegro</option>
+<option value="Montserrat">Montserrat</option>
+<option value="Morocco">Morocco</option>
+<option value="Mozambique">Mozambique</option>
+<option value="Myanmar">Myanmar</option>
+<option value="Namibia">Namibia</option>
+<option value="Nauru">Nauru</option>
+<option value="Nepal">Nepal</option>
+<option value="Netherlands">Netherlands</option>
+<option value="New Caledonia">New Caledonia</option>
+<option value="New Zealand">New Zealand</option>
+<option value="Nicaragua">Nicaragua</option>
+<option value="Niger">Niger</option>
+<option value="Nigeria">Nigeria</option>
+<option value="Niue">Niue</option>
+<option value="Norfolk Island">Norfolk Island</option>
+<option value="Northern Mariana Islands">Northern Mariana Islands</option>
+<option value="Norway">Norway</option>
+<option value="Oman">Oman</option>
+<option value="Pakistan">Pakistan</option>
+<option value="Palau">Palau</option>
+<option value="Palestine, State of">Palestine, State of</option>
+<option value="Panama">Panama</option>
+<option value="Papua New Guinea">Papua New Guinea</option>
+<option value="Paraguay">Paraguay</option>
+<option value="Peru">Peru</option>
+<option value="Philippines">Philippines</option>
+<option value="Pitcairn">Pitcairn</option>
+<option value="Poland">Poland</option>
+<option value="Portugal">Portugal</option>
+<option value="Puerto Rico">Puerto Rico</option>
+<option value="Qatar">Qatar</option>
+<option value="Republic of North Macedonia">Republic of North Macedonia</option>
+<option value="Romania">Romania</option>
+<option value="Russian Federation">Russian Federation</option>
+<option value="Rwanda">Rwanda</option>
+<option value="Réunion">Réunion</option>
+<option value="Saint Barthélemy">Saint Barthélemy</option>
+<option value="Saint Helena, Ascension and Tristan da Cunha">Saint Helena, Ascension and Tristan da Cunha</option>
+<option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+<option value="Saint Lucia">Saint Lucia</option>
+<option value="Saint Martin (French part)">Saint Martin (French part)</option>
+<option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+<option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+<option value="Samoa">Samoa</option>
+<option value="San Marino">San Marino</option>
+<option value="Sao Tome and Principe">Sao Tome and Principe</option>
+<option value="Saudi Arabia">Saudi Arabia</option>
+<option value="Senegal">Senegal</option>
+<option value="Serbia">Serbia</option>
+<option value="Seychelles">Seychelles</option>
+<option value="Sierra Leone">Sierra Leone</option>
+<option value="Singapore">Singapore</option>
+<option value="Sint Maarten (Dutch part)">Sint Maarten (Dutch part)</option>
+<option value="Slovakia">Slovakia</option>
+<option value="Slovenia">Slovenia</option>
+<option value="Solomon Islands">Solomon Islands</option>
+<option value="Somalia">Somalia</option>
+<option value="South Georgia and the South Sandwich Islands">South Georgia and the South Sandwich Islands</option>
+<option value="South Sudan">South Sudan</option>
+<option value="Spain">Spain</option>
+<option value="Sri Lanka">Sri Lanka</option>
+<option value="Sudan">Sudan</option>
+<option value="Suriname">Suriname</option>
+<option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+<option value="Sweden">Sweden</option>
+<option value="Switzerland">Switzerland</option>
+<option value="Syrian Arab Republic">Syrian Arab Republic</option>
+<option value="Taiwan">Taiwan</option>
+<option value="Tajikistan">Tajikistan</option>
+<option value="Tanzania">Tanzania</option>
+<option value="Thailand">Thailand</option>
+<option value="Timor-Leste">Timor-Leste</option>
+<option value="Togo">Togo</option>
+<option value="Tokelau">Tokelau</option>
+<option value="Tonga">Tonga</option>
+<option value="Trinidad and Tobago">Trinidad and Tobago</option>
+<option value="Tunisia">Tunisia</option>
+<option value="Turkey">Turkey</option>
+<option value="Turkmenistan">Turkmenistan</option>
+<option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+<option value="Tuvalu">Tuvalu</option>
+<option value="Uganda">Uganda</option>
+<option value="Ukraine">Ukraine</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+<option value="Uruguay">Uruguay</option>
+<option value="Uzbekistan">Uzbekistan</option>
+<option value="Vanuatu">Vanuatu</option>
+<option value="Venezuela">Venezuela</option>
+<option value="Viet Nam">Viet Nam</option>
+<option value="Virgin Islands (British)">Virgin Islands (British)</option>
+<option value="Virgin Islands (U.S.)">Virgin Islands (U.S.)</option>
+<option value="Wallis and Futuna">Wallis and Futuna</option>
+<option value="Western Sahara">Western Sahara</option>
+<option value="Yemen">Yemen</option>
+<option value="Zambia">Zambia</option>
+<option value="Zimbabwe">Zimbabwe</option>
+<option value="Åland Islands">Åland Islands</option>
+</optgroup></select>
+      </div>
+      
+      <!-- Per Page Filter -->
+      <div class="w-full sm:w-[20%]">
+        <label class="block text-lg font-medium text-amber-800 mb-1" for="per_page">Results per page</label>
+        <select name="per_page" id="per_page" class="w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white" data-action="change-&gt;filter#submit"><option selected value="10">10</option>
+<option value="20">20</option>
+<option value="50">50</option>
+<option value="all">All</option></select>
+      </div>
+      
+      <!-- Reset Filters -->
+      <div class="w-full sm:w-[15%] flex justify-end items-end">
+        <a class="inline-flex items-center px-4 py-2 border border-transparent text-lg font-medium rounded-md shadow-sm text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300" href="/job_offers">Reset</a>
+      </div>
+</form>  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <turbo-frame id="jobs" src="http://127.0.0.1:63621/?category=Drilling&amp;page=2&amp;per_page=10&amp;region=">
+      <!-- Top Pagination -->
+        <div id="pagination-top" class="mt-4 mb-6 flex justify-center">
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-amber-300 bg-amber-50 text-sm font-medium text-amber-400">
+          <span class="sr-only">Previous</span>
+          <!-- Heroicon name: solid/chevron-left -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </span>
+      
+          <!-- Current page -->
+          <span aria-current="page" class="relative inline-flex items-center px-4 py-2 border border-amber-500 bg-amber-100 text-sm font-medium text-amber-900">
+            1
+          </span>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=2&amp;per_page=10&amp;region=">2</a>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=3&amp;per_page=10&amp;region=">3</a>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=4&amp;per_page=10&amp;region=">4</a>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=5&amp;per_page=10&amp;region=">5</a>
+          <!-- Gap -->
+          <span class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800">
+            ...
+          </span>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=21&amp;per_page=10&amp;region=">21</a>
+      
+        <a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=2&amp;per_page=10&amp;region=">
+          <span class="sr-only">Next</span>
+          <!-- Heroicon name: solid/chevron-right -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+          </svg>
+</a>    </nav>
+  </div>
+ 
+
+      <!-- Jobs List -->
+      <div class="grid gap-6">
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Congo
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Congo
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Congo
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Comoros
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Comoros
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Comoros
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Colombia
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Colombia
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  Colombia
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
+      <div class="p-6">
+        <div class="flex justify-between relative">
+          <div class="flex-grow">
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+            
+            <div class="flex items-center gap-4">
+              <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
+
+              <!-- Job Meta Information -->
+              <div class="flex items-center gap-4 text-sm text-amber-600">
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                  China
+                </span>
+                <span class="flex items-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  Drilling
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side content -->
+          <div class="flex flex-col justify-between ml-6">
+            <!-- Button centered vertically -->
+            <div class="flex items-center h-full">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
+              See more
+              </button>
+            </div>
+
+            <!-- Timestamp at bottom -->
+            <div class="text-right">
+              <span class="text-sm text-amber-600 flex items-center justify-end">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                </svg>
+                Added Today
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+      
+      <!-- Bottom Pagination -->
+        <div id="pagination-bottom" class="mt-4 mb-6 flex justify-center">
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-amber-300 bg-amber-50 text-sm font-medium text-amber-400">
+          <span class="sr-only">Previous</span>
+          <!-- Heroicon name: solid/chevron-left -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </span>
+      
+          <!-- Current page -->
+          <span aria-current="page" class="relative inline-flex items-center px-4 py-2 border border-amber-500 bg-amber-100 text-sm font-medium text-amber-900">
+            1
+          </span>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=2&amp;per_page=10&amp;region=">2</a>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=3&amp;per_page=10&amp;region=">3</a>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=4&amp;per_page=10&amp;region=">4</a>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=5&amp;per_page=10&amp;region=">5</a>
+          <!-- Gap -->
+          <span class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800">
+            ...
+          </span>
+          <!-- Regular page link -->
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=21&amp;per_page=10&amp;region=">21</a>
+      
+        <a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?category=Drilling&amp;page=2&amp;per_page=10&amp;region=">
+          <span class="sr-only">Next</span>
+          <!-- Heroicon name: solid/chevron-right -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+          </svg>
+</a>    </nav>
+  </div>
+ 
+</turbo-frame>  </main>
+</div>
+  <div id="cookieNotice" class="fixed bottom-0 left-0 right-0 bg-amber-800 text-white p-4 flex justify-between items-center" style="display: none;">
+  <span>This website uses essential cookies to ensure you get the best experience.</span>
+  <button onclick="acceptCookies()" class="bg-amber-700 hover:bg-amber-600 text-white px-4 py-2 rounded transition-colors duration-300">
+    Got It
+  </button>
+</div>
+<script>
+    function acceptCookies() {
+        document.cookie = "cookiesAccepted=true; path=/; max-age=" + (60 * 60 * 24 * 365);
+        document.getElementById("cookieNotice").style.display = "none";
+    }
+    window.addEventListener("load", function() {
+        if (!document.cookie.match(/cookiesAccepted=true/)) {
+            document.getElementById("cookieNotice").style.display = "flex";
+        }
+    });
+</script>
+  
+
+</body>
+</html>

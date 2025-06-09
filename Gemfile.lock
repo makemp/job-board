@@ -281,6 +281,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
+    rexml (3.4.1)
     rspec (3.13.1)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -337,12 +338,19 @@ GEM
     ruby-vips (2.2.3)
       ffi (~> 1.12)
       logger
+    rubyzip (2.4.1)
     safely_block (0.4.1)
     sass-embedded (1.89.0-arm64-darwin)
       google-protobuf (~> 4.31)
     sass-embedded (1.89.0-x86_64-linux-gnu)
       google-protobuf (~> 4.31)
     securerandom (0.4.1)
+    selenium-webdriver (4.32.0)
+      base64 (~> 0.2)
+      logger (~> 1.4)
+      rexml (~> 3.2, >= 3.2.5)
+      rubyzip (>= 1.2.2, < 3.0)
+      websocket (~> 1.0)
     solid_cable (3.0.8)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -412,6 +420,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    websocket (1.2.11)
     websocket-driver (0.7.7)
       base64
       websocket-extensions (>= 0.1.0)
@@ -445,6 +454,7 @@ DEPENDENCIES
   rspec-rails
   rspec-snapshot (~> 2.0.3)
   rubocop-rails-omakase
+  selenium-webdriver
   solid_cable
   solid_cache
   solid_queue

@@ -53,13 +53,13 @@
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <%= turbo_frame_tag "jobs" do %>
       <!-- Top Pagination -->
-      <%= render partial: "pagination" %>
+      <%= render partial: "pagination",  locals: { position: :top } %>
 
       <!-- Jobs List -->
       <%= render partial: "job_list", locals: { jobs: @jobs } %>
       
       <!-- Bottom Pagination -->
-      <%= render partial: "pagination" %>
+      <%= render partial: "pagination",  locals: { position: :bottom } %>
     <% end %>
   </main>
 </div>

@@ -71,4 +71,18 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  Capybara.register_driver :selenium_chrome do |app|
+    Capybara::Selenium::Driver.new(app, browser: :chrome)
+  end
+
+  Capybara.register_driver :selenium_chrome_headless do |app|
+    options = ::Selenium::WebDriver::Chrome::Options.new
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu") # Not needed in most modern environments, but safe
+    options.add_argument("--window-size=2400,2400")
+    options.add_argument("--no-sandbox") # Useful for CI
+
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  end
 end

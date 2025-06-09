@@ -1,6 +1,93 @@
-<!DOCTYPE html>
-<html>
-  <head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html aria-busy="true" data-turbo-visit-direction="forward">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css" data-tag-name="trix-editor">trix-editor {
+    display: block;
+}
+
+trix-editor:empty::before {
+    content: attr(placeholder);
+    color: graytext;
+    cursor: text;
+    pointer-events: none;
+    white-space: pre-line;
+}
+
+trix-editor a[contenteditable=false] {
+    cursor: text;
+}
+
+trix-editor img {
+    max-width: 100%;
+    height: auto;
+}
+
+trix-editor [data-trix-attachment] figcaption textarea {
+    resize: none;
+}
+
+trix-editor [data-trix-attachment] figcaption textarea.trix-autoresize-clone {
+    position: absolute;
+    left: -9999px;
+    max-height: 0px;
+}
+
+trix-editor [data-trix-attachment] figcaption[data-trix-placeholder]:empty::before {
+    content: attr(data-trix-placeholder);
+    color: graytext;
+}
+
+trix-editor [data-trix-cursor-target] {
+    display: inline-block !important;
+    width: 1px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+trix-editor [data-trix-cursor-target=left] {
+    vertical-align: top !important;
+    margin-left: -1px !important;
+}
+
+trix-editor [data-trix-cursor-target=right] {
+    vertical-align: bottom !important;
+    margin-right: -1px !important;
+}</style>
+<style type="text/css" data-tag-name="trix-toolbar">trix-toolbar {
+  display: block;
+}
+
+trix-toolbar {
+  white-space: nowrap;
+}
+
+trix-toolbar [data-trix-dialog] {
+  display: none;
+}
+
+trix-toolbar [data-trix-dialog][data-trix-active] {
+  display: block;
+}
+
+trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
+  background-color: #ffdddd;
+}</style>
+<style type="text/css">.turbo-progress-bar {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #0076ff;
+  z-index: 2147483647;
+  transition:
+    width 300ms ease-out,
+    opacity 150ms 150ms ease-in;
+  transform: translate3d(0, 0, 0);
+}
+</style>
     <title>Job Board</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,9 +101,9 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <link rel="stylesheet" href="/assets/tailwind-682a92b5.css" data-turbo-track="reload" />
+    <link rel="stylesheet" href="/assets/tailwind-[hash].css" data-turbo-track="reload">
 
-    <link rel="stylesheet" href="/assets/application-231c63cf.css" data-turbo-track="reload" />
+    <link rel="stylesheet" href="/assets/application-[hash].css" data-turbo-track="reload">
 
     <script type="importmap" data-turbo-track="reload">{
   "imports": {
@@ -35,13 +122,13 @@
     "controllers/voucher_controller": "/assets/controllers/voucher_controller-882f64a0.js"
   }
 }</script>
-<link rel="modulepreload" href="/assets/application-4212c486.js">
-<link rel="modulepreload" href="/assets/turbo.min-1262d735.js">
-<link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
-<link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
-<link rel="modulepreload" href="/assets/@rails--request.js-22cecb25.js">
-<link rel="modulepreload" href="/assets/trix-4b540cb5.js">
-<link rel="modulepreload" href="/assets/actiontext.esm-f1c04d34.js">
+<link rel="modulepreload" href="/assets/application-[hash].js">
+<link rel="modulepreload" href="/assets/turbo.min-[hash].js">
+<link rel="modulepreload" href="/assets/stimulus.min-[hash].js">
+<link rel="modulepreload" href="/assets/stimulus-loading-[hash].js">
+<link rel="modulepreload" href="/assets/@rails--request.js-[hash].js">
+<link rel="modulepreload" href="/assets/trix-[hash].js">
+<link rel="modulepreload" href="/assets/actiontext.esm-[hash].js">
 <link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
 <link rel="modulepreload" href="/assets/controllers/filter_controller-6b0c6e24.js">
 <link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
@@ -71,8 +158,8 @@
           Sign in
 </a>
       <a class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" href="/job_offer_forms/new">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
         Post a Job
 </a>    </div>
@@ -88,7 +175,8 @@
       <!-- Category Filter -->
       <div class="w-full sm:w-[30%]">
         <label class="block text-lg font-medium text-amber-800 mb-1" for="category">Category</label>
-        <select name="category" id="category" class="w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white" data-action="change-&gt;filter#submit"><option value="">All Categories</option><option value="Drilling">Drilling</option>
+        <select name="category" id="category" class="w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white" data-action="change-&gt;filter#submit"><option value="">All Categories</option>
+<option value="Drilling">Drilling</option>
 <option value="Mining">Mining</option>
 <option value="Engineering">Engineering</option>
 <option value="Safety">Safety</option>
@@ -98,7 +186,9 @@
       <!-- Region Filter -->
       <div class="w-full sm:w-[30%]">
         <label class="block text-lg font-medium text-amber-800 mb-1" for="region">Region</label>
-        <select name="region" id="region" class="w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white" data-action="change-&gt;filter#submit"><option value="">All Locations</option><optgroup label="Featured Regions"><option value="Australia">Australia</option>
+        <select name="region" id="region" class="w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white" data-action="change-&gt;filter#submit"><option value="">All Locations</option>
+<optgroup label="Featured Regions">
+<option value="Australia">Australia</option>
 <option value="Canada">Canada</option>
 <option value="USA">USA</option>
 <option value="UAE">UAE</option>
@@ -109,7 +199,10 @@
 <option value="Gulf of America (Mexico) - Offshore">Gulf of America (Mexico) - Offshore</option>
 <option value="West Africa - Offshore">West Africa - Offshore</option>
 <option value="Remote/Rotational">Remote/Rotational</option>
-<option value="Other">Other</option></optgroup><optgroup label="All Regions"><option value="Afghanistan">Afghanistan</option>
+<option value="Other">Other</option>
+</optgroup>
+<optgroup label="All Regions">
+<option value="Afghanistan">Afghanistan</option>
 <option value="Albania">Albania</option>
 <option value="Algeria">Algeria</option>
 <option value="Andorra">Andorra</option>
@@ -160,7 +253,7 @@
 <option value="Curaçao">Curaçao</option>
 <option value="Cyprus">Cyprus</option>
 <option value="Czechia">Czechia</option>
-<option value="Côte d&#39;Ivoire">Côte d&#39;Ivoire</option>
+<option value="Côte d'Ivoire">Côte d'Ivoire</option>
 <option value="Denmark">Denmark</option>
 <option value="Djibouti">Djibouti</option>
 <option value="Dominica">Dominica</option>
@@ -222,7 +315,7 @@
 <option value="Korea (South)">Korea (South)</option>
 <option value="Kuwait">Kuwait</option>
 <option value="Kyrgyzstan">Kyrgyzstan</option>
-<option value="Lao People&#39;s Democratic Republic">Lao People&#39;s Democratic Republic</option>
+<option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
 <option value="Latvia">Latvia</option>
 <option value="Lebanon">Lebanon</option>
 <option value="Lesotho">Lesotho</option>
@@ -346,14 +439,15 @@
 <option value="Yemen">Yemen</option>
 <option value="Zambia">Zambia</option>
 <option value="Zimbabwe">Zimbabwe</option>
-<option value="Åland Islands">Åland Islands</option></optgroup></select>
+<option value="Åland Islands">Åland Islands</option>
+</optgroup></select>
       </div>
       
       <!-- Per Page Filter -->
       <div class="w-full sm:w-[20%]">
         <label class="block text-lg font-medium text-amber-800 mb-1" for="per_page">Results per page</label>
         <select name="per_page" id="per_page" class="w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white" data-action="change-&gt;filter#submit"><option value="10">10</option>
-<option selected="selected" value="20">20</option>
+<option selected value="20">20</option>
 <option value="50">50</option>
 <option value="all">All</option></select>
       </div>
@@ -366,15 +460,15 @@
 
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <turbo-frame id="jobs">
+    <turbo-frame id="jobs" src="http://127.0.0.1:63621/?page=2">
       <!-- Top Pagination -->
-        <div class="mt-4 mb-6 flex justify-center">
+        <div id="pagination-top" class="mt-4 mb-6 flex justify-center">
     <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
         <a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?page=1">
           <span class="sr-only">Previous</span>
           <!-- Heroicon name: solid/chevron-left -->
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
           </svg>
 </a>      
           <!-- Regular page link -->
@@ -394,13 +488,13 @@
             ...
           </span>
           <!-- Regular page link -->
-          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?page=30">30</a>
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?page=53">53</a>
       
         <a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?page=3">
           <span class="sr-only">Next</span>
           <!-- Heroicon name: solid/chevron-right -->
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
           </svg>
 </a>    </nav>
   </div>
@@ -412,7 +506,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -420,14 +514,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   UAE
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -439,7 +533,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/181');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -447,8 +541,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -461,7 +555,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -469,14 +563,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   USA
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -488,7 +582,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/161');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -496,8 +590,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -510,7 +604,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -518,14 +612,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   USA
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -537,7 +631,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/141');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -545,8 +639,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -559,7 +653,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -567,14 +661,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   USA
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -586,7 +680,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/121');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -594,8 +688,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -608,7 +702,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -616,14 +710,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Canada
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -635,7 +729,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/101');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -643,8 +737,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -657,7 +751,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -665,14 +759,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Canada
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -684,7 +778,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/81');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -692,8 +786,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -706,7 +800,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -714,14 +808,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Canada
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -733,7 +827,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/61');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -741,8 +835,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -755,7 +849,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -763,14 +857,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Australia
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -782,7 +876,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/41');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -790,8 +884,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -804,7 +898,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -812,14 +906,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Australia
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -831,7 +925,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/21');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -839,8 +933,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -853,7 +947,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -861,14 +955,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Australia
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -880,7 +974,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/1');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -888,8 +982,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Today
               </span>
@@ -902,7 +996,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Geologist</h2>
@@ -910,14 +1004,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Congo
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -929,7 +1023,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/586');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -937,8 +1031,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -951,7 +1045,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -959,14 +1053,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Congo
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Mining
                 </span>
@@ -978,7 +1072,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/582');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -986,8 +1080,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1000,7 +1094,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Geologist</h2>
@@ -1008,14 +1102,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Congo
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -1027,7 +1121,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/566');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -1035,8 +1129,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1049,7 +1143,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -1057,14 +1151,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Congo
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Mining
                 </span>
@@ -1076,7 +1170,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/562');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -1084,8 +1178,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1098,7 +1192,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Geologist</h2>
@@ -1106,14 +1200,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Congo
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -1125,7 +1219,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/546');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -1133,8 +1227,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1147,7 +1241,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -1155,14 +1249,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Congo
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Mining
                 </span>
@@ -1174,7 +1268,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/542');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -1182,8 +1276,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1196,7 +1290,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Geologist</h2>
@@ -1204,14 +1298,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Comoros
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -1223,7 +1317,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/526');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -1231,8 +1325,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1245,7 +1339,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -1253,14 +1347,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Comoros
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Mining
                 </span>
@@ -1272,7 +1366,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/522');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -1280,8 +1374,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1294,7 +1388,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Geologist</h2>
@@ -1302,14 +1396,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Comoros
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Drilling
                 </span>
@@ -1321,7 +1415,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/506');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -1329,8 +1423,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1343,7 +1437,7 @@
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              &lt;img src=&quot;/assets/rails_logo_placeholder.png&quot; /&gt;
+              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -1351,14 +1445,14 @@
               <!-- Job Meta Information -->
               <div class="flex items-center gap-4 text-sm text-amber-600">
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                   </svg>
                   Comoros
                 </span>
                 <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                   </svg>
                   Mining
                 </span>
@@ -1370,7 +1464,7 @@
           <div class="flex flex-col justify-between ml-6">
             <!-- Button centered vertically -->
             <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers/502');">
+              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('/job_offers//[ulid]');">
               See more
               </button>
             </div>
@@ -1378,8 +1472,8 @@
             <!-- Timestamp at bottom -->
             <div class="text-right">
               <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewbox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 Added Yesterday
               </span>
@@ -1393,13 +1487,13 @@
 
       
       <!-- Bottom Pagination -->
-        <div class="mt-4 mb-6 flex justify-center">
+        <div id="pagination-bottom" class="mt-4 mb-6 flex justify-center">
     <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
         <a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?page=1">
           <span class="sr-only">Previous</span>
           <!-- Heroicon name: solid/chevron-left -->
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
           </svg>
 </a>      
           <!-- Regular page link -->
@@ -1419,20 +1513,20 @@
             ...
           </span>
           <!-- Regular page link -->
-          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?page=30">30</a>
+          <a class="relative inline-flex items-center px-4 py-2 border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?page=53">53</a>
       
         <a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-amber-300 bg-white text-sm font-medium text-amber-800 hover:bg-amber-100" data-action="filter#paginate" href="/?page=3">
           <span class="sr-only">Next</span>
           <!-- Heroicon name: solid/chevron-right -->
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
           </svg>
 </a>    </nav>
   </div>
  
 </turbo-frame>  </main>
 </div>
-  <div id="cookieNotice" class="fixed bottom-0 left-0 right-0 bg-amber-800 text-white p-4 flex justify-between items-center" style="display: none;">
+  <div id="cookieNotice" class="fixed bottom-0 left-0 right-0 bg-amber-800 text-white p-4 flex justify-between items-center" style="display: flex;">
   <span>This website uses essential cookies to ensure you get the best experience.</span>
   <button onclick="acceptCookies()" class="bg-amber-700 hover:bg-amber-600 text-white px-4 py-2 rounded transition-colors duration-300">
     Got It
@@ -1449,5 +1543,7 @@
         }
     });
 </script>
-  </body>
+  
+
+</body>
 </html>
