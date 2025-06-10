@@ -54,14 +54,17 @@
           </div>
         </div>
 
-        <div>
+        <div data-controller="logo-preview">
           <%= f.label :logo, "Company Logo", class: "block text-sm font-medium text-amber-900" %>
-
-          <% if f.object.logo&.attached? %>
-              <%= image_tag f.object.logo, class: "w-32 h-32 rounded-md object-cover border" %>
-          <% end %>
+          <%= image_tag (f.object.logo&.attached? ? f.object.logo : ""),
+                        class: "w-32 h-32 rounded-md object-cover border mb-2 #{'hidden' unless f.object.logo&.attached?}",
+                        data: { "logo-preview-target": "output" } %>
           <%= f.file_field :logo,
                            accept: 'image/*',
+                           data: {
+                             action: "change->logo-preview#show",
+                             "logo-preview-target": "input"
+                           },
                            class: "mt-1 block w-full text-sm text-amber-900
                       file:mr-4 file:py-2 file:px-4
                       file:rounded-full file:border-0
