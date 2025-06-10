@@ -26,7 +26,7 @@ Rails.application.configure do
   end
 
   config.action_controller.default_url_options = {
-    host: "localhost",
+    host: "127.0.0.1",
     port: 3000
   }
 

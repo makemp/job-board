@@ -45,4 +45,10 @@ Rails.application.routes.draw do
 
   # Stripe webhook endpoint
   post "/stripe/webhook", to: "webhooks/stripe#receive"
+
+  if Rails.env.development?
+    scope module: :dev_shortcuts do
+      get "/job_offer_forms/new/dev", controller: "job_offer_forms", action: :new
+    end
+  end
 end

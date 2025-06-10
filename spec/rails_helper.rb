@@ -9,7 +9,6 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # return unless Rails.env.test?
 require "rspec/rails"
 require "capybara/rspec"
-require "rspec/snapshot"
 # Add additional requires below this line
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 # Requires supporting ruby files with custom matchers and macros, etc, in

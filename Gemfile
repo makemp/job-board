@@ -54,6 +54,8 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem "factory_bot_rails"
+
+  gem "faker"
 end
 
 group :development do
@@ -67,7 +69,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "rspec-rails"
-  gem "rspec-snapshot", "~> 2.0.3"
 end
 
 gem "devise", "~> 4.9"
