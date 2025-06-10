@@ -7,10 +7,11 @@ class PlaceOrder
         description:,
         location:,
         category:)
+      context.job_offer.logo.attach(logo) if logo.present?
     end
 
     delegate :employer, to: :context
     delegate :title, :description, :location, :category, :company_name, to: :"context.info"
-    delegate "voucher", to: :"context.info"
+    delegate "voucher", "logo", to: :"context.info"
   end
 end

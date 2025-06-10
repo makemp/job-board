@@ -31,7 +31,7 @@ module Stripe
         },
         mode: "payment",
         success_url: URL_HELPERS.order_placement_url(order_placement, host: host) + "?success=true",
-        cancel_url: URL_HELPERS.new_job_offer_forms_url(host: host, job_offer_form: order_placement.job_offer_params["attributes"]) + "?cancel=true"
+        cancel_url: URL_HELPERS.new_job_offer_forms_url(host: host, order_placement_id: order_placement.id, cancelled: true)
       )
       order_placement.update!(stripe_session_id: session.id)
       session

@@ -4,7 +4,7 @@ class PlaceOrder
 
     def call
       # context.order_placement = job_offer.create_order_placement!(price: price, free_order: true, voucher_code: code)
-      context.order_placement = job_offer.create_order_placement!(job_offer_params: context.info)
+      context.order_placement = job_offer.create_order_placement!(job_offer_form_params: context.info)
     end
 
     delegate "voucher", to: :"context.info"

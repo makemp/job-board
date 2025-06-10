@@ -1,7 +1,15 @@
 class JobOfferFormsController < ApplicationController
   def new
-    from_params = params[:job_offer_form].present?
-    @job = from_params ? JobOfferForm.new(job_offer_form_params) : JobOfferForm.new
+    if params[:job_offer_form]
+      @job = JobOfferForm.new(job_offer_form_params)
+    elsif params[:order_placement_id]
+      params_ = OrderPlacement.find(params[:order_placement_id]).job_offer_form_attributes
+      @job = JobOfferForm.new(params_)
+      puts params_
+      @job.logo = params_[:logo]
+    else
+      @job = JobOfferForm.new
+    end
   end
 
   def update

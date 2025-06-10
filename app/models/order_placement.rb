@@ -16,6 +16,12 @@ class OrderPlacement < ApplicationRecord
     free?
   end
 
+  def job_offer_form_attributes
+    jop = job_offer_form_params["attributes"]
+    jop = jop.merge(logo: job_offer.logo) if job_offer.logo.present?
+    jop
+  end
+
   private
 
   def price_consistency
