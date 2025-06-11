@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "job_offers/index", type: :feature, js: true, driver: :selenium_chrome_headless do
+RSpec.describe "job_offers/index", type: :feature, js: true, driver: :selenium_chrome do
   after(:all) do
     ActiveRecord::Tasks::DatabaseTasks.truncate_all
   end

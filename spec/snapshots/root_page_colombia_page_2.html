@@ -117,6 +117,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
     "controllers/application": "/assets/controllers/application-3affb389.js",
     "controllers/filter_controller": "/assets/controllers/filter_controller-6b0c6e24.js",
     "controllers": "/assets/controllers/index-ee64e1f1.js",
+    "controllers/logo_preview_controller": "/assets/controllers/logo_preview_controller-0146751b.js",
     "controllers/modal_controller": "/assets/controllers/modal_controller-82335ae1.js",
     "controllers/tabs_controller": "/assets/controllers/tabs_controller-28c63dba.js",
     "controllers/voucher_controller": "/assets/controllers/voucher_controller-882f64a0.js"
@@ -132,6 +133,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
 <link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
 <link rel="modulepreload" href="/assets/controllers/filter_controller-6b0c6e24.js">
 <link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
+<link rel="modulepreload" href="/assets/controllers/logo_preview_controller-0146751b.js">
 <link rel="modulepreload" href="/assets/controllers/modal_controller-82335ae1.js">
 <link rel="modulepreload" href="/assets/controllers/tabs_controller-28c63dba.js">
 <link rel="modulepreload" href="/assets/controllers/voucher_controller-882f64a0.js">
@@ -460,7 +462,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
 
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <turbo-frame id="jobs" src="http://127.0.0.1:63621/?category=Drilling&amp;page=2&amp;per_page=10&amp;region=Colombia">
+    <turbo-frame id="jobs" src="http://localhost:12345/?category=Drilling&amp;page=2&amp;per_page=10&amp;region=Colombia">
       <!-- Top Pagination -->
         <div id="pagination-top" class="mt-4 mb-6 flex justify-center">
     <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
@@ -497,7 +499,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -546,7 +548,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -595,7 +597,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Digger</h2>
@@ -644,7 +646,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Geologist</h2>
@@ -693,7 +695,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Geologist</h2>
@@ -742,7 +744,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Geologist</h2>
@@ -791,7 +793,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Rock Developer</h2>
@@ -840,7 +842,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Rock Developer</h2>
@@ -889,7 +891,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Rock Developer</h2>
@@ -938,7 +940,7 @@ trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
       <div class="p-6">
         <div class="flex justify-between relative">
           <div class="flex-grow">
-              <img class="h-16 w-16 object-contain mb-3" src="http://127.0.0.1:63621/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
+              <img class="h-16 w-16 object-contain mb-3" src="http://localhost:12345/rails/active_storage/blobs/redirect/[blob-url]/logo.png">
             
             <div class="flex items-center gap-4">
               <h2 class="text-xl font-semibold text-amber-900">Miner</h2>

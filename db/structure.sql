@@ -30,11 +30,11 @@ FOREIGN KEY ("blob_id")
   REFERENCES "active_storage_blobs" ("id")
 );
 CREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-06-10 11:38:51.441844', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-06-11 11:24:35.753199', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE TABLE IF NOT EXISTS "action_text_rich_texts" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "body" text, "record_type" varchar NOT NULL, "record_id" ulid NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE UNIQUE INDEX "index_action_text_rich_texts_uniqueness" ON "action_text_rich_texts" ("record_type", "record_id", "name") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "special_offers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text, "number_of_vouchers" integer NOT NULL, "price" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
-CREATE TABLE IF NOT EXISTS "order_placements" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "free_order" boolean DEFAULT 0 NOT NULL, "paid_at" datetime(6), "price" integer, "job_offer_id" ulid, "special_offer_id" ulid, "voucher_code" varchar DEFAULT 'STANDARD' NOT NULL, "ready_to_be_placed" boolean DEFAULT 0, "job_offer_form_params" json DEFAULT '{}', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "stripe_session_id" varchar /*application='JobBoard'*/, CONSTRAINT "fk_rails_de023b5fe1"
+CREATE TABLE IF NOT EXISTS "order_placements" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "free_order" boolean DEFAULT 0 NOT NULL, "paid_at" datetime(6), "price" integer, "job_offer_id" ulid, "special_offer_id" ulid, "voucher_code" varchar DEFAULT 'STANDARD' NOT NULL, "ready_to_be_placed" boolean DEFAULT 0, "job_offer_form_params" json DEFAULT '{}', "stripe_payload" json DEFAULT '{}', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "stripe_session_id" varchar /*application='JobBoard'*/, CONSTRAINT "fk_rails_de023b5fe1"
 FOREIGN KEY ("job_offer_id")
   REFERENCES "job_offers" ("id")
 , CONSTRAINT "fk_rails_b0664bf563"

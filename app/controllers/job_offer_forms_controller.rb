@@ -5,7 +5,6 @@ class JobOfferFormsController < ApplicationController
     elsif params[:order_placement_id]
       params_ = OrderPlacement.find(params[:order_placement_id]).job_offer_form_attributes
       @job = JobOfferForm.new(params_)
-      puts params_
       @job.logo = params_[:logo]
     else
       @job = JobOfferForm.new

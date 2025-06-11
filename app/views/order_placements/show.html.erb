@@ -6,15 +6,12 @@
   <p class="text-lg text-amber-800 mb-2"><strong>Price:</strong> <%= number_to_currency(@order_placement.price) %></p>
   <p class="text-lg text-amber-800 mb-2"><strong>Free Order:</strong> <%= @order_placement.free_order? ? 'Yes' : 'No' %></p>
   <% if @order_placement.voucher.present? %>
-    <p class="text-lg text-amber-800 mb-2"><strong>Voucher Code:</strong> <%= @order_placement.voucher_code %> (<%= @order_placement.voucher.amount %> off)</p>
+    <p class="text-lg text-amber-800 mb-2"><strong>Voucher Code:</strong> <%= @order_placement.voucher_code %>)</p>
   <% else %>
     <p class="text-lg text-amber-800 mb-2"><strong>Voucher Code:</strong> None</p>
   <% end %>
   <p class="text-lg text-amber-800 mb-2"><strong>Paid At:</strong> <%= @order_placement.paid_at ? l(@order_placement.paid_at, format: :long) : 'Not paid yet' %></p>
   <p class="text-lg text-amber-800 mb-2"><strong>Status:</strong> <%= @order_placement.ready_to_be_placed? ? 'Ready to place' : 'Pending' %></p>
-  <% if @order_placement.stripe_session_id.present? %>
-    <p class="text-lg text-amber-800 mb-2"><strong>Stripe Session:</strong> <%= @order_placement.stripe_session_id %></p>
-  <% end %>
 
   <div class="mt-6">
     <%= link_to 'Back to Job Offers', job_offers_path, class: 'inline-block bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-700 transition-colors duration-300' %>
