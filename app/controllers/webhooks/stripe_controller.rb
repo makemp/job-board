@@ -44,8 +44,13 @@ module Webhooks
 
     def handle_checkout_session_completed(session, order_placement)
       raise "No order for #{session.id}" unless order_placement
+      employer = order_placement.employer
       order_placement.update!(paid_at: Time.current)
-      order_placement.employer.update!(stripe_customer_id: session.customer)
+      return if employer.stripe_customer_id.present? && employer.confirmed_at.present?
+
+      employer.update!(stripe_customer_id: session.customer,
+        confirmed_at: Time.current,
+        confirmation_token: nil)
     end
   end
 end
