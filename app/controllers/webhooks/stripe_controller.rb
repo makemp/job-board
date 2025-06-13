@@ -46,11 +46,15 @@ module Webhooks
       raise "No order for #{session.id}" unless order_placement
       employer = order_placement.employer
       order_placement.update!(paid_at: Time.current)
-      return if employer.stripe_customer_id.present? && employer.confirmed_at.present?
 
-      employer.update!(stripe_customer_id: session.customer,
-        confirmed_at: Time.current,
-        confirmation_token: nil)
+      hsh = {}
+      hsh[:stripe_session_id] = session.customer if employer.stripe_customer_id.blank
+      if employer.confirmed_at.blank?
+        hsh[:confirmed_at] = Time.current
+        hsh[:confirmation_token] = nil
+      end
+
+      employer.update!(hsh) if hsh.present?
     end
   end
 end
