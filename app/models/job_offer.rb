@@ -1,7 +1,9 @@
 class JobOffer < ApplicationRecord
   CATEGORIES = %w[Drilling Mining Engineering Safety Technicians].freeze
 
-  has_one :order_placement
+  has_many :order_placements
+
+  has_one :order_placement, -> { order(created_at: :desc) }, class_name: "OrderPlacement"
 
   HIGHLIGHTED_REGIONS = ["Australia",
     "Canada",

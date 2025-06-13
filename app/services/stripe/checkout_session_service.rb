@@ -13,8 +13,17 @@ module Stripe
     end
 
     def call
-      session = ::Stripe::Checkout::Session.create(
-        payment_method_types: %w[card revolut_pay pay_by_bank],
+      session = ::Stripe::Checkout::Session.create(checkout_params.merge(customer_params))
+
+      order_placement.update!(stripe_session_id: session.id)
+      session
+    end
+
+    private
+
+    def checkout_params
+      {
+        payment_method_types: %w[card],
         line_items: [{
           price_data: {
             currency: Rails.configuration.stripe[:currency],
@@ -29,15 +38,38 @@ module Stripe
         tax_id_collection: {
           enabled: true
         },
+
         mode: "payment",
+        invoice_creation: {
+          enabled: true,
+          invoice_data: {
+            # This metadata will be on the Invoice object itself
+            metadata: {
+              order_placement_id: order_placement.id.to_s
+            },
+            # This will be visible on the PDF for the customer
+            custom_fields: [
+              {name: "Order ID", value: order_placement.id.to_s}
+            ]
+          }
+        },
+        payment_intent_data: {
+          metadata: {
+            order_placement_id: order_placement.id.to_s
+          }
+        },
+        client_reference_id: order_placement.id.to_s,
+
         success_url: URL_HELPERS.order_placement_url(order_placement, host: host) + "?success=true",
         cancel_url: URL_HELPERS.new_job_offer_forms_url(host: host, order_placement_id: order_placement.id, cancelled: true)
-      )
-      order_placement.update!(stripe_session_id: session.id)
-      session
+      }
     end
 
-    private
+    def customer_params
+      stripe_customer_id = order_placement.employer.stripe_customer_id
+      return {customer: stripe_customer_id, customer_update: {name: "auto", address: "auto"}} if stripe_customer_id
+      {customer_email: order_placement.email, customer_creation: "always"}
+    end
 
     def host
       (HOST[/\d*/] || HOST[/localhost/]) ? "#{HOST}:#{PORT}" : HOST

@@ -18,15 +18,25 @@ module Webhooks
       end
 
       event_type = event.type
-      session = event.data&.object
-      order_placement = OrderPlacement.find_by(stripe_session_id: session.id)
-      payload = JSON.parse(payload)
+      event_object = event.data.object
+      client_reference_id = event_object.try(:client_reference_id) || event_object.metadata.to_hash.dig(:order_placement_id)
+
+      order_placement = OrderPlacement.find_by(id: client_reference_id)
+
+      skip_order_placement = false
 
       case event_type
       when "checkout.session.completed"
-        handle_checkout_session_completed(session, order_placement)
+        handle_checkout_session_completed(event_object, order_placement)
+      when "customer.created",
+           "customer.tax_id.created"
+        skip_order_placement = true
+        Rails.logger.info "Stripe webhook received for customer creation or tax ID creation, event_type: #{event_type}, customer_id: #{event_object.to_hash}"
       end
-      order_placement&.update!(stripe_payload: order_placement.stripe_payload.merge({event_type => payload}))
+      order_placement.update!(stripe_payload: order_placement.stripe_payload.merge({event_type => event_object.to_hash})) unless skip_order_placement
+      head :ok
+    rescue NoMethodError => e
+      logger.error "Stripe webhook processing failed, error: #{e.message}, event_type: #{event_type}, payload: #{event_object.to_hash}"
       head :ok
     end
 
@@ -35,7 +45,7 @@ module Webhooks
     def handle_checkout_session_completed(session, order_placement)
       raise "No order for #{session.id}" unless order_placement
       order_placement.update!(paid_at: Time.current)
-      # Optionally, send confirmation email or trigger any post-payment logic
+      order_placement.employer.update!(stripe_customer_id: session.customer)
     end
   end
 end

@@ -38,6 +38,8 @@ class DeviseCreateEmployers < ActiveRecord::Migration[8.0]
       t.string :display_name
 
       t.timestamps null: false
+
+      t.string :stripe_customer_id
     end
 
     add_index :employers, :email, unique: true

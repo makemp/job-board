@@ -4,6 +4,8 @@ class OrderPlacement < ApplicationRecord
 
   validate :price_consistency
 
+  delegate :employer, to: :job_offer, allow_nil: true
+
   def free?
     read_attribute("free_order") && price.zero?
   end
@@ -20,6 +22,14 @@ class OrderPlacement < ApplicationRecord
     jop = job_offer_form_params["attributes"]
     jop = jop.merge(logo: job_offer.logo) if job_offer.logo.present?
     jop
+  end
+
+  def email
+    job_offer_form_params.dig("attributes", "email")
+  end
+
+  def invoice_url
+    stripe_payload.dig("invoice.payment_succeeded", "invoice_pdf")
   end
 
   private

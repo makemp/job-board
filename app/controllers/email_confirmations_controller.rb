@@ -4,6 +4,7 @@ class EmailConfirmationsController < ApplicationController
     job_offer = Registrations::ConfirmEmailService.call!(params[:token])
     flash[:notice] = "Email confirmed successfully. Your job offer is now visible!"
     sign_in(job_offer.employer)
+    Stripe::InvoiceProcessing.call(job_offer: job_offer)
     redirect_to job_offer_path(job_offer, success: true)
   rescue Registrations::ConfirmEmailService::ConfirmationError => e
     flash[:alert] = e.message

@@ -11,6 +11,15 @@ class Employer < ApplicationRecord
     false
   end
 
+  def stripe_customer
+    return nil if stripe_customer_id.blank?
+
+    @stripe_customer ||= Stripe::Customer.retrieve(stripe_customer_id)
+  rescue Stripe::InvalidRequestError => e
+    Rails.logger.error "Stripe customer retrieval failed. Employer id: #{id}, error message: #{e.message}"
+    nil
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable
