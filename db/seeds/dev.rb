@@ -1,3 +1,5 @@
+require "index_manager"
+
 ActiveRecord::Tasks::DatabaseTasks.truncate_all
 
 Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 299})

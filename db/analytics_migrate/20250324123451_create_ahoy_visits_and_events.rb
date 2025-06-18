@@ -1,6 +1,6 @@
 class CreateAhoyVisitsAndEvents < ActiveRecord::Migration[8.0]
   def change
-    create_table :ahoy_visits, id: :ulid, default: -> { "ulid()" } do |t|
+    create_table :ahoy_visits do |t|
       t.string :visit_token
       t.string :visitor_token
 
@@ -8,7 +8,7 @@ class CreateAhoyVisitsAndEvents < ActiveRecord::Migration[8.0]
       # simply remove any you don't want
 
       # user
-      t.references :user
+      # t.references :user
 
       # standard
       t.string :ip
@@ -49,7 +49,7 @@ class CreateAhoyVisitsAndEvents < ActiveRecord::Migration[8.0]
 
     create_table :ahoy_events do |t|
       t.references :visit
-      t.references :user
+      # t.references :user
 
       t.string :name
       t.json :properties

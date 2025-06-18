@@ -4,42 +4,58 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem "sqlite3"
 #
-
-
-default: &default
+primary: &primary
   adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
   timeout: 5000
   extensions:
     - <%= SqliteUlid.ulid_loadable_path %>
 
+analytics: &analytics
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
+  timeout: 5000
+  migrations_paths: db/analytics_migrate
+
+
 development:
-  <<: *default
-  database: storage/development.sqlite3
+  primary:
+    <<: *primary
+    database: storage/development.sqlite3
+  analytics:
+    <<: *analytics
+    database: storage/development_analytics.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: storage/test.sqlite3
+  primary:
+    <<: *primary
+    database: storage/test.sqlite3
+  analytics:
+    <<: *analytics
+    database: storage/test_analytics.sqlite3
 
 
 # Store production database in the storage/ directory, which by default
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
   primary:
-    <<: *default
+    <<: *primary
     database: storage/production.sqlite3
+  analytics:
+    <<: *analytics
+    database: storage/production_analytics.sqlite3
   cache:
-    <<: *default
+    <<: *primary
     database: storage/production_cache.sqlite3
     migrations_paths: db/cache_migrate
   queue:
-    <<: *default
+    <<: *primary
     database: storage/production_queue.sqlite3
     migrations_paths: db/queue_migrate
   cable:
-    <<: *default
+    <<: *primary
     database: storage/production_cable.sqlite3
     migrations_paths: db/cable_migrate
