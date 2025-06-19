@@ -10,6 +10,7 @@ class CreateOrderPlacements < ActiveRecord::Migration[8.0]
       t.boolean :ready_to_be_placed, default: false
       t.json :job_offer_form_params, default: {}
       t.json :stripe_payload, default: {}
+      t.string :session_token
       t.timestamps
     end
   end

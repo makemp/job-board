@@ -13,6 +13,7 @@ module Stripe
     end
 
     def call
+      order_placement.update!(session_token: SecureRandom.hex(10))
       session = ::Stripe::Checkout::Session.create(checkout_params.merge(customer_params))
 
       order_placement.update!(stripe_session_id: session.id)
@@ -60,7 +61,7 @@ module Stripe
         },
         client_reference_id: order_placement.id.to_s,
 
-        success_url: URL_HELPERS.order_placement_url(order_placement, host: host) + "?success=true",
+        success_url: URL_HELPERS.completed_order_url(order_placement, session_token: order_placement.session_token, host: host),
         cancel_url: URL_HELPERS.new_job_offer_forms_url(host: host, order_placement_id: order_placement.id, cancelled: true)
       }
     end

@@ -44,7 +44,7 @@ class JobOffersController < ApplicationController
   def update
     @job = JobOfferForm.new(job_offer_form_params.merge(email: current_employer.email))
 
-    if @job.valid? && job_offer.update!(job_offer_form_params)
+    if @job.valid? && job_offer.update_with_logo!(job_offer_form_params)
       redirect_to job_offer_path(job_offer, success: true), notice: "Job offer updated successfully."
     else
       flash[:alert] = @job.errors.full_messages.to_sentence

@@ -1,0 +1,19 @@
+<div class="mt-8 max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
+  <h1 class="text-3xl font-semibold text-amber-900 mb-4">
+    Thank you for your order!
+  </h1>
+
+  <p class="text-lg text-amber-800 mb-2">
+    Your order has been successfully processed and the invoice has been sent to your email address.
+  </p>
+
+  <p class="text-lg text-amber-800 mb-2">
+    You can check your order details in your dashboard: <%= link_to "Dashboard", employers_dashboard_path, class: "text-amber-600 hover:underline" %>.
+  </p>
+
+  <p class="text-lg text-amber-800 mb-4">
+    Your job offering is now visible here: <%= link_to @order_placement.job_offer.title, job_offer_path(@order_placement.job_offer), class: "text-amber-600 hover:underline" %>.
+  </p>
+
+  <%= link_to "Back to Job Offers", job_offers_path, class: "inline-block bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-700 transition-colors duration-300" %>
+</div>

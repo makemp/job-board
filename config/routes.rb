@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :first_orders, only: %i[index]
 
   resources :order_placements, only: %i[show create]
+  resources :completed_orders, only: %i[show]
 
   get "/email_confirmed", to: "email_confirmations#email_confirmed", as: :email_confirmed
   get "/first_confirmation_email_sent", to: "email_confirmations#first_confirmation_email_sent", as: :first_confirmation_email_sent
