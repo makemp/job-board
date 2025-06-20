@@ -25,6 +25,18 @@ development:
   analytics:
     <<: *analytics
     database: storage/development_analytics.sqlite3
+  queue:
+    <<: *primary
+    database: storage/development_queue.sqlite3
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary
+    database: storage/development_cable.sqlite3
+    migrations_paths: db/cable_migrate
+  cache:
+    <<: *primary
+    database: storage/development_cache.sqlite3
+    migrations_paths: db/cache_migrate
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -36,6 +48,19 @@ test:
   analytics:
     <<: *analytics
     database: storage/test_analytics.sqlite3
+  queue:
+    <<: *primary
+    database: storage/test_queue.sqlite3
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary
+    database: storage/test_cable.sqlite3
+    migrations_paths: db/cable_migrate
+  cache:
+    <<: *primary
+    database: storage/test_cache.sqlite3
+    migrations_paths: db/cache_migrate
+
 
 
 # Store production database in the storage/ directory, which by default

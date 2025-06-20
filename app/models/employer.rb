@@ -11,6 +11,10 @@ class Employer < ApplicationRecord
     false
   end
 
+  def latest_order_placement
+    job_offers.order(created_at: :desc).first&.order_placement
+  end
+
   def stripe_customer
     return nil if stripe_customer_id.blank?
 

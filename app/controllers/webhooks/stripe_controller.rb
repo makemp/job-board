@@ -19,9 +19,9 @@ module Webhooks
 
       event_type = event.type
       event_object = event.data.object
-      client_reference_id = event_object.try(:client_reference_id) || event_object.metadata.to_hash.dig(:order_placement_id)
+      client_reference_id = client_reference_id_resolver(event_object)
 
-      order_placement = OrderPlacement.find_by(id: client_reference_id)
+      order_placement = client_reference_id ? OrderPlacement.find_by(id: client_reference_id) : nil
 
       skip_order_placement = false
 
@@ -29,18 +29,31 @@ module Webhooks
       when "checkout.session.completed"
         handle_checkout_session_completed(event_object, order_placement)
       when "customer.created",
-           "customer.tax_id.created"
+           "customer.tax_id.created",
+           "customer.tax_id.updated"
         skip_order_placement = true
-        Rails.logger.info "Stripe webhook received for customer creation or tax ID creation, event_type: #{event_type}, customer_id: #{event_object.to_hash}"
+        StripeCustomerDataJob.set(wait: 1.minute).perform_later(event_type, event_object.to_hash)
+      when "invoice_payment.paid"
+        skip_order_placement = true
+        logger.info "Stripe webhook received invoice_payment.paid. Data: #{event_object.to_hash}"
       end
       order_placement.update!(stripe_payload: order_placement.stripe_payload.merge({event_type => event_object.to_hash})) unless skip_order_placement
       head :ok
-    rescue NoMethodError => e
+    rescue => e
       logger.error "Stripe webhook processing failed, error: #{e.message}, event_type: #{event_type}, payload: #{event_object.to_hash}"
       head :ok
     end
 
     private
+
+    def client_reference_id_resolver(event_object)
+      result = event_object.try(:client_reference_id)
+      return result if result
+
+      metadata = event_object.try(:metadata)
+      return unless metadata
+      metadata.to_hash.dig(:order_placement_id)
+    end
 
     def handle_checkout_session_completed(session, order_placement)
       raise "No order for #{session.id}" unless order_placement
@@ -48,7 +61,7 @@ module Webhooks
       order_placement.update!(paid_at: Time.current)
 
       hsh = {}
-      hsh[:stripe_session_id] = session.customer if employer.stripe_customer_id.blank
+      hsh[:stripe_customer_id] = session.customer if employer.stripe_customer_id.blank?
       if employer.confirmed_at.blank?
         hsh[:confirmed_at] = Time.current
         hsh[:confirmation_token] = nil

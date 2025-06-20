@@ -16,6 +16,7 @@ module JobBoard
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
     config.active_record.schema_format = :sql
+    config.solid_queue.connects_to = {database: {writing: :queue, reading: :queue}}
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: :ulid   # any `rails g model` now uses ULID
