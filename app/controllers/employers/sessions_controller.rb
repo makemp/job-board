@@ -19,8 +19,8 @@ class Employers::SessionsController < Devise::SessionsController
         render turbo_stream: turbo_stream.replace("login_form", partial: "code_form", locals: {email: email})
       end
     else
-      # To prevent email enumeration, render password form even if email doesn't exist
-      render turbo_stream: turbo_stream.replace("login_form", partial: "password_form", locals: {email: email})
+      # To prevent email enumeration, render code form even if email doesn't exist
+      render turbo_stream: turbo_stream.replace("login_form", partial: "code_form", locals: {email: email})
     end
   end
 
