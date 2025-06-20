@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   devise_for :employers, controllers: {sessions: "employers/sessions"}, skip: [:registrations, :confirmations, :unlocks]
   devise_scope :employer do
-    post "employers/login_code", to: "employers/sessions#send_code", as: :login_code_employers
-    get "employers/verify_code", to: "employers/sessions#verify_code", as: :verify_code_employers
-    post "employers/verify_code", to: "employers/sessions#verify_code"
+    post "employers/sessions/process_email", to: "employers/sessions#process_email"
+    post "employers/sessions/verify_code", to: "employers/sessions#verify_code"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

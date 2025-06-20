@@ -4,31 +4,46 @@ class Employers::SessionsController < Devise::SessionsController
     super
   end
 
-  # POST /employers/login_code
-  def send_code
-    employer = Employer.find_by(email: params[:email])
-    if employer
-      code = rand.to_s[2..6] # generate 5-digit code
-      employer.update(login_code: code, login_code_sent_at: Time.current)
-      EmployerLoginCodeMailer.send_code(employer).deliver_later
-    end
-    redirect_to verify_code_employers_path(email: params[:email])
-  end
+  # POST /employers/process_email
+  def process_email
+    email = params[:employer][:email]
+    @employer = Employer.find_by(email: email)
 
-  # GET and POST /employers/verify_code
-  def verify_code
-    if request.post?
-      employer = Employer.find_by(email: params[:email])
-      if employer && employer.login_code == params[:code] && employer.login_code_sent_at > 10.minutes.ago
-        sign_in(:employer, employer)
-        redirect_to after_sign_in_path_for(employer)
+    if @employer
+      if @employer.encrypted_password.present?
+        # Render password form
+        render turbo_stream: turbo_stream.replace("login_form", partial: "password_form", locals: {email: email})
       else
-        flash.now[:alert] = "Invalid or expired code"
-        render :verify_code
+        # Send login code and render code form
+        send_login_code(@employer)
+        render turbo_stream: turbo_stream.replace("login_form", partial: "code_form", locals: {email: email})
       end
     else
-      render :verify_code
+      # To prevent email enumeration, render password form even if email doesn't exist
+      render turbo_stream: turbo_stream.replace("login_form", partial: "password_form", locals: {email: email})
     end
+  end
+
+  # POST /employers/verify_code
+  def verify_code
+    email = params[:employer][:email]
+    @employer = Employer.find_by(email: email)
+
+    if @employer && @employer.login_code == params[:employer][:code] && @employer.login_code_sent_at > 10.minutes.ago
+      sign_in(:employer, @employer)
+      redirect_to after_sign_in_path_for(@employer)
+    else
+      flash.now[:alert] = "Invalid or expired code"
+      render turbo_stream: turbo_stream.replace("login_form", partial: "code_form", locals: {email: email}), status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def send_login_code(employer)
+    code = rand.to_s[2..6] # generate 5-digit code
+    employer.update(login_code: code, login_code_sent_at: Time.current)
+    EmployerLoginCodeMailer.send_code(employer).deliver_later
   end
 
   protected
