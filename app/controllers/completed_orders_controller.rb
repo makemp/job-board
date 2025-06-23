@@ -6,7 +6,7 @@ class CompletedOrdersController < ApplicationController
     return redirect_to root_path unless @order_placement
 
     @order_placement.update!(session_token: nil)
-    @order_placement.employer.update!(confirmed_at: Time.zone.now)
+
     sign_in(@order_placement.employer)
   end
 end
