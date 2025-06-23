@@ -5,5 +5,5 @@ CREATE INDEX "index_solid_cable_messages_on_created_at" ON "solid_cable_messages
 CREATE TABLE IF NOT EXISTS "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY);
 CREATE TABLE IF NOT EXISTS "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 INSERT INTO "schema_migrations" (version) VALUES
-('1');
+    ('1');
 

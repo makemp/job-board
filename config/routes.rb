@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => "/cable"
   devise_for :employers, controllers: {sessions: "employers/sessions"}, skip: [:registrations, :confirmations, :unlocks]
   devise_scope :employer do
     post "employers/sessions/process_email", to: "employers/sessions#process_email"

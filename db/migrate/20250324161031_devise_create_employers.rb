@@ -35,7 +35,7 @@ class DeviseCreateEmployers < ActiveRecord::Migration[8.0]
       ## Custom
       # t.datetime :approved_at
       # t.datetime :disabled_at
-      t.string :display_name
+      t.string :company_name
 
       t.timestamps null: false
 

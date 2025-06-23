@@ -18,44 +18,44 @@ CREATE INDEX "index_solid_queue_semaphores_on_expires_at" ON "solid_queue_semaph
 CREATE INDEX "index_solid_queue_semaphores_on_key_and_value" ON "solid_queue_semaphores" ("key", "value") /*application='JobBoard'*/;
 CREATE UNIQUE INDEX "index_solid_queue_semaphores_on_key" ON "solid_queue_semaphores" ("key") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "solid_queue_blocked_executions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "job_id" bigint NOT NULL, "queue_name" varchar NOT NULL, "priority" integer DEFAULT 0 NOT NULL, "concurrency_key" varchar NOT NULL, "expires_at" datetime(6) NOT NULL, "created_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_4cd34e2228"
-FOREIGN KEY ("job_id")
-  REFERENCES "solid_queue_jobs" ("id")
- ON DELETE CASCADE);
+    FOREIGN KEY ("job_id")
+        REFERENCES "solid_queue_jobs" ("id")
+        ON DELETE CASCADE);
 CREATE INDEX "index_solid_queue_blocked_executions_for_release" ON "solid_queue_blocked_executions" ("concurrency_key", "priority", "job_id") /*application='JobBoard'*/;
 CREATE INDEX "index_solid_queue_blocked_executions_for_maintenance" ON "solid_queue_blocked_executions" ("expires_at", "concurrency_key") /*application='JobBoard'*/;
 CREATE UNIQUE INDEX "index_solid_queue_blocked_executions_on_job_id" ON "solid_queue_blocked_executions" ("job_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "solid_queue_claimed_executions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "job_id" bigint NOT NULL, "process_id" bigint, "created_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_9cfe4d4944"
-FOREIGN KEY ("job_id")
-  REFERENCES "solid_queue_jobs" ("id")
- ON DELETE CASCADE);
+    FOREIGN KEY ("job_id")
+        REFERENCES "solid_queue_jobs" ("id")
+        ON DELETE CASCADE);
 CREATE UNIQUE INDEX "index_solid_queue_claimed_executions_on_job_id" ON "solid_queue_claimed_executions" ("job_id") /*application='JobBoard'*/;
 CREATE INDEX "index_solid_queue_claimed_executions_on_process_id_and_job_id" ON "solid_queue_claimed_executions" ("process_id", "job_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "solid_queue_failed_executions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "job_id" bigint NOT NULL, "error" text, "created_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_39bbc7a631"
-FOREIGN KEY ("job_id")
-  REFERENCES "solid_queue_jobs" ("id")
- ON DELETE CASCADE);
+    FOREIGN KEY ("job_id")
+        REFERENCES "solid_queue_jobs" ("id")
+        ON DELETE CASCADE);
 CREATE UNIQUE INDEX "index_solid_queue_failed_executions_on_job_id" ON "solid_queue_failed_executions" ("job_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "solid_queue_ready_executions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "job_id" bigint NOT NULL, "queue_name" varchar NOT NULL, "priority" integer DEFAULT 0 NOT NULL, "created_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_81fcbd66af"
-FOREIGN KEY ("job_id")
-  REFERENCES "solid_queue_jobs" ("id")
- ON DELETE CASCADE);
+    FOREIGN KEY ("job_id")
+        REFERENCES "solid_queue_jobs" ("id")
+        ON DELETE CASCADE);
 CREATE UNIQUE INDEX "index_solid_queue_ready_executions_on_job_id" ON "solid_queue_ready_executions" ("job_id") /*application='JobBoard'*/;
 CREATE INDEX "index_solid_queue_poll_all" ON "solid_queue_ready_executions" ("priority", "job_id") /*application='JobBoard'*/;
 CREATE INDEX "index_solid_queue_poll_by_queue" ON "solid_queue_ready_executions" ("queue_name", "priority", "job_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "solid_queue_recurring_executions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "job_id" bigint NOT NULL, "task_key" varchar NOT NULL, "run_at" datetime(6) NOT NULL, "created_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_318a5533ed"
-FOREIGN KEY ("job_id")
-  REFERENCES "solid_queue_jobs" ("id")
- ON DELETE CASCADE);
+    FOREIGN KEY ("job_id")
+        REFERENCES "solid_queue_jobs" ("id")
+        ON DELETE CASCADE);
 CREATE UNIQUE INDEX "index_solid_queue_recurring_executions_on_job_id" ON "solid_queue_recurring_executions" ("job_id") /*application='JobBoard'*/;
 CREATE UNIQUE INDEX "index_solid_queue_recurring_executions_on_task_key_and_run_at" ON "solid_queue_recurring_executions" ("task_key", "run_at") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "solid_queue_scheduled_executions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "job_id" bigint NOT NULL, "queue_name" varchar NOT NULL, "priority" integer DEFAULT 0 NOT NULL, "scheduled_at" datetime(6) NOT NULL, "created_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c4316f352d"
-FOREIGN KEY ("job_id")
-  REFERENCES "solid_queue_jobs" ("id")
- ON DELETE CASCADE);
+    FOREIGN KEY ("job_id")
+        REFERENCES "solid_queue_jobs" ("id")
+        ON DELETE CASCADE);
 CREATE UNIQUE INDEX "index_solid_queue_scheduled_executions_on_job_id" ON "solid_queue_scheduled_executions" ("job_id") /*application='JobBoard'*/;
 CREATE INDEX "index_solid_queue_dispatch_all" ON "solid_queue_scheduled_executions" ("scheduled_at", "priority", "job_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY);
 CREATE TABLE IF NOT EXISTS "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 INSERT INTO "schema_migrations" (version) VALUES
-('1');
+    ('1');
 

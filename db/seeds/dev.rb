@@ -6,15 +6,15 @@ Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 299})
 FreeVoucher.create!(code: "FREE", options: {price: 0})
 Voucher.create!(enabled_till: 3.days.ago, code: "DISCOUNT", options: {price: 199})
 
-owl_labs = Employer.create!(display_name: "Owl Drills",
+owl_labs = Employer.create!(company_name: "Owl Drills",
   email: "owl@owldrills.com",
   password: "Password1!",
   confirmed_at: 1.day.ago)
-pelican_studios = Employer.create!(display_name: "Pelican Studio Cranes",
+pelican_studios = Employer.create!(company_name: "Pelican Studio Cranes",
   email: "john@pelican-studio-cranes.com",
   password: "Password1!",
   confirmed_at: 12.days.ago)
-dis_man = Employer.create!(display_name: "Dis Man Hammer",
+dis_man = Employer.create!(company_name: "Dis Man Hammer",
   email: "dis@dismanhammer.com",
   password: "Password1!",
   confirmed_at: 4.days.ago)
@@ -24,7 +24,7 @@ titles = ["Digger", "Geologist", "Rock Developer", "Miner"]
 descriptions = ["Lorem ipsum dolor sit ament"]
 
 employers.each do |employer|
-  employer.logo.attach(io: File.open(Rails.root.join("app/assets/images/dev_logos", "#{employer.display_name}.png")),
+  employer.logo.attach(io: File.open(Rails.root.join("app/assets/images/dev_logos", "#{employer.company_name}.png")),
     filename: "logo.png")
 end
 
@@ -34,7 +34,7 @@ end
       descriptions.each do |description|
         JobOffer::CATEGORIES.each do |category|
           job = JobOffer.create!(
-            company_name: employer.display_name,
+            company_name: employer.company_name,
             title: title,
             location: region,
             employer: employer,

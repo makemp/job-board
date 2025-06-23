@@ -19,7 +19,11 @@
 
         <div>
           <%= f.label :company_name, "Company Name", class: "block text-sm font-medium text-amber-900" %>
-          <%= f.text_field :company_name, class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <% if current_employer %>
+            <%= f.text_field :company_name, value: current_employer_company_name, class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <% else %>
+            <%= f.text_field :company_name, class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+          <% end %>
           <%= error_messages_for(f, :company_name) %>
         </div>
 

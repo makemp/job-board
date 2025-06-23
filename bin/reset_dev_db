@@ -7,7 +7,8 @@ if [ -f db/schema.rb ]; then
 fi
 
 # completely rebuild the DB and run migrations
-rails db:migrate:reset
+rails db:reset
+
 
 # seed the development dataset
 rails db:seeds:dev
