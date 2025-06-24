@@ -17,8 +17,11 @@ class JobOfferForm
 
   attribute :description, :string
 
+  attribute :terms_and_conditions, :boolean
+
   attr_accessor :logo
 
+  validates_acceptance_of :terms_and_conditions, accept: [true, "y", "yes"]
   validates :description, presence: true
   validates :title, presence: true
   validates :company_name, presence: true

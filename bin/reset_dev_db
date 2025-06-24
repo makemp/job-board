@@ -6,8 +6,22 @@ if [ -f db/schema.rb ]; then
   rm db/schema.rb
 fi
 
+
+if [ -f db/structure.sql ]; then
+  rm db/structure.sql
+fi
+
+
+if [ -f db/analytics_structure.sql ]; then
+  rm db/analytics_structure.sql
+fi
+
+# rebuild structure.sql files
+rails db:drop
+rails db:migrate
 # completely rebuild the DB and run migrations
-rails db:reset
+
+
 
 
 # seed the development dataset

@@ -1,0 +1,89 @@
+Terms and Conditions for drilljobs.xyz
+Last Updated: 25 June 2024
+
+1. Introduction
+
+1.1. Welcome to drilljobs.xyz (the "Website"). These Terms and Conditions ("Terms") govern your use of the Website and its services (the "Service").
+
+1.2. The Service is operated by Betete Lise Limited, a company registered in England and Wales under company number 13168303 ("we", "us", "our").
+
+1.3. By accessing or using our Service, you agree to be bound by these Terms. If you do not agree with any part of the terms, you must not use our Website.
+
+1.4. For any questions or support requests concerning these Terms, please contact us at support@drilljobs.xyz.
+
+2. Definitions
+
+2.1. "Employer" refers to any person or entity that registers an account to post job advertisements on the Website.
+2.2. "Job Seeker" refers to any individual who browses the Website or uses its functionality to search for or apply to job advertisements.
+2.3. "User" refers to any Employer or Job Seeker.
+2.4. "Content" means any information, text, graphics, logos, or other materials uploaded, downloaded or appearing on the Service.
+
+3. User Obligations
+
+3.1. For All Users:
+a. You agree to use the Website in compliance with all applicable UK laws and regulations.
+b. You must not use the Website for any unlawful purpose, including but not limited to, data scraping, distributing malware, spamming, or attempting to compromise the Website's security.
+
+3.2. For Job Seekers:
+a. There is no age restriction for Browse job advertisements on the Website.
+b. When you apply for a job through our platform (e.g., by sending your CV directly to an Employer via our web application), you agree that the information you provide is accurate and truthful.
+c. We are not responsible for the content, accuracy, or legality of job advertisements posted by Employers. You are responsible for conducting your own due diligence before applying for any role or entering into any agreement with an Employer.
+
+3.3. For Employers:
+a. To post a job advertisement, you must be at least 18 years of age.
+b. You are responsible for maintaining the confidentiality of your account information, including your password.
+c. You agree that all information you provide to us upon registration and at all other times will be true, accurate, current, and complete. This includes your company name and email address.
+d. You are solely responsible for the Content of the job advertisements you post.
+
+4. Content Guidelines for Employers
+
+4.1. All job advertisements posted on the Website must be for legitimate employment opportunities within the mining, drilling, or directly related industries.
+
+4.2. You agree that your Content will not:
+a. Violate any applicable law or regulation, including the Equality Act 2010 and laws concerning employment and data protection.
+b. Contain any information that is false, inaccurate, or misleading.
+c. Infringe upon any third party's copyright, trademark, or other intellectual property rights.
+d. Be defamatory, discriminatory, obscene, offensive, hateful, or inflammatory.
+
+4.3. We do not review job advertisements before they are published. However, we reserve the right, in our sole discretion, to remove or hide any job advertisement that we believe violates these Terms or is otherwise inappropriate, without notice or refund.
+
+5. Payments and Refunds
+
+5.1. Fees: Services for Employers, such as posting a job advertisement, are subject to fees as set out on the Website. All fees are payable in advance. At present, we do not offer subscription-based services.
+
+5.2. Payment Processing: We use Stripe as our third-party payment processor. When you make a payment, you will be providing your payment details directly to Stripe. We do not store your full card number or billing details on our servers. Your use of the Stripe payment service is subject to Stripe's own terms and conditions.
+
+5.3. Refund Policy: A refund for a job advertisement fee may be requested if the Website experiences downtime of more than 24 cumulative hours during the active period of that job advertisement. The active period is defined as the duration selected at the time of purchase (e.g., 30 or 45 days). To request a refund, you must contact us at support@drilljobs.xyz.
+
+6. Data Protection and Privacy
+
+6.1. Data We Collect:
+a. From Employers: We store your company name and email address in our system. Further details required for payment, such as billing addresses and VAT numbers, are collected and stored by Stripe.
+b. From Job Seekers: When you apply for a role via our webapp, we process the personal data you provide (such as your CV and contact details) solely to transmit it to the relevant Employer.
+c. Anonymous Data: We may collect anonymous data about your use of the Website, such as IP addresses, browser type, and device information, for analytical and security purposes.
+
+6.2. Use of Data: We use your data to operate the Website, process payments, provide customer support, improve our Service, and send essential service-related communications.
+
+6.3. Data Retention: We will retain your personal data for as long as your account is active or as needed to provide you with our services. You may request the deletion of your account and associated data by contacting us. We may retain certain information for a longer period if required for legal, accounting, or regulatory purposes.
+
+6.4. Cookies: This Website uses essential first-party cookies for core functionality, such as keeping you logged in. We do not use third-party cookies for tracking or advertising. By using our Website, you consent to the use of these essential cookies.
+
+7. Intellectual Property Rights
+
+7.1. Our Content: The drilljobs.xyz logo, and all text, graphics, and software created by us for the Website are our property. The logo of Betete Lise Limited may be used on other websites for attribution purposes, provided it is made clear that it represents our company.
+
+7.2. Employer Content: You (or your licensors) retain ownership of the Content you post, including your company logos and job descriptions. By posting Content on our Website, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, display, and distribute that Content in connection with the operation of our Service.
+
+8. Disclaimers and Limitation of Liability
+
+8.1. Disclaimer: The Service is provided on an "as is" and "as available" basis. We do not warrant the accuracy, completeness, or reliability of any Content posted by Users, including the existence or availability of any job advertised or the accuracy of any CV submitted.
+
+8.2. Limitation of Liability: To the fullest extent permitted by law, Betete Lise Limited shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a) your access to or use of or inability to access or use the Service; (b) any conduct or content of any third party on the Service.
+
+8.3. In no event shall the aggregate liability of Betete Lise Limited exceed the greater of one hundred British pounds (£100) or the amount you paid us, if any, in the past six months for the services giving rise to the claim.
+
+9. General
+
+9.1. Changes to Terms: We reserve the right to modify these Terms at any time. We will notify you of any changes by posting the new Terms on this page and updating the "Last Updated" date.
+
+9.2. Governing Law and Jurisdiction: These Terms shall be governed and construed in accordance with the laws of England and Wales. You agree that any dispute arising from these Terms will be subject to the exclusive jurisdiction of the courts of England and Wales.

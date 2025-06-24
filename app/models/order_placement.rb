@@ -54,14 +54,10 @@ class OrderPlacement < ApplicationRecord
   end
 
   def recently_paid_with_invoice_generated?
-    was_just_paid? && invoice_url.present?
+    invoice_url.present? && saved_change_to_stripe_payload?
   end
 
   private
-
-  def was_just_paid?
-    paid_at < 1.minute.ago
-  end
 
   def invoice_stripe_payload
     return @invoice_stripe_payload if @invoice_stripe_payload.present?
