@@ -1,5 +1,5 @@
 class JobOffersController < ApplicationController
-  before_action :authenticate_employer!, only: [:edit, :update]
+  before_action :authenticate_employer!, except: [:show, :index]
   def index
     @jobs = JobOffer.valid.includes(:employer)
 
@@ -41,10 +41,20 @@ class JobOffersController < ApplicationController
     @job = JobOfferForm.from_job_offer(job_offer)
   end
 
+  def destroy
+    job_offer.expire_manually!
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("job_offer_#{job_offer.id}", partial: "employers/dashboard/job_offer", locals: {job_offer: job_offer})
+      end
+      format.html { redirect_to job_offers_path, notice: "Job offer expired successfully." }
+    end
+  end
+
   def update
     @job = JobOfferForm.new(job_offer_form_params.merge(email: current_employer.email))
 
-    if @job.valid? && job_offer.update_with_logo!(job_offer_form_params)
+    if @job.valid? && job_offer.update!(job_offer_form_params)
       redirect_to job_offer_path(job_offer, success: true), notice: "Job offer updated successfully."
     else
       flash[:alert] = @job.errors.full_messages.to_sentence

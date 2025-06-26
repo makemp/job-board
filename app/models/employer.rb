@@ -1,7 +1,18 @@
 class Employer < ApplicationRecord
-  has_many :job_offers, dependent: :destroy
+  has_many :job_offers
 
-  has_one :billing_detail, dependent: :destroy
+  has_many :order_placements, -> { where.not(paid_at: nil) }, through: :job_offers, source: :order_placement
+
+  has_many :special_offers
+
+  validates :company_name, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :stripe_customer_id, uniqueness: true, allow_nil: true
+
+  # Devise configuration
+  devise :database_authenticatable, authentication_keys: [:email]
+
+  # Active Storage attachment for employer logo
 
   has_one_attached :logo
 

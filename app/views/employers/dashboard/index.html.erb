@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto mt-16 flex" data-controller="tabs" data-tabs-initial-tab="job_offers">
   <aside class="w-1/4 pr-6">
     <nav class="space-y-2">
-      <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="job_offers" class="w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Job Offers</button>
+      <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="job_offers" class="w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Your Job Offers</button>
 
       <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="password" class="w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Password</button>
       <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="billing" class="w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Billing</button>
@@ -16,18 +16,13 @@
         <thead>
         <tr class="bg-gray-100">
           <th class="px-4 py-2">Title</th>
+          <th class="px-4 py-2">Invoice</th>
           <th class="px-4 py-2">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <% current_employer.job_offers.each do |offer| %>
-          <tr class="border-t">
-            <td class="px-4 py-2"><%= offer.title %></td>
-            <td class="px-4 py-2 space-x-2">
-              <%= link_to 'Edit', edit_job_offer_path(offer), class: 'text-blue-600 hover:underline' %>
-              <%= button_to 'Remove', employers_job_offer_path(offer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-600 hover:underline' %>
-            </td>
-          </tr>
+        <% current_employer.order_placements.includes(:job_offer).each do |order_placement| %>
+          <%= render 'job_offer', job_offer: order_placement.job_offer %>
         <% end %>
         </tbody>
       </table>
@@ -51,15 +46,9 @@
     <!-- Billing Pane -->
     <div data-tabs-target="pane" data-tab-name="billing" class="hidden">
       <h2 class="text-2xl font-semibold mb-4">Billing Details</h2>
-      <%= form_with model: (current_employer.billing_detail || current_employer.build_billing_detail), url: update_billing_employers_path, method: :patch, local: true do |f| %>
-        <% ['company_name','tax_id','address','city','zip','country'].each do |attr| %>
-          <div class="mb-4">
-            <%= f.label attr.to_sym, attr.humanize, class: 'block text-gray-700' %>
-            <%= f.text_field attr.to_sym, class: 'mt-1 w-full border border-gray-300 rounded-md p-2' %>
-          </div>
-        <% end %>
-        <%= f.submit 'Save Billing', class: 'px-6 py-2 bg-amber-900 text-white rounded-md hover:bg-amber-800' %>
-      <% end %>
+      <div class="mb-4">
+        You can change your billing and tax details placing the new order.
+      </div>
     </div>
     <!-- Close Account Pane -->
     <div data-tabs-target="pane" data-tab-name="close_account" class="hidden">
@@ -69,4 +58,3 @@
     </div>
   </div>
 </div>
-

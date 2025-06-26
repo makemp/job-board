@@ -5,6 +5,15 @@ class Voucher < ApplicationRecord
     options["price"]
   end
 
+  # How many days the job offer is valid
+  def offer_duration
+    options["offer_duration"]
+  end
+
+  def offer_duration_words
+    "#{(offer_duration / 1.day).to_i} days"
+  end
+
   def required_approval?
     options["required_approval"] || false
   end
@@ -13,6 +22,7 @@ class Voucher < ApplicationRecord
     false
   end
 
+  # How many days the voucher is valid
   def enabled?
     enabled_till > Time.current
   end
@@ -21,7 +31,7 @@ class Voucher < ApplicationRecord
 
   def apply(order_placement:, job_offer:)
     order_placement.update!(voucher_code: code, price: price, free_order: free_voucher?, ready_to_be_placed: true)
-    job_offer.update!(approved: !required_approval?)
+    job_offer.update!(approved: !required_approval?, expires_at: ActiveSupport::Duration.build(offer_duration).from_now)
   end
 
   def soft_apply(job_offer_form)
@@ -39,6 +49,15 @@ class Voucher < ApplicationRecord
 
     def default_price
       default_voucher.options["price"]
+    end
+
+    # how many days the job offer is valid
+    def default_offer_duration
+      default_voucher.options["offer_duration"]
+    end
+
+    def default_offer_duration_words
+      "#{(default_offer_duration / 1.day).to_i} days"
     end
   end
 end

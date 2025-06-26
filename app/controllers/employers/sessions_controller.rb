@@ -41,7 +41,7 @@ class Employers::SessionsController < Devise::SessionsController
   private
 
   def send_login_code(employer)
-    code = rand.to_s[2..8] # generate 5-digit code
+    code = rand.to_s[2..8] # generate 7-digit code
     employer.update(login_code: code, login_code_sent_at: Time.current)
     EmployerLoginCodeMailer.send_code(employer).deliver_later
   end

@@ -19,6 +19,8 @@ class JobOfferForm
 
   attribute :terms_and_conditions, :boolean
 
+  attribute :application_type, :string
+
   attr_accessor :logo
 
   validates_acceptance_of :terms_and_conditions, accept: [true, "y", "yes"]
@@ -32,6 +34,8 @@ class JobOfferForm
   validates :category, inclusion: {in: JobOffer::CATEGORIES}
 
   validates :location, inclusion: {in: JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS}
+
+  validates :application_type, inclusion: {in: JobOffer::APPLICATION_TYPES}
 
   validate :logo_type_and_size
   validate :voucher_code_check

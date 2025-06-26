@@ -48,7 +48,9 @@
     </div>
 
     <div class="flex justify-end items-center space-x-4">
-      <%= link_to 'Cancel', job_offer_path(@job_offer,success: true), class: 'px-4 py-2 text-gray-700 hover:text-gray-900' %>
+      <%= link_to 'Cancel', job_offer_path(@job_offer, success: true),
+                  class: 'px-4 py-2 text-gray-700 hover:text-gray-900',
+                  onclick: "event.preventDefault();var ref=document.referrer;if(ref){var a=document.createElement('a');a.href=ref;if(a.origin===window.location.origin){window.history.back();return;} }window.location.href=this.href;" %>
       <%= f.submit "Save Changes", class: "px-6 py-2 bg-amber-900 text-white rounded-lg hover:bg-amber-800 transition-colors" %>
     <% end %>
   </div>

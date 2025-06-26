@@ -1,5 +1,5 @@
 <h3 class="text-xl font-medium mb-4 text-gray-800">Login with Email Code</h3>
-<p class="text-gray-600 mb-4">Enter the 5-digit code sent to your email.</p>
+<p class="text-gray-600 mb-4">Enter the 7-digit code sent to your email.</p>
 <%= form_with url: employers_sessions_verify_code_path, scope: :employer, local: false do |f| %>
   <%= f.hidden_field :email, value: email %>
   <div class="mb-4">

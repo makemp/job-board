@@ -2,9 +2,9 @@ require "index_manager"
 
 ActiveRecord::Tasks::DatabaseTasks.truncate_all
 
-Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 299})
-FreeVoucher.create!(code: "FREE", options: {price: 0})
-Voucher.create!(enabled_till: 3.days.ago, code: "DISCOUNT", options: {price: 199})
+Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 299, offer_duration: 30.days})
+FreeVoucher.create!(code: "FREE", options: {price: 0, offer_duration: 30.days})
+Voucher.create!(enabled_till: 3.days.ago, code: "DISCOUNT", options: {price: 199, offer_duration: 30.days})
 
 owl_labs = Employer.create!(company_name: "Owl Drills",
   email: "owl@owldrills.com",
@@ -39,7 +39,8 @@ end
             location: region,
             employer: employer,
             category: category,
-            description: description
+            description: description,
+            expires_at: 70.years.from_now
           )
 
           job.update_column(:created_at, rand(1..10).days.ago)

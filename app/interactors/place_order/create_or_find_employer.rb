@@ -8,7 +8,7 @@ class PlaceOrder
 
       context.is_new_employer = true unless employer
 
-      employer ||= Employer.create!(email:)
+      employer ||= Employer.create!(email:, company_name:)
 
       # We only want to set the company name:
       # 1. If the employer is new
