@@ -54,7 +54,7 @@ class OrderPlacement < ApplicationRecord
   end
 
   def recently_paid_with_invoice_generated?
-    invoice_url.present? && saved_change_to_stripe_payload?
+    saved_change_to_stripe_payload? && invoice_url.present?
   end
 
   private

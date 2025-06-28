@@ -27,18 +27,18 @@ class JobOffer < ApplicationRecord
   belongs_to :employer
 
   scope :valid, -> do
-    joins(:employer).where.not(employers: {confirmed_at: nil}).where("expires_at > ?", Time.current)
+    joins(:employer).where.not(employers: {confirmed_at: nil}).where("expires_on > ?", Time.current)
   end
 
   has_rich_text :description
 
   def expire_manually!
     time = Time.current
-    update!(expires_at: time, expires_manually: time)
+    update!(expires_on: time, expires_manually: time)
   end
 
   def expired?
-    expires_at < Time.current
+    expires_on < Time.current
   end
 
   delegate :logo, to: :employer
