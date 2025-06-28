@@ -10,7 +10,7 @@
   <% else %>
     <p class="text-lg text-amber-800 mb-2"><strong>Voucher Code:</strong> None</p>
   <% end %>
-  <p class="text-lg text-amber-800 mb-2"><strong>Paid At:</strong> <%= @order_placement.paid_at ? l(@order_placement.paid_at, format: :long) : 'Not paid yet' %></p>
+  <p class="text-lg text-amber-800 mb-2"><strong>Paid At:</strong> <%= @order_placement.paid_on ? l(@order_placement.paid_on, format: :long) : 'Not paid yet' %></p>
   <p class="text-lg text-amber-800 mb-2"><strong>Invoice:</strong> <%= link_to 'Download here', @order_placement.invoice_url %></p>
 
 

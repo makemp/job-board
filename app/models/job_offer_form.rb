@@ -21,6 +21,8 @@ class JobOfferForm
 
   attribute :application_type, :string
 
+  attribute :application_destination, :string
+
   attr_accessor :logo
 
   validates_acceptance_of :terms_and_conditions, accept: [true, "y", "yes"]
@@ -28,14 +30,14 @@ class JobOfferForm
   validates :title, presence: true
   validates :company_name, presence: true
   validates :email, presence: true,
-    format: {with: /@/, message: "must look like an email"},
+    format: {with: /\A.+@.+\z/i, message: "must look like an email"},
     confirmation: {case_sensitive: false}
 
   validates :category, inclusion: {in: JobOffer::CATEGORIES}
+  validates :application_type, presence: true, inclusion: {in: JobOffer::APPLICATION_TYPES}
+  validates :application_destination, presence: true
 
   validates :location, inclusion: {in: JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS}
-
-  validates :application_type, inclusion: {in: JobOffer::APPLICATION_TYPES}
 
   validate :logo_type_and_size
   validate :voucher_code_check
@@ -57,6 +59,29 @@ class JobOfferForm
   def initialize(attributes = {})
     super
     @price = nil
+  end
+
+  def validate_application_destination
+    return if application_destination.blank?
+    if application_type == JobOffer::APPLICATION_TYPE_EMAIL
+      unless /\A.+@.+\z/i.match?(application_destination)
+        errors.add(:application_destination, "must be a valid email address")
+      end
+    elsif application_type == JobOffer::APPLICATION_TYPE_LINK
+      unless /\A#{URI::RFC2396_PARSER.make_regexp(%w[http https])}\z/.match?(application_destination)
+        errors.add(:application_destination, "must be a valid URL")
+      end
+    else
+      errors.add(:application_type, "is not supported")
+    end
+  end
+
+  def email=(value)
+    super(value.to_s.strip.downcase)
+  end
+
+  def application_destination=(value)
+    super(value.to_s.strip.downcase)
   end
 
   def employer_check

@@ -13,7 +13,12 @@ class JobOffer < ApplicationRecord
     "Remote/Rotational",
     "Other"].freeze
   REGIONS = YAML.load_file(Rails.root.join("config", "regions.yml")).freeze
-  APPLICATION_TYPES = %w[Link Form].freeze
+
+  APPLICATION_TYPE_LINK = "Link".freeze
+  APPLICATION_TYPE_FORM = "Form".freeze
+  APPLICATION_TYPES = [APPLICATION_TYPE_FORM, APPLICATION_TYPE_LINK].freeze
+
+  normalizes :application_destination, with: -> { it.downcase.strip }
 
   has_many :order_placements
 
@@ -37,4 +42,5 @@ class JobOffer < ApplicationRecord
   end
 
   delegate :logo, to: :employer
+  delegate :paid_on, to: :order_placement, allow_nil: true
 end

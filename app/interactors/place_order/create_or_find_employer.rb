@@ -12,7 +12,7 @@ class PlaceOrder
 
       # We only want to set the company name:
       # 1. If the employer is new
-      # 2. If the employer is not confirmed yet but previously tied to be registered
+      # 2. If the employer is not confirmed yet but previously tried to be registered
       employer.update!(company_name:) unless employer.confirmed_at
 
       context.employer = employer

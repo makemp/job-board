@@ -1,7 +1,9 @@
 class Employer < ApplicationRecord
+  normalizes :email, with: -> { it.downcase.strip }
+
   has_many :job_offers
 
-  has_many :order_placements, -> { where.not(paid_at: nil) }, through: :job_offers, source: :order_placement
+  has_many :order_placements, -> { where.not(paid_on: nil) }, through: :job_offers, source: :order_placement
 
   has_many :special_offers
 

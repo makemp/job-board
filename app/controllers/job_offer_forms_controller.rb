@@ -7,7 +7,7 @@ class JobOfferFormsController < ApplicationController
       @job = JobOfferForm.new(params_)
       @job.logo = params_[:logo]
     else
-      @job = JobOfferForm.new
+      @job = JobOfferForm.new(application_type: "Form")
     end
   end
 
