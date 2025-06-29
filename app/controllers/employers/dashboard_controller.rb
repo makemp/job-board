@@ -31,6 +31,15 @@ module Employers
       redirect_to root_path, notice: "Your account has been closed."
     end
 
+    def update_details
+      if current_employer.update(details_params)
+        redirect_to employers_dashboard_path, notice: "Details updated successfully."
+      else
+        flash.now[:alert] = current_employer.errors.full_messages.to_sentence
+        render :index
+      end
+    end
+
     private
 
     def password_params
@@ -39,6 +48,10 @@ module Employers
 
     def billing_params
       params.require(:billing_detail).permit(:company_name, :tax_id, :address, :city, :zip, :country)
+    end
+
+    def details_params
+      params.require(:employer).permit(:company_name, :logo)
     end
   end
 end

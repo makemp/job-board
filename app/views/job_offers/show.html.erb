@@ -7,7 +7,7 @@
       <p class="text-xl text-amber-700"><%= @job_offer.company_name %></p>
     </div>
     <% if @job_offer.logo.attached? %>
-      <%= image_tag @job_offer.logo, alt: @job_offer.title, class: "h-20 w-20 object-contain rounded-lg border border-gray-200" %>
+      <%= image_tag @job_offer.logo, alt: @job_offer.title, class: "h-20 w-20 object-contain rounded-lg" %>
     <% end %>
   </div>
 

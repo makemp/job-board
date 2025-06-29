@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   # Explicit named routes for dashboard updates (ensure correct path helpers)
   patch "/employers/dashboard/password", to: "employers/dashboard#update_password", as: :update_password_employers
   patch "/employers/dashboard/billing", to: "employers/dashboard#update_billing", as: :update_billing_employers
+  patch "/employers/dashboard/details", to: "employers/dashboard#update_details", as: :update_details_employers
   delete "/employers/dashboard/close_account", to: "employers/dashboard#close_account", as: :close_account_employers
 
   # Stripe webhook endpoint
