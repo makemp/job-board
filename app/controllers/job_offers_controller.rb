@@ -1,5 +1,5 @@
 class JobOffersController < ApplicationController
-  before_action :authenticate_employer!, except: [:show, :index, :create_application, :apply_with_url]
+  before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url]
   def index
     @jobs = JobOffer.valid.includes(:employer)
 
@@ -62,8 +62,8 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # POST /job_offers/:id/apply
-  def create_application
+  # POST /job_offers/:id/apply_with_form
+  def apply_with_form
     @job_offer = JobOffer.find(params[:id])
     cv = params[:cv]
     comments = params[:comments]
@@ -84,12 +84,15 @@ class JobOffersController < ApplicationController
 
     JobApplicationMailer.with(job_offer: @job_offer, cv: cv, comments: comments).application_email.deliver_later
     flash[:notice] = "Your application has been sent to the employer."
+    ahoy.track "apply_with_form", job_offer_id: @job_offer.id, step: "second"
+
     redirect_to job_offer_path(@job_offer)
   end
 
   def apply_with_url
     @job_offer = JobOffer.find(params[:id])
-    # do stuff
+    ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id, step: "second"
+
     redirect_to @job_offer.application_destination, allow_other_host: true, notice: "You are being redirected to the job application page."
   end
 
