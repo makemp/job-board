@@ -17,4 +17,5 @@ EDITOR="vim" bin/rails credentials:edit --environment development
 
 
 Libraries:
-vips
+vips  for image processing
+geoip-database ??
