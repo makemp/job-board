@@ -1,5 +1,5 @@
 class JobOffersController < ApplicationController
-  before_action :authenticate_employer!, except: [:show, :index]
+  before_action :authenticate_employer!, except: [:show, :index, :create_application, :apply_with_url]
   def index
     @jobs = JobOffer.valid.includes(:employer)
 
@@ -60,6 +60,37 @@ class JobOffersController < ApplicationController
       flash[:alert] = @job.errors.full_messages.to_sentence
       redirect_to edit_job_offer_path(job_offer)
     end
+  end
+
+  # POST /job_offers/:id/apply
+  def create_application
+    @job_offer = JobOffer.find(params[:id])
+    cv = params[:cv]
+    comments = params[:comments]
+
+    if cv.nil? || cv.empty?
+      flash[:alert] = "Please upload your CV."
+      redirect_to job_offer_path(@job_offer) and return
+    end
+
+    unless cv.respond_to?(:content_type) && %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].include?(cv.content_type)
+      flash[:alert] = "Invalid CV file type. Only PDF, DOC, and DOCX are allowed."
+      redirect_to job_offer_path(@job_offer) and return
+    end
+    if cv.size > 5.megabytes
+      flash[:alert] = "CV file is too large (max 5MB)."
+      redirect_to job_offer_path(@job_offer) and return
+    end
+
+    JobApplicationMailer.with(job_offer: @job_offer, cv: cv, comments: comments).application_email.deliver_later
+    flash[:notice] = "Your application has been sent to the employer."
+    redirect_to job_offer_path(@job_offer)
+  end
+
+  def apply_with_url
+    @job_offer = JobOffer.find(params[:id])
+    # do stuff
+    redirect_to @job_offer.application_destination, allow_other_host: true, notice: "You are being redirected to the job application page."
   end
 
   private
