@@ -68,7 +68,7 @@ class JobOffersController < ApplicationController
     cv = params[:cv]
     comments = params[:comments]
 
-    if cv.nil? || cv.empty?
+    if cv.nil?
       flash[:alert] = "Please upload your CV."
       redirect_to job_offer_path(@job_offer) and return
     end
@@ -82,7 +82,10 @@ class JobOffersController < ApplicationController
       redirect_to job_offer_path(@job_offer) and return
     end
 
-    JobApplicationMailer.with(job_offer: @job_offer, cv: cv, comments: comments).application_email.deliver_later
+    JobApplicationMailer.application_email(job_offer: @job_offer,
+                                           cv_original_filename: cv.original_filename,
+                                           cv_read: cv.read,
+                                           comments: comments).deliver_later
     flash[:notice] = "Your application has been sent to the employer."
     ahoy.track "apply_with_form", job_offer_id: @job_offer.id, step: "second"
 

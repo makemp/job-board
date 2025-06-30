@@ -1,10 +1,10 @@
 class JobApplicationMailer < ApplicationMailer
-  def application_email
-    @job_offer = params[:job_offer]
-    @comments = params[:comments]
-    attachments[params[:cv].original_filename] = params[:cv].read
+  def application_email(job_offer:, cv_read:, cv_original_filename:, comments:)
+    @job_offer = job_offer
+    attachments[cv_original_filename] = cv_read
+    @comments = comments
     mail(
-      to: @job_offer.employer.application_destination,
+      to: @job_offer.application_destination,
       subject: "New Job Application for #{@job_offer.title}"
     )
   end

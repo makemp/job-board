@@ -9,7 +9,10 @@
 #### if JobOffers::Submit fails send email to admin? And maybe customer? If customer we need to filter out invalid vouchers. but I think it is done in JobOfferForm class
 
 
-
-#### company logo should be changed not in form of job offer
-#### If this is next job offer, should not offer be logo to be uploaded again
 #### If customer first bought tokens, then only on first order he should be offered a logo
+
+
+
+#### Rack attack or maybe a gem but not use cloudflare? 
+
+#### robots.txt stuff
