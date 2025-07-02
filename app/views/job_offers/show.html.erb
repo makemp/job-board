@@ -1,37 +1,60 @@
-<div class="mt-8 max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+<div class="mt-8 max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg <%= 'opacity-60 grayscale' if @job_offer.expired? %>">
   <div class="flex items-start justify-between mb-6">
     <div>
-      <h1 class="text-4xl font-bold text-amber-900 mb-2">
+      <h1 class="text-4xl font-bold <%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-900' %> mb-2">
         <%= @job_offer.title %>
+        <% if @job_offer.expired? %>
+          <span class="text-lg text-red-500 ml-3 font-normal">(EXPIRED)</span>
+        <% end %>
       </h1>
-      <p class="text-xl text-amber-700"><%= @job_offer.company_name %></p>
+      <p class="text-xl <%= @job_offer.expired? ? 'text-gray-400' : 'text-amber-700' %>"><%= @job_offer.company_name %></p>
     </div>
     <% if @job_offer.logo.attached? %>
-      <%= image_tag @job_offer.logo, alt: @job_offer.title, class: "h-20 w-20 object-contain rounded-lg" %>
+      <%= image_tag @job_offer.logo, alt: @job_offer.title, class: "h-20 w-20 object-contain rounded-lg #{'opacity-50' if @job_offer.expired?}" %>
     <% end %>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-    <div class="bg-amber-50 p-4 rounded-lg">
-      <p class="text-lg font-semibold text-amber-800">Location</p>
-      <p class="text-amber-700"><%= @job_offer.location %></p>
+    <div class="<%= @job_offer.expired? ? 'bg-gray-100' : 'bg-amber-50' %> p-4 rounded-lg">
+      <p class="text-lg font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">Location</p>
+      <p class="<%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>"><%= @job_offer.location %></p>
     </div>
-    <div class="bg-amber-50 p-4 rounded-lg">
-      <p class="text-lg font-semibold text-amber-800">Category</p>
-      <p class="text-amber-700"><%= @job_offer.category %></p>
+    <div class="<%= @job_offer.expired? ? 'bg-gray-100' : 'bg-amber-50' %> p-4 rounded-lg">
+      <p class="text-lg font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">Category</p>
+      <p class="<%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>"><%= @job_offer.category %></p>
     </div>
-    <div class="bg-amber-50 p-4 rounded-lg">
-      <p class="text-lg font-semibold text-amber-800">Posted</p>
-      <p class="text-amber-700"><%= time_ago_in_words(@job_offer.created_at) %> ago</p>
+    <div class="<%= @job_offer.expired? ? 'bg-gray-100' : 'bg-amber-50' %> p-4 rounded-lg">
+      <p class="text-lg font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">
+        <%= @job_offer.expired? ? 'Expired' : 'Posted' %>
+      </p>
+      <p class="<%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>">
+        <%= if @job_offer.expired?
+              time_ago_in_words(@job_offer.expires_on) + " ago"
+            else
+              time_ago_in_words(@job_offer.created_at) + " ago"
+            end %>
+      </p>
     </div>
   </div>
 
-  <div class="prose max-w-none text-amber-800 mb-8">
-    <h2 class="text-2xl font-semibold text-amber-900 mb-4">Job Description</h2>
+  <div class="prose max-w-none <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %> mb-8">
+    <h2 class="text-2xl font-semibold <%= @job_offer.expired? ? 'text-gray-700' : 'text-amber-900' %> mb-4">Job Description</h2>
     <%= @job_offer.description %>
   </div>
 
-  <% if @job_offer.application_type == 'Form' %>
+  <% if @job_offer.expired? %>
+    <div class="flex justify-center my-8">
+      <div class="w-full max-w-xl bg-red-50 p-6 rounded-lg shadow border border-red-200">
+        <div class="text-center">
+          <svg class="mx-auto h-12 w-12 text-red-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+          <h3 class="text-xl font-bold text-red-800 mb-2">This job offer has expired</h3>
+          <p class="text-red-600">Applications are no longer being accepted for this position.</p>
+        </div>
+      </div>
+    </div>
+  <% elsif @job_offer.application_type == 'Form' %>
     <div class="flex justify-center my-8">
       <div class="w-full max-w-xl bg-amber-50 p-6 rounded-lg shadow">
         <h3 class="text-xl font-bold text-amber-900 mb-4">Apply for this job</h3>
@@ -60,7 +83,7 @@
     <button class="inline-block bg-amber-800 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors duration-300 text-lg font-semibold" onclick="handleBackClick(event)">
       Back to Job Offers
     </button>
-    <% if current_employer && current_employer.id == @job_offer.employer_id %>
+    <% if current_employer && current_employer.id == @job_offer.employer_id && !@job_offer.expired? %>
       <%= link_to edit_job_offer_path(@job_offer), title: 'Edit Job Offer', class: 'text-amber-600 hover:text-amber-800 transition-colors duration-300' do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

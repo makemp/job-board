@@ -38,6 +38,12 @@ class JobOffersController < ApplicationController
 
   def edit
     job_offer
+
+    if job_offer.expired?
+      flash[:alert] = "This job offer has expired and cannot be edited."
+      redirect_to job_offer_path(job_offer) and return
+    end
+
     @job = JobOfferForm.from_job_offer(job_offer)
   end
 
@@ -52,6 +58,11 @@ class JobOffersController < ApplicationController
   end
 
   def update
+    if job_offer.expired?
+      flash[:alert] = "This job offer has expired and cannot be updated."
+      redirect_to job_offer_path(job_offer) and return
+    end
+
     @job = JobOfferForm.new(job_offer_form_params.merge(email: current_employer.email))
 
     if @job.valid? && job_offer.update!(job_offer_form_params)
@@ -65,6 +76,12 @@ class JobOffersController < ApplicationController
   # POST /job_offers/:id/apply_with_form
   def apply_with_form
     @job_offer = JobOffer.find(params[:id])
+
+    if @job_offer.expired?
+      flash[:alert] = "This job offer has expired and is no longer accepting applications."
+      redirect_to job_offer_path(@job_offer) and return
+    end
+
     cv = params[:cv]
     comments = params[:comments]
 
@@ -83,9 +100,9 @@ class JobOffersController < ApplicationController
     end
 
     JobApplicationMailer.application_email(job_offer: @job_offer,
-                                           cv_original_filename: cv.original_filename,
-                                           cv_read: cv.read,
-                                           comments: comments).deliver_later
+      cv_original_filename: cv.original_filename,
+      cv_read: cv.read,
+      comments: comments).deliver_later
     flash[:notice] = "Your application has been sent to the employer."
     ahoy.track "apply_with_form", job_offer_id: @job_offer.id, step: "second"
 
@@ -94,6 +111,12 @@ class JobOffersController < ApplicationController
 
   def apply_with_url
     @job_offer = JobOffer.find(params[:id])
+
+    if @job_offer.expired?
+      flash[:alert] = "This job offer has expired and is no longer accepting applications."
+      redirect_to job_offer_path(@job_offer) and return
+    end
+
     ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id, step: "second"
 
     redirect_to @job_offer.application_destination, allow_other_host: true, notice: "You are being redirected to the job application page."

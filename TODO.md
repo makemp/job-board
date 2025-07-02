@@ -16,3 +16,9 @@
 #### Rack attack or maybe a gem but not use cloudflare? 
 
 #### robots.txt stuff
+
+
+#### if job offer expired- the form/aplly is different and can't go further. Also the whole stuff is "blocked"
+
+
+#### if the employer already placed the job offer and paid, needs to login to place another job offer.
