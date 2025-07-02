@@ -1,15 +1,27 @@
-<div class="max-w-7xl mx-auto mt-16 flex" data-controller="tabs" data-tabs-initial-tab="job_offers">
-  <aside class="w-1/4 pr-6">
-    <nav class="space-y-2">
+<div class="max-w-7xl mx-auto mt-16 flex flex-col md:flex-row" data-controller="tabs" data-tabs-initial-tab="job_offers">
+  <aside class="w-full md:w-1/4 md:pr-6 mb-6 md:mb-0">
+    <!-- Mobile dropdown navigation -->
+    <div class="md:hidden mb-4">
+      <label for="mobile-tab-select" class="block text-sm font-medium text-gray-700 mb-2">Navigate to:</label>
+      <select id="mobile-tab-select" data-action="change->tabs#showFromSelect" class="w-full px-4 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+        <option value="job_offers">Your Job Offers</option>
+        <option value="details">Details</option>
+        <option value="password">Password</option>
+        <option value="billing">Billing</option>
+        <option value="close_account">Close Account</option>
+      </select>
+    </div>
+
+    <!-- Desktop button navigation -->
+    <nav class="hidden md:block space-y-2">
       <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="job_offers" class="w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Your Job Offers</button>
       <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="details" class="w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Details</button>
       <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="password" class="w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Password</button>
       <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="billing" class="w-full text-left px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Billing</button>
       <button type="button" data-action="click->tabs#show" data-tabs-target="tab" data-tab-name="close_account" class="w-full text-left px-4 py-2 rounded-md text-red-600 hover:bg-red-100">Close Account</button>
-
     </nav>
   </aside>
-  <div class="flex-1 bg-white p-6 rounded-lg shadow">
+  <div class="w-full md:flex-1 bg-white p-6 rounded-lg shadow">
     <!-- Job Offers Pane -->
     <div data-tabs-target="pane" data-tab-name="job_offers" class="hidden">
       <h2 class="text-2xl font-semibold mb-4">Your Job Offers</h2>
@@ -85,7 +97,7 @@
           <label class="block text-sm font-medium text-amber-900" for="employer_email">
             Email Address
             <span class="ml-1 cursor-pointer" title="Contact support to change your email address.">
-              <svg xmlns="http://www.w3.org/2000/svg" class="inline h-4 w-4 text-ember-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
+              <svg class="inline h-4 w-4 text-ember-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" /></svg>
             </span>
           </label>
           <input type="email" id="employer_email" value="<%= current_employer.email %>" class="mt-1 w-full border border-gray-300 rounded-md p-2 bg-gray-100 cursor-not-allowed" readonly tabindex="-1" />
