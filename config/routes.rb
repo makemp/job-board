@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_scope :employer do
     post "employers/sessions/process_email", to: "employers/sessions#process_email"
     post "employers/sessions/verify_code", to: "employers/sessions#verify_code"
+    post "employers/sessions/forgot_password", to: "employers/sessions#forgot_password"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

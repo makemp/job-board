@@ -4,6 +4,23 @@ class Employers::SessionsController < Devise::SessionsController
     super
   end
 
+  def create
+    email = params[:employer][:email]
+    password = params[:employer][:password]
+
+    @employer = Employer.find_by(email: email)
+
+    if @employer&.valid_password?(password)
+      sign_in(:employer, @employer)
+
+      # Use turbo_stream to navigate to dashboard
+      render turbo_stream: turbo_stream.replace("login_form", "<script>window.location.href = '#{after_sign_in_path_for(@employer)}';</script>")
+    else
+      flash.now[:alert] = "Invalid email or password"
+      render turbo_stream: turbo_stream.update("login_form", partial: "password_form", locals: {email: email}), status: :unprocessable_entity
+    end
+  end
+
   # POST /employers/process_email
   def process_email
     email = params[:employer][:email]
@@ -12,15 +29,15 @@ class Employers::SessionsController < Devise::SessionsController
     if @employer
       if @employer.encrypted_password.present?
         # Render password form
-        render turbo_stream: turbo_stream.replace("login_form", partial: "password_form", locals: {email: email})
+        render turbo_stream: turbo_stream.update("login_form", partial: "password_form", locals: {email: email})
       else
         # Send login code and render code form
         send_login_code(@employer)
-        render turbo_stream: turbo_stream.replace("login_form", partial: "code_form", locals: {email: email})
+        render turbo_stream: turbo_stream.update("login_form", partial: "code_form", locals: {email: email})
       end
     else
       # To prevent email enumeration, render code form even if email doesn't exist
-      render turbo_stream: turbo_stream.replace("login_form", partial: "code_form", locals: {email: email})
+      render turbo_stream: turbo_stream.update("login_form", partial: "code_form", locals: {email: email})
     end
   end
 
@@ -31,11 +48,26 @@ class Employers::SessionsController < Devise::SessionsController
 
     if @employer && @employer.login_code == params[:employer][:code] && @employer.login_code_sent_at > 10.minutes.ago
       sign_in(:employer, @employer)
-      redirect_to after_sign_in_path_for(@employer)
+
+      # Use turbo_stream to navigate to dashboard
+      render turbo_stream: turbo_stream.replace("login_form", "<script>window.location.href = '#{after_sign_in_path_for(@employer)}';</script>")
     else
       flash.now[:alert] = "Invalid or expired code"
-      render turbo_stream: turbo_stream.replace("login_form", partial: "code_form", locals: {email: email}), status: :unprocessable_entity
+      render turbo_stream: turbo_stream.update("login_form", partial: "code_form", locals: {email: email}), status: :unprocessable_entity
     end
+  end
+
+  # POST /employers/forgot_password
+  def forgot_password
+    email = params[:employer][:email]
+    @employer = Employer.find_by(email: email)
+
+    if @employer
+      send_login_code(@employer)
+    end
+
+    # Always render code form to prevent email enumeration
+    render turbo_stream: turbo_stream.update("login_form", partial: "code_form", locals: {email: email})
   end
 
   private
