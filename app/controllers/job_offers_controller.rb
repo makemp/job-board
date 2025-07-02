@@ -117,7 +117,7 @@ class JobOffersController < ApplicationController
       redirect_to job_offer_path(@job_offer) and return
     end
 
-    ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id, step: "second"
+    ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id
 
     redirect_to @job_offer.application_destination, allow_other_host: true, notice: "You are being redirected to the job application page."
   end

@@ -1,3 +1,8 @@
+<%= turbo_stream_from @order_placement %>
 <div id="<%= dom_id(@order_placement, :completed) %>">
-  <%= render 'status', order_placement: @order_placement %>
+  <% if @order_placement&.invoice_url.present? %>
+    <%= render 'processed', order_placement: @order_placement %>
+  <% else %>
+    <%= render 'processing' %>
+  <% end %>
 </div>

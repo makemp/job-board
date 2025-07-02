@@ -12,7 +12,7 @@
       <div class="flex justify-between items-center mb-8">
         <div>
           <h2 class="text-2xl font-semibold text-amber-900">Standard Listing</h2>
-          <p class="text-amber-600 mt-2">30 days visibility</p>
+
         </div>
         <div class="text-3xl font-bold text-amber-900">$<%= Voucher.default_price %></div>
       </div>
@@ -22,7 +22,7 @@
           <svg class="w-5 h-5 mr-3 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
           </svg>
-          Present on the homepage for 30 days
+          Present on the homepage for <%= Voucher.default_offer_duration_words %>
         </li>
         <li class="flex items-center text-amber-700">
           <svg class="w-5 h-5 mr-3 text-amber-500" fill="currentColor" viewBox="0 0 20 20">

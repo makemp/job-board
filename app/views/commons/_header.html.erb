@@ -1,6 +1,6 @@
 <!-- file: `app/views/commons/_header.html.erb` -->
 <header class="bg-amber-900 shadow-lg">
-  <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8" data-controller="mobile-menu">
     <!-- Mobile layout -->
     <div class="flex justify-between items-center md:hidden">
       <%= link_to root_path, class: "block" do %>
@@ -15,11 +15,11 @@
       <% end %>
 
       <!-- Mobile menu button -->
-      <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-amber-100 hover:text-white hover:bg-amber-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-        <svg id="mobile-menu-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <button data-action="click->mobile-menu#toggle" class="inline-flex items-center justify-center p-2 rounded-md text-amber-100 hover:text-white hover:bg-amber-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+        <svg data-mobile-menu-target="hamburgerIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <svg id="mobile-menu-close" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg data-mobile-menu-target="closeIcon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -69,7 +69,7 @@
     </div>
 
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden mt-4 border-t border-amber-800 pt-4">
+    <div data-mobile-menu-target="menu" class="hidden md:hidden mt-4 border-t border-amber-800 pt-4">
       <div class="space-y-3">
         <% if employer_signed_in? %>
           <%= link_to 'Dashboard', employers_dashboard_path, class: "block px-3 py-2 text-base font-medium text-amber-100 hover:text-white hover:bg-amber-800 rounded-md" %>
@@ -90,28 +90,3 @@
     </div>
   </div>
 </header>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileMenuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = document.getElementById('mobile-menu-icon');
-  const closeIcon = document.getElementById('mobile-menu-close');
-
-  if (mobileMenuButton) {
-    mobileMenuButton.addEventListener('click', function() {
-      const isHidden = mobileMenu.classList.contains('hidden');
-
-      if (isHidden) {
-        mobileMenu.classList.remove('hidden');
-        menuIcon.classList.add('hidden');
-        closeIcon.classList.remove('hidden');
-      } else {
-        mobileMenu.classList.add('hidden');
-        menuIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
-      }
-    });
-  }
-});
-</script>

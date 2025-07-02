@@ -48,7 +48,7 @@ class OrderPlacement < ApplicationRecord
       target: ActionView::RecordIdentifier.dom_id(self, :completed),
 
       # Content: Render the partial with the updated object state.
-      partial: "completed_orders/status",
+      partial: "completed_orders/processed",
       locals: {order_placement: self}
     )
   end

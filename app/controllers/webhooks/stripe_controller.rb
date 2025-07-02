@@ -30,7 +30,8 @@ module Webhooks
         handle_checkout_session_completed(event_object, order_placement)
       when "customer.created",
            "customer.tax_id.created",
-           "customer.tax_id.updated"
+           "customer.tax_id.updated",
+           "customer.updated"
         skip_order_placement = true
         StripeCustomerDataJob.set(wait: 1.minute).perform_later(event_type, event_object.to_hash)
       when "invoice_payment.paid"
