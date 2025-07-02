@@ -1,23 +1,23 @@
 <div class="min-h-screen bg-amber-50">
   <!-- Filters -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-amber-100 border-b border-amber-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 bg-amber-100 border-b border-amber-200">
     <%= form_with(url: job_offers_path, method: :get,
                   data: { controller: "filter", turbo_frame: "jobs" },
-                  class: "space-y-4 sm:space-y-0 sm:flex sm:flex-wrap sm:gap-4") do %>
-      
+                  class: "space-y-4 lg:space-y-0 lg:flex lg:flex-wrap lg:gap-4") do %>
+
       <!-- Category Filter -->
-      <div class="w-full sm:w-[30%]">
-        <%= label_tag :category, 'Category', class: "block text-lg font-medium text-amber-800 mb-1" %>
+      <div class="w-full lg:w-[30%]">
+        <%= label_tag :category, 'Category', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :category,
             options_for_select(JobOffer::CATEGORIES, selected: params[:category]),
             include_blank: "All Categories",
-            class: "w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
       </div>
       
       <!-- Region Filter -->
-      <div class="w-full sm:w-[30%]">
-        <%= label_tag :region, 'Region', class: "block text-lg font-medium text-amber-800 mb-1" %>
+      <div class="w-full lg:w-[30%]">
+        <%= label_tag :region, 'Region', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :region,
             content_tag(:optgroup, 
               options_for_select(JobOffer::HIGHLIGHTED_REGIONS, selected: params[:region]),
@@ -28,23 +28,23 @@
               label: "All Regions"
             ),
             include_blank: "All Locations",
-            class: "w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
       </div>
       
       <!-- Per Page Filter -->
-      <div class="w-full sm:w-[20%]">
-        <%= label_tag :per_page, 'Results per page', class: "block text-lg font-medium text-amber-800 mb-1" %>
+      <div class="w-full lg:w-[20%]">
+        <%= label_tag :per_page, 'Results per page', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :per_page,
             options_for_select([["10", 10], ["20", 20], ["50", 50], ["All", "all"]], selected: params[:per_page] || 20),
-            class: "w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
       </div>
       
       <!-- Reset Filters -->
-      <div class="w-full sm:w-[15%] flex justify-end items-end">
+      <div class="w-full lg:w-[15%] flex justify-center lg:justify-end lg:items-end">
         <%= link_to "Reset", job_offers_path,
-            class: "inline-flex items-center px-4 py-2 border border-transparent text-lg font-medium rounded-md shadow-sm text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300" %>
+            class: "inline-flex items-center px-4 py-2 border border-transparent text-base sm:text-lg font-medium rounded-md shadow-sm text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300" %>
       </div>
     <% end %>
   </div>

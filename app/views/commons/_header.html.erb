@@ -1,45 +1,117 @@
 <!-- file: `app/views/commons/_header.html.erb` -->
 <header class="bg-amber-900 shadow-lg">
-  <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
-    <%= link_to root_path, class: "block" do %>
-      <h1 class="text-3xl font-bold flex items-center">
-        <span class="text-amber-100">drill</span>
-        <span class="text-amber-300">J</span>
-        <span class="text-amber-100">obs.</span>
-        <span class="text-amber-400">X</span>
-        <span class="text-amber-300">Y</span>
-        <span class="text-amber-200">Z</span>
-      </h1>
-    <% end %>
-
-    <div class="flex items-center space-x-4">
-      <% if employer_signed_in? %>
-        <div class="relative group">
-          <button type="button" class="inline-flex items-center px-6 py-3 rounded-full bg-amber-800 text-amber-100 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 cursor-pointer">
-            <span class="mr-2">Menu</span>
-            <svg class="w-4 h-4 transform transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
-          </button>
-          <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transform translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-20 divide-y divide-gray-100">
-            <%= link_to 'Dashboard', employers_dashboard_path, class: "block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" %>
-            <%= button_to 'Sign out', destroy_employer_session_path, method: :delete, data: { turbo: false }, class: "w-full text-left block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" %>
-          </div>
-        </div>
-      <% else %>
-        <%= link_to new_employer_session_path, class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" do %>
-          Sign in
-        <% end %>
+  <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+    <!-- Mobile layout -->
+    <div class="flex justify-between items-center md:hidden">
+      <%= link_to root_path, class: "block" do %>
+        <h1 class="text-2xl font-bold flex items-center">
+          <span class="text-amber-100">drill</span>
+          <span class="text-amber-300">J</span>
+          <span class="text-amber-100">obs.</span>
+          <span class="text-amber-400">X</span>
+          <span class="text-amber-300">Y</span>
+          <span class="text-amber-200">Z</span>
+        </h1>
       <% end %>
 
-      <%= link_to new_job_offer_forms_path,
-                  class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" do %>
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-amber-100 hover:text-white hover:bg-amber-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+        <svg id="mobile-menu-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        Post a Job
+        <svg id="mobile-menu-close" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Desktop layout -->
+    <div class="hidden md:flex justify-between items-center">
+      <%= link_to root_path, class: "block" do %>
+        <h1 class="text-3xl font-bold flex items-center">
+          <span class="text-amber-100">drill</span>
+          <span class="text-amber-300">J</span>
+          <span class="text-amber-100">obs.</span>
+          <span class="text-amber-400">X</span>
+          <span class="text-amber-300">Y</span>
+          <span class="text-amber-200">Z</span>
+        </h1>
       <% end %>
+
+      <div class="flex items-center space-x-4">
+        <% if employer_signed_in? %>
+          <div class="relative group">
+            <button type="button" class="inline-flex items-center px-6 py-3 rounded-full bg-amber-800 text-amber-100 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 cursor-pointer">
+              <span class="mr-2">Menu</span>
+              <svg class="w-4 h-4 transform transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transform translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-20 divide-y divide-gray-100">
+              <%= link_to 'Dashboard', employers_dashboard_path, class: "block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" %>
+              <%= button_to 'Sign out', destroy_employer_session_path, method: :delete, data: { turbo: false }, class: "w-full text-left block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to new_employer_session_path, class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" do %>
+            Sign in
+          <% end %>
+        <% end %>
+
+        <%= link_to new_job_offer_forms_path,
+                    class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" do %>
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Post a Job
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 border-t border-amber-800 pt-4">
+      <div class="space-y-3">
+        <% if employer_signed_in? %>
+          <%= link_to 'Dashboard', employers_dashboard_path, class: "block px-3 py-2 text-base font-medium text-amber-100 hover:text-white hover:bg-amber-800 rounded-md" %>
+          <%= button_to 'Sign out', destroy_employer_session_path, method: :delete, data: { turbo: false }, class: "w-full text-left block px-3 py-2 text-base font-medium text-amber-100 hover:text-white hover:bg-amber-800 rounded-md" %>
+        <% else %>
+          <%= link_to new_employer_session_path, class: "block px-3 py-2 text-base font-medium text-amber-100 hover:text-white hover:bg-amber-800 rounded-md" do %>
+            Sign in
+          <% end %>
+        <% end %>
+
+        <%= link_to new_job_offer_forms_path, class: "flex items-center px-3 py-2 text-base font-medium text-amber-100 hover:text-white hover:bg-amber-800 rounded-md" do %>
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Post a Job
+        <% end %>
+      </div>
     </div>
   </div>
 </header>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('mobile-menu-icon');
+  const closeIcon = document.getElementById('mobile-menu-close');
+
+  if (mobileMenuButton) {
+    mobileMenuButton.addEventListener('click', function() {
+      const isHidden = mobileMenu.classList.contains('hidden');
+
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      }
+    });
+  }
+});
+</script>
