@@ -6,8 +6,10 @@ class CreateJobOffers < ActiveRecord::Migration[8.0]
       t.string :category
       t.string :application_type
       t.string :application_destination
-      t.datetime :expires_on
-      t.datetime :expires_manually
+      t.datetime :expires_at
+      t.datetime :expired_manually
+      t.datetime :marked_for_cleanup_at
+      t.datetime :cleanup_completed_at
       t.boolean :featured
       t.boolean :approved, default: false, null: false
       t.boolean :terms_and_conditions, default: false

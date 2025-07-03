@@ -31,7 +31,7 @@ class Voucher < ApplicationRecord
 
   def apply(order_placement:, job_offer:)
     order_placement.update!(voucher_code: code, price: price, free_order: free_voucher?, ready_to_be_placed: true)
-    job_offer.update!(approved: !required_approval?, expires_on: ActiveSupport::Duration.build(offer_duration).from_now)
+    job_offer.update!(approved: !required_approval?, expires_at: ActiveSupport::Duration.build(offer_duration).from_now)
   end
 
   def soft_apply(job_offer_form)

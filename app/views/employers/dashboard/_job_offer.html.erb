@@ -5,7 +5,7 @@
       <span class="ml-2 inline-block px-2 py-1 text-xs font-semibold text-white bg-red-500 rounded">Expired</span>
     <% elsif job_offer.order_placement&.paid_on.present? %>
       <span class="ml-2 text-xs text-amber-600">Paid: <%= job_offer.paid_on.strftime("%Y-%m-%d") %></span>
-      <span class="ml-2 text-xs text-amber-600">Expires at: <%= job_offer.expires_on.strftime("%Y-%m-%d %H:%M") %></span>
+      <span class="ml-2 text-xs text-amber-600">Expires at: <%= job_offer.expires_at.strftime("%Y-%m-%d %H:%M") %></span>
     <% end %>
   </td>
   <td class="px-4 py-2">

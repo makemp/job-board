@@ -29,7 +29,7 @@
       </p>
       <p class="text-sm sm:text-base <%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>">
         <%= if @job_offer.expired?
-              time_ago_in_words(@job_offer.expires_on) + " ago"
+              time_ago_in_words(@job_offer.expires_at) + " ago"
             else
               time_ago_in_words(@job_offer.created_at) + " ago"
             end %>
