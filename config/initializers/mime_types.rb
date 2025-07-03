@@ -1,1 +1,1 @@
-Mime::Type.register "text/html", :html, %w[ application/xhtml+xml ]
+Mime::Type.register "text/html", :html, %w[application/xhtml+xml]

@@ -81,6 +81,9 @@ class JobOfferFormsController < ApplicationController
   def terms_and_conditions
   end
 
+  def privacy
+  end
+
   private
 
   def job_offer_form_params

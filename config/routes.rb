@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   # Stripe webhook endpoint
   post "/stripe/webhook", to: "webhooks/stripe#receive"
   get "/terms_and_conditions", to: "job_offer_forms#terms_and_conditions", as: :terms_and_conditions
+  get "/privacy", to: "job_offer_forms#privacy", as: :privacy
 
   if Rails.env.development?
     scope module: :dev_shortcuts do
