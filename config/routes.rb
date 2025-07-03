@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :job_offers, only: %i[index show edit update destroy] do
     post "apply_with_form", on: :member
     get "apply_with_url", on: :member
+    get "preview", on: :member
   end
   resource :job_offer_forms, only: %i[new create] do
     patch :update, on: :collection

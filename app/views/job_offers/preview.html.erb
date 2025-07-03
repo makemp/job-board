@@ -1,0 +1,91 @@
+<div class="h-full bg-white overflow-y-auto">
+  <div class="p-6">
+    <!-- Header with close button -->
+    <div class="flex justify-between items-start mb-6">
+      <div class="flex-1">
+        <h1 class="text-2xl font-bold <%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-900' %> mb-2">
+          <%= @job_offer.title %>
+          <% if @job_offer.expired? %>
+            <span class="text-sm text-red-500 block font-normal">(EXPIRED)</span>
+          <% end %>
+        </h1>
+        <p class="text-lg <%= @job_offer.expired? ? 'text-gray-400' : 'text-amber-700' %>"><%= @job_offer.company_name %></p>
+      </div>
+
+    </div>
+
+    <!-- Logo -->
+    <% if @job_offer.logo.attached? %>
+      <div class="mb-6 flex justify-center">
+        <%= image_tag @job_offer.logo, alt: @job_offer.title, class: "h-20 w-20 object-contain rounded-lg #{'opacity-50' if @job_offer.expired?}" %>
+      </div>
+    <% end %>
+
+    <!-- Job meta information -->
+    <div class="space-y-4 mb-6">
+      <div class="<%= @job_offer.expired? ? 'bg-gray-100' : 'bg-amber-50' %> p-4 rounded-lg">
+        <p class="text-sm font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">Location</p>
+        <p class="text-sm <%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>"><%= @job_offer.location %></p>
+      </div>
+      <div class="<%= @job_offer.expired? ? 'bg-gray-100' : 'bg-amber-50' %> p-4 rounded-lg">
+        <p class="text-sm font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">Category</p>
+        <p class="text-sm <%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>"><%= @job_offer.category %></p>
+      </div>
+      <div class="<%= @job_offer.expired? ? 'bg-gray-100' : 'bg-amber-50' %> p-4 rounded-lg">
+        <p class="text-sm font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">
+          <%= @job_offer.expired? ? 'Expired' : 'Posted' %>
+        </p>
+        <p class="text-sm <%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>">
+          <%= if @job_offer.expired?
+                time_ago_in_words(@job_offer.expires_on) + " ago"
+              else
+                time_ago_in_words(@job_offer.created_at) + " ago"
+              end %>
+        </p>
+      </div>
+    </div>
+
+    <!-- Job Description -->
+    <div class="prose prose-sm max-w-none <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %> mb-6">
+      <h2 class="text-lg font-semibold <%= @job_offer.expired? ? 'text-gray-700' : 'text-amber-900' %> mb-4">Job Description</h2>
+      <%= @job_offer.description %>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="border-t pt-6 space-y-4">
+      <% if @job_offer.expired? %>
+        <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+          <div class="text-center">
+            <svg class="mx-auto h-8 w-8 text-red-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <h3 class="text-lg font-bold text-red-800 mb-2">This job offer has expired</h3>
+            <p class="text-red-600">Applications are no longer being accepted for this position.</p>
+          </div>
+        </div>
+      <% elsif @job_offer.application_type == 'Form' %>
+        <div class="bg-amber-50 p-4 rounded-lg">
+          <h3 class="text-lg font-bold text-amber-900 mb-4">Apply for this job</h3>
+          <%= form_with url: apply_with_form_job_offer_path(@job_offer), local: true, html: { multipart: true, class: 'space-y-4' } do |f| %>
+            <div>
+              <%= f.label :cv, 'Upload CV', class: 'block text-amber-900 mb-1' %>
+              <%= f.file_field :cv, class: 'w-full bg-amber-700 border border-amber-800 rounded-md p-2 text-white', required: true, accept: '.pdf,.doc,.docx' %>
+            </div>
+            <div>
+              <%= f.label :comments, 'Comments', class: 'block text-amber-900 mb-1' %>
+              <%= f.text_area :comments, class: 'w-full border border-amber-300 rounded-md p-2', rows: 4, placeholder: 'Add a message or cover letter (optional)' %>
+            </div>
+            <div>
+              <%= f.submit 'Send Application', class: 'w-full bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg font-bold shadow transition-colors duration-300' %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <%= link_to 'Apply Now', apply_with_url_job_offer_path(@job_offer), target: '_blank', rel: 'noopener noreferrer', class: 'block w-full text-center bg-amber-700 hover:bg-amber-800 text-white px-4 py-3 rounded-lg font-bold shadow transition-colors duration-300' %>
+      <% end %>
+
+      <!-- View Full Details Button -->
+      <%= link_to 'See in a separate page', job_offer_path(@job_offer), class: 'block w-full text-center bg-amber-800 hover:bg-amber-700 text-white px-4 py-3 rounded-lg font-bold shadow transition-colors duration-300' %>
+    </div>
+  </div>
+</div>

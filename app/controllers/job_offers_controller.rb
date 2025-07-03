@@ -1,5 +1,5 @@
 class JobOffersController < ApplicationController
-  before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url]
+  before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview]
   def index
     @jobs = JobOffer.valid.includes(:employer)
 
@@ -34,6 +34,11 @@ class JobOffersController < ApplicationController
 
   def show
     job_offer
+  end
+
+  def preview
+    job_offer
+    render layout: false
   end
 
   def edit
@@ -101,7 +106,7 @@ class JobOffersController < ApplicationController
 
     JobApplicationMailer.application_email(job_offer: @job_offer,
       cv_original_filename: cv.original_filename,
-      cv_read: cv.read,
+      cv_read: Base64.strict_encode64(cv.read),
       comments: comments).deliver_later
     flash[:notice] = "Your application has been sent to the employer."
     ahoy.track "apply_with_form", job_offer_id: @job_offer.id, step: "second"

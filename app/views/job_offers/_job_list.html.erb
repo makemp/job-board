@@ -1,6 +1,6 @@
 <div class="grid gap-6">
   <% jobs.each do |job| %>
-    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200 <%= 'opacity-50 grayscale' if job.expired? %>">
+    <div class="job-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200 <%= 'opacity-50 grayscale' if job.expired? %>" data-job-id="<%= job.id %>">
       <div class="p-4 sm:p-6">
         <!-- Mobile layout - stacked vertically -->
         <div class="block md:hidden">
@@ -108,7 +108,9 @@
                   Expired
                 </button>
               <% else %>
-                <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('<%= job_offer_path(job.id) %>');">
+                <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300"
+                        data-action="click->job-preview#showPreview"
+                        data-job-preview-job-id-param="<%= job.id %>">
                   See more
                 </button>
               <% end %>

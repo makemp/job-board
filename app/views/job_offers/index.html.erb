@@ -50,16 +50,34 @@
   </div>
 
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <%= turbo_frame_tag "jobs" do %>
-      <!-- Top Pagination -->
-      <%= render partial: "pagination",  locals: { position: :top } %>
-
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-controller="job-preview">
+    <div class="flex gap-6">
       <!-- Jobs List -->
-      <%= render partial: "job_list", locals: { jobs: @jobs } %>
-      
-      <!-- Bottom Pagination -->
-      <%= render partial: "pagination",  locals: { position: :bottom } %>
-    <% end %>
+      <div id="jobs-list" class="w-full lg:w-full transition-all duration-300" data-job-preview-target="jobsList">
+        <%= turbo_frame_tag "jobs" do %>
+          <!-- Top Pagination -->
+          <%= render partial: "pagination",  locals: { position: :top } %>
+
+          <!-- Jobs List -->
+          <%= render partial: "job_list", locals: { jobs: @jobs } %>
+
+          <!-- Bottom Pagination -->
+          <%= render partial: "pagination",  locals: { position: :bottom } %>
+        <% end %>
+      </div>
+
+      <!-- Job Preview Panel (hidden by default) -->
+      <div id="job-preview" class="hidden lg:block lg:w-1/2 bg-white rounded-lg shadow-lg border border-amber-200 sticky top-6 h-[calc(100vh-8rem)] overflow-hidden" data-job-preview-target="previewPanel">
+        <div class="flex items-center justify-center h-full text-gray-500">
+          <div class="text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <p class="text-lg font-medium">Select a job to view details</p>
+            <p class="text-sm">Click on "See more" to preview job details</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </div>
