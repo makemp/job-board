@@ -24,10 +24,14 @@ class JobOffer < ApplicationRecord
 
   has_one :order_placement, -> { order(created_at: :desc) }, class_name: "OrderPlacement"
 
+  has_many :job_offer_actions, dependent: :destroy
+
+  has_many :job_offer_applications, dependent: :destroy
+
   belongs_to :employer
 
   scope :valid, -> do
-    joins(:employer).where.not(employers: {confirmed_at: nil}).where("expires_at > ?", Time.current)
+    joins(:employer).where.not(employers: {confirmed_at: nil}).where.not(expired_on: nil)
   end
 
   has_rich_text :description

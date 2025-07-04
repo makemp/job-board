@@ -39,8 +39,7 @@ end
             location: region,
             employer: employer,
             category: category,
-            description: description,
-            expires_at: 70.years.from_now
+            description: description
           )
 
           job.update_column(:created_at, rand(1..10).days.ago)
