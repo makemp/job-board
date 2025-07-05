@@ -31,18 +31,28 @@ class JobOffer < ApplicationRecord
   belongs_to :employer
 
   scope :valid, -> do
-    joins(:employer).where.not(employers: {confirmed_at: nil}).where.not(expired_on: nil)
+    joins(:employer).where.not(employers: {confirmed_at: nil}).where(expired_on: nil)
   end
 
   has_rich_text :description
 
   def expire_manually!
     time = Time.current
-    update!(expires_at: time, expired_manually: time)
+    update!(expired_on: time, expired_manually: time)
   end
 
   def expired?
-    expires_at < Time.current
+    expired_on.present?
+  end
+
+  def expire!
+    update!(expired_on: Time.current) unless expired?
+  end
+
+  def expires_at
+    job_offer_actions
+      .where(action_type: JobOfferAction::TYPES_EXTENDING_EXPIRATION)
+      .order(:valid_till).last&.valid_till || Time.current # fallback just to prevent nil value but shouldn't happen
   end
 
   delegate :logo, to: :employer

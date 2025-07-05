@@ -1,8 +1,8 @@
 class JobApplicationMailer < ApplicationMailer
-  def application_email(job_offer:, cv_read:, cv_original_filename:, comments:)
-    @job_offer = job_offer
-    attachments[cv_original_filename] = Base64.strict_decode64(cv_read)
-    @comments = comments
+  def application_email(job_offer_application:)
+    @job_offer = job_offer_application.job_offer
+    attachments[job_offer_application.cv.original_filename] = job_offer_application.cv
+    @comments = job_offer_application.comments
     mail(
       to: @job_offer.application_destination,
       subject: "New Job Application for #{@job_offer.title}"

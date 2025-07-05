@@ -11,8 +11,10 @@ module JobOffers
     def call
       Employer.transaction do
         JobOffer.transaction do
-          OrderPlacement.transaction do
-            return PlaceOrder.call(**params).redirect_path
+          JobOfferAction.transaction do
+            OrderPlacement.transaction do
+              return PlaceOrder.call(**params).redirect_path
+            end
           end
         end
       end

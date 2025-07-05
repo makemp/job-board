@@ -21,4 +21,6 @@
 #### if job offer expired- the form/aplly is different and can't go further. Also the whole stuff is "blocked"
 
 
-#### if the employer already placed the job offer and paid, needs to login to place another job offer.
+#### if the employer already placed the job offer and paid, needs to login to place another job offer. (really?) The system might be attacked to see what email exists in that case.
+
+#### change how sorting is done in the job offers list. include job actions, 

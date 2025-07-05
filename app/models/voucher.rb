@@ -29,9 +29,12 @@ class Voucher < ApplicationRecord
 
   alias_method :enable?, :enabled?
 
+  # This method is used in context of transaction, see JobOffers::Submit
   def apply(order_placement:, job_offer:)
     order_placement.update!(voucher_code: code, price: price, free_order: free_voucher?, ready_to_be_placed: true)
-    job_offer.update!(approved: !required_approval?, expires_at: ActiveSupport::Duration.build(offer_duration).from_now)
+    job_offer.update!(approved: !required_approval?)
+    job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
+      valid_till: Time.current + offer_duration)
   end
 
   def soft_apply(job_offer_form)

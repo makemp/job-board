@@ -43,6 +43,8 @@ end
           )
 
           job.update_column(:created_at, rand(1..10).days.ago)
+          job.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
+            valid_till: Time.current + Voucher.default_offer_duration)
         end
       end
     end

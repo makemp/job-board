@@ -104,12 +104,15 @@ class JobOffersController < ApplicationController
       redirect_to job_offer_path(@job_offer) and return
     end
 
-    JobApplicationMailer.application_email(job_offer: @job_offer,
-      cv_original_filename: cv.original_filename,
-      cv_read: Base64.strict_encode64(cv.read),
-      comments: comments).deliver_later
+    if comments.present? && comments.length > 500
+      flash[:alert] = "Comments are too long (max 500 characters)."
+      redirect_to job_offer_path(@job_offer) and return
+    end
+
+    @job_offer.create_job_offer_application!(cv: cv, comments: comments).process
+
     flash[:notice] = "Your application has been sent to the employer."
-    ahoy.track "apply_with_form", job_offer_id: @job_offer.id, step: "second"
+    ahoy.track "apply_with_form", job_offer_id: @job_offer.id
 
     redirect_to job_offer_path(@job_offer)
   end
