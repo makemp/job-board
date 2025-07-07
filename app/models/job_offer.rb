@@ -49,9 +49,13 @@ class JobOffer < ApplicationRecord
 
   has_rich_text :description
 
-  def expire_manually!
+  def expire_manually!(additional_params = {})
     time = Time.current
-    update!(expired_on: time, expired_manually: time)
+    if expired?
+      update!(**additional_params) if additional_params.present?
+    else
+      update!(expired_on: time, expired_manually: time, **additional_params)
+    end
   end
 
   def expired?

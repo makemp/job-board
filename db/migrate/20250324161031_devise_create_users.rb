@@ -4,7 +4,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[8.0]
   def change
     create_table :users, id: :ulid, default: -> { "ulid()" } do |t|
       ## Database authenticatable
-      t.string :email, null: false, default: ""
+      t.string :email
       t.string :encrypted_password, null: true
 
       ## Recoverable
@@ -42,6 +42,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[8.0]
       t.string :stripe_customer_id
 
       t.string :type
+
+      t.datetime :closed_at
     end
 
     add_index :users, :email, unique: true

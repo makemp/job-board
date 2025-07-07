@@ -27,7 +27,8 @@ module Employers
     end
 
     def close_account
-      current_employer.destroy
+      CloseEmployerJob.perform_later(current_employer.id)
+      sign_out(current_employer)
       redirect_to root_path, notice: "Your account has been closed."
     end
 

@@ -7,8 +7,8 @@ class Employer < User
 
   has_many :special_offers
 
-  validates :company_name, presence: true
-  validates :email, presence: true, uniqueness: true
+  validates :company_name, presence: true, unless: ->(employer) { employer.closed_at.present? }
+  validates :email, presence: true, uniqueness: true, unless: ->(employer) { employer.closed_at.present? }
   validates :stripe_customer_id, uniqueness: true, allow_nil: true
 
   # Devise configuration
@@ -18,7 +18,7 @@ class Employer < User
 
   has_one_attached :logo
 
-  scope :valid, -> { where.not(confirmed_at: nil) }
+  scope :valid, -> { where.not(confirmed_at: nil).where(closed_at: nil) }
 
   def password_required?
     false
