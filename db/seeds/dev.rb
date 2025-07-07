@@ -33,18 +33,28 @@ end
     titles.each do |title|
       descriptions.each do |description|
         JobOffer::CATEGORIES.each do |category|
+          application_type = JobOffer::APPLICATION_TYPES.sample(1).first
+          application_destination = if application_type == JobOffer::APPLICATION_TYPE_LINK
+            Faker::Internet.url
+          else
+            Faker::Internet.email
+          end
+
           job = JobOffer.create!(
             company_name: employer.company_name,
             title: title,
             location: region,
             employer: employer,
             category: category,
-            description: description
+            description: Faker::Lorem.sentences(number: 200).join("\n\n"),
+            application_destination:,
+            application_type:
           )
 
-          job.update_column(:created_at, rand(1..10).days.ago)
           job.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
             valid_till: Time.current + Voucher.default_offer_duration)
+
+          job.recent_action.update_column(:created_at, rand(1..10).days.ago)
         end
       end
     end

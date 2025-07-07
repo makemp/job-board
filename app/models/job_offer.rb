@@ -30,8 +30,15 @@ class JobOffer < ApplicationRecord
 
   belongs_to :employer, class_name: "Employer", inverse_of: :job_offers
 
+  has_one :recent_action,
+    -> {
+      where(action_type: JobOfferAction::TYPES_EXTENDING_EXPIRATION)
+        .order("job_offer_actions.created_at": :desc)
+    },
+    class_name: "JobOfferAction", foreign_key: :job_offer_id
+
   scope :valid, -> do
-    eager_load(:employer).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
+    eager_load(:employer, :recent_action).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
   end
 
   scope :sorted, -> do
@@ -53,6 +60,10 @@ class JobOffer < ApplicationRecord
 
   def expire!
     update!(expired_on: Time.current) unless expired?
+  end
+
+  def enlisted_recently_at
+    recent_action&.created_at || Time.current
   end
 
   def expires_at

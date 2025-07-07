@@ -51,15 +51,7 @@
               <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
               </svg>
-              <%= if job.expired?
-                    "Expired " + time_ago_in_words(job.expired_on) + " ago"
-                  elsif job.created_at.today?
-                    "Added Today"
-                  elsif job.created_at.yesterday?
-                    "Added Yesterday"
-                  else
-                    "Added " + time_ago_in_words(job.created_at) + " ago"
-                  end %>
+              <%= timestamp_as_words(job) %>
             </span>
           </div>
         </div>
@@ -96,20 +88,6 @@
                     </svg>
                     <%= job.category %>
                   </span>
-                  <span class="flex items-right">
-                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                    </svg>
-                    <%= if job.expired?
-                          "Expired " + time_ago_in_words(job.expired_on) + " ago"
-                        elsif job.created_at.today?
-                          "Added Today"
-                        elsif job.created_at.yesterday?
-                          "Added Yesterday"
-                        else
-                          "Added " + time_ago_in_words(job.created_at) + " ago"
-                        end %>
-                  </span>
                 </div>
               </div>
             </div>
@@ -127,6 +105,18 @@
                   See more
                 </button>
               <% end %>
+            </div>
+
+            <!-- Timestamp at absolute right corner -->
+            <div class="absolute bottom-0 right-0">
+              <span class="text-sm <%= job.expired? ? 'text-gray-400' : 'text-amber-600' %> flex items-center whitespace-nowrap">
+                <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+                <span class="truncate max-w-32">
+                  <%= timestamp_as_words(job) %>
+                </span>
+              </span>
             </div>
           </div>
         </div>
