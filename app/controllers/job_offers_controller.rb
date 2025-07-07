@@ -1,7 +1,7 @@
 class JobOffersController < ApplicationController
   before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview]
   def index
-    @jobs = JobOffer.valid.includes(:employer)
+    @jobs = JobOffer.valid.sorted.includes(:employer)
 
     # Apply filters
     @jobs = @jobs.where(category: params[:category]) if params[:category].present?
@@ -108,8 +108,7 @@ class JobOffersController < ApplicationController
       flash[:alert] = "Comments are too long (max 500 characters)."
       redirect_to job_offer_path(@job_offer) and return
     end
-
-    @job_offer.create_job_offer_application!(cv: cv, comments: comments).process
+    @job_offer.job_offer_applications.create!(cv: cv, comments: comments).process
 
     flash[:notice] = "Your application has been sent to the employer."
     ahoy.track "apply_with_form", job_offer_id: @job_offer.id

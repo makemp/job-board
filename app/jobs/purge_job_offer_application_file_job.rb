@@ -1,6 +1,6 @@
 # removes all files associated with a job offer through job_offer_applications
 
-class PurgeJobOfferApplicationFile < ActiveJob::Base
+class PurgeJobOfferApplicationFileJob < ActiveJob::Base
   queue_as :low_priority
 
   def perform(job_application_id)

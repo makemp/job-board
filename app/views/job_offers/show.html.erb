@@ -83,7 +83,7 @@
     <button class="inline-block bg-amber-800 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition-colors duration-300 text-lg font-semibold" onclick="handleBackClick(event)">
       Back to Job Offers
     </button>
-    <% if current_employer && current_employer.id == @job_offer.employer_id && !@job_offer.expired? %>
+    <% if current_employer && current_employer == @job_offer.employer && !@job_offer.expired? %>
       <%= link_to edit_job_offer_path(@job_offer), title: 'Edit Job Offer', class: 'text-amber-600 hover:text-amber-800 transition-colors duration-300' do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

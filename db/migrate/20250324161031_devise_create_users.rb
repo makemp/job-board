@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class DeviseCreateEmployers < ActiveRecord::Migration[8.0]
+class DeviseCreateUsers < ActiveRecord::Migration[8.0]
   def change
-    create_table :employers, id: :ulid, default: -> { "ulid()" } do |t|
+    create_table :users, id: :ulid, default: -> { "ulid()" } do |t|
       ## Database authenticatable
       t.string :email, null: false, default: ""
       t.string :encrypted_password, null: true
@@ -40,10 +40,12 @@ class DeviseCreateEmployers < ActiveRecord::Migration[8.0]
       t.timestamps null: false
 
       t.string :stripe_customer_id
+
+      t.string :type
     end
 
-    add_index :employers, :email, unique: true
-    add_index :employers, :reset_password_token, unique: true
+    add_index :users, :email, unique: true
+    add_index :users, :reset_password_token, unique: true
     # add_index :employers, :confirmation_token,   unique: true
     # add_index :employers, :unlock_token,         unique: true
   end

@@ -28,10 +28,16 @@ class JobOffer < ApplicationRecord
 
   has_many :job_offer_applications, dependent: :destroy
 
-  belongs_to :employer
+  belongs_to :employer, class_name: "Employer", inverse_of: :job_offers
 
   scope :valid, -> do
-    joins(:employer).where.not(employers: {confirmed_at: nil}).where(expired_on: nil)
+    eager_load(:employer).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
+  end
+
+  scope :sorted, -> do
+    joins("INNER JOIN (SELECT job_offer_id, MAX(created_at) AS max_created_at
+                                                   FROM job_offer_actions GROUP BY job_offer_id)
+    max_actions ON job_offers.id = max_actions.job_offer_id").order(max_created_at: :desc)
   end
 
   has_rich_text :description
