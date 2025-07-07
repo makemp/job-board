@@ -67,7 +67,7 @@
     <div data-tabs-target="pane" data-tab-name="close_account" class="hidden">
       <h2 class="text-2xl font-semibold mb-4 text-red-600">Close Account</h2>
       <p class="mb-4 text-gray-700">This will permanently delete your account and all associated data.</p>
-      <%= button_to 'Close My Account', close_account_employers_path, method: :delete, data: { confirm: 'Are you absolutely sure?' }, class: 'px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-500' %>
+      <%= button_to 'Close My Account', close_account_employers_path, method: :delete, data: { turbo: false, confirm: 'Are you absolutely sure?' }, class: 'px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-500' %>
     </div>
     <!-- Details Pane -->
     <div data-tabs-target="pane" data-tab-name="details" class="hidden">

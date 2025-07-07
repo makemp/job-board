@@ -1,6 +1,8 @@
 class Employer < User
   normalizes :email, with: -> { it.downcase.strip }
 
+  default_scope { where.not(email: nil) }
+
   has_many :job_offers, foreign_key: :employer_id
 
   has_many :order_placements, -> { where.not(paid_on: nil) }, through: :job_offers, source: :order_placement

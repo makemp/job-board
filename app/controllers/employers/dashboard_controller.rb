@@ -28,8 +28,8 @@ module Employers
 
     def close_account
       CloseEmployerJob.perform_later(current_employer.id)
-      sign_out(current_employer)
-      redirect_to root_path, notice: "Your account has been closed."
+      flash.now[:alert] = "You account is closed now."
+      sign_out_and_redirect(current_employer)
     end
 
     def update_details
@@ -39,6 +39,10 @@ module Employers
         flash.now[:alert] = current_employer.errors.full_messages.to_sentence
         render :index
       end
+    end
+
+    def after_sign_out_path_for(_resource_or_scope)
+      root_path
     end
 
     private
