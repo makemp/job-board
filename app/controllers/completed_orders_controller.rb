@@ -5,6 +5,9 @@ class CompletedOrdersController < ApplicationController
         session_token:  params[:session_token])
     return redirect_to root_path unless @order_placement
 
-    sign_in(@order_placement.employer)
+    employer = @order_placement.employer
+
+    # login only on the first order placement
+    sign_in(employer) if employer.order_placements.size == 1
   end
 end

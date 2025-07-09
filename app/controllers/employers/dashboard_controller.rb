@@ -28,7 +28,7 @@ module Employers
 
     def close_account
       CloseEmployerJob.perform_later(current_employer.id)
-      flash.now[:alert] = "You account is closed now."
+      flash[:alert] = "You account is closed now."
       sign_out_and_redirect(current_employer)
     end
 
