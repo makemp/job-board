@@ -55,6 +55,14 @@ Rails.application.routes.draw do
   get "/terms_and_conditions", to: "job_offer_forms#terms_and_conditions", as: :terms_and_conditions
   get "/privacy", to: "job_offer_forms#privacy", as: :privacy
 
+  # Admin authentication (Devise-like custom routes)
+  devise_scope :admin do
+    get "/admin/login", to: "admin#login_panel", as: :new_admin_session
+    post "/admin/login", to: "admin#create", as: :admin_session
+    delete "/admin/logout", to: "admin#destroy", as: :destroy_admin_session
+    get "/admin", to: "admin#index", as: :admin_dashboard
+  end
+
   if Rails.env.development?
     scope module: :dev_shortcuts do
       get "/job_offer_forms/new/dev", controller: "job_offer_forms", action: :new
