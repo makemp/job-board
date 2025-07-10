@@ -86,3 +86,5 @@ gem "interactor", "~> 3.0"
 gem "geocoder", "~> 1.8"
 
 gem "geoip", "~> 1.6"
+
+gem 'pretender'
