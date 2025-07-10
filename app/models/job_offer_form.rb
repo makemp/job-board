@@ -138,4 +138,11 @@ class JobOfferForm
     return Voucher.default_voucher if voucher_code.blank?
     Voucher.find_by(code: voucher_code.strip)
   end
+
+  def voucher_placeholder
+    return if voucher_code.blank?
+    return if voucher_code == Voucher::DEFAULT_CODE
+
+    voucher_code
+  end
 end
