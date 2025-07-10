@@ -55,12 +55,15 @@ Rails.application.routes.draw do
   get "/terms_and_conditions", to: "job_offer_forms#terms_and_conditions", as: :terms_and_conditions
   get "/privacy", to: "job_offer_forms#privacy", as: :privacy
 
-  # Admin authentication (Devise-like custom routes)
-  devise_scope :admin do
-    get "/admin/login", to: "admin#login_panel", as: :new_admin_session
-    post "/admin/login", to: "admin#create", as: :admin_session
-    delete "/admin/logout", to: "admin#destroy", as: :destroy_admin_session
-    get "/admin", to: "admin#index", as: :admin_dashboard
+  # Admin authentication with Devise
+  devise_for :admins, path: "admin", controllers: {
+    sessions: "devise/sessions"
+  }
+
+  namespace :admin do
+    root to: "admin#index", as: :dashboard
+    post "impersonate/:id", to: "admin#impersonate", as: :impersonate_employer
+    delete "stop_impersonating", to: "admin#stop_impersonating", as: :stop_impersonating_employers
   end
 
   if Rails.env.development?

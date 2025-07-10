@@ -225,8 +225,6 @@ GEM
       racc
     pp (0.6.2)
       prettyprint
-    pretender (0.6.0)
-      actionpack (>= 7.1)
     prettyprint (0.2.0)
     prism (1.4.0)
     propshaft (1.1.0)
@@ -452,7 +450,6 @@ DEPENDENCIES
   jbuilder
   kamal
   pagy
-  pretender
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.2)

@@ -61,5 +61,4 @@ end
   end
 end
 
-
-Admin.create!(email: 'admin@admin.com', password: 'Abcd1234!')
+Admin.create!(email: "admin@admin.com", password: "Abcd1234!")
