@@ -22,7 +22,7 @@ class JobOffer < ApplicationRecord
 
   has_many :order_placements
 
-  has_one :order_placement, -> { order(created_at: :desc) }, class_name: "OrderPlacement"
+  has_one :order_placement, -> { order(created_at: :desc) }, class_name: "OrderPlacement", inverse_of: :job_offer
 
   has_many :job_offer_actions, dependent: :destroy
 
@@ -70,10 +70,15 @@ class JobOffer < ApplicationRecord
     recent_action&.created_at || Time.current
   end
 
+  # use select here to cache the result
   def expires_at
     job_offer_actions
-      .where(action_type: JobOfferAction::TYPES_EXTENDING_EXPIRATION)
-      .order(:valid_till).last&.valid_till || Time.current # fallback just to prevent nil value but shouldn't happen
+      .select { JobOfferAction::TYPES_EXTENDING_EXPIRATION.include? it.action_type }
+      .max_by { it.valid_till }&.valid_till || Time.current # fallback just to prevent nil value but shouldn't happen
+  end
+
+  def employer_company_name
+    employer.company_name
   end
 
   delegate :logo, to: :employer

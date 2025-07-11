@@ -1,4 +1,4 @@
-#### Login on behalf (admin login)
+
 #### Logo design
 #### Add a favicon
 #### More offers - 5 job offers as voucher
@@ -13,13 +13,14 @@
 
 #### robots.txt stuff
 
-#### change how sorting is done in the job offers list. include job actions, 
 
-
-### contact us form
 
 ### password rules
 
 
 ### anti-virus integration for attachemnts
 
+
+### ahoy javascript
+
+### instead "see in separate tab use "copy url"

@@ -48,7 +48,8 @@ end
             category: category,
             description: Faker::Lorem.sentences(number: 200).join("\n\n"),
             application_destination:,
-            application_type:
+            application_type:,
+            order_placement: OrderPlacement.create!(paid_on: Time.current)
           )
 
           job.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
@@ -62,3 +63,11 @@ end
 end
 
 Admin.create!(email: "admin@admin.com", password: "Abcd1234!")
+
+ExternalJobOffer.from_hash({
+  company: "University of Colorado Denver",
+  title: "IELTS USA Examiner",
+  location: "USA",
+  application_destination: "https://minejobs.com/job-details/?title=IELTS_USA_Examiner&id=6308502",
+  category: "Technicians"
+})

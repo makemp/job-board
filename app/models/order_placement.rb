@@ -1,5 +1,5 @@
 class OrderPlacement < ApplicationRecord
-  belongs_to :job_offer, optional: true
+  belongs_to :job_offer, optional: true, inverse_of: :order_placement
   belongs_to :special_offer, optional: true
 
   validate :price_consistency

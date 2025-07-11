@@ -11,6 +11,7 @@ class CreateJobOffers < ActiveRecord::Migration[8.0]
       t.boolean :featured
       t.boolean :approved, default: false, null: false
       t.boolean :terms_and_conditions, default: false
+      t.string :type
       t.references :employer, null: false, foreign_key: {to_table: :users}, type: :ulid
 
       t.timestamps

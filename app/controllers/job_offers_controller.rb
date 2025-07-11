@@ -6,7 +6,6 @@ class JobOffersController < ApplicationController
     # Apply filters
     @jobs = @jobs.where(category: params[:category]) if params[:category].present?
     @jobs = @jobs.where(location: params[:region]) if params[:region].present?
-    @jobs = @jobs.order(created_at: :desc)
 
     # Handle pagination
     @per_page = if params[:per_page].present?
@@ -126,7 +125,7 @@ class JobOffersController < ApplicationController
 
     ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id
 
-    redirect_to @job_offer.application_destination, allow_other_host: true, notice: "You are being redirected to the job application page."
+    redirect_to @job_offer.application_destination, allow_other_host: true
   end
 
   private
