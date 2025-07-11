@@ -86,3 +86,6 @@ gem "interactor", "~> 3.0"
 gem "geocoder", "~> 1.8"
 
 gem "geoip", "~> 1.6"
+
+gem 'ratonvirus', git: 'https://github.com/MaksJS/ratonvirus', branch: 'feature/rails-8-upgrade'
+gem 'ratonvirus-clamby' # Adapter for ClamAV

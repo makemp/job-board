@@ -19,3 +19,4 @@ EDITOR="vim" bin/rails credentials:edit --environment development
 Libraries:
 vips  for image processing
 geoip-database ??
+clamav for anti-virus
