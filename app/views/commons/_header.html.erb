@@ -1,17 +1,9 @@
-<!-- file: `app/views/commons/_header.html.erb` -->
 <header class="bg-amber-900 shadow-lg">
-  <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8" data-controller="mobile-menu">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative" data-controller="mobile-menu">
     <!-- Mobile layout -->
-    <div class="flex justify-between items-center md:hidden">
+    <div id="top-logo-mobile" class="flex justify-between items-center md:hidden py-2">
       <%= link_to root_path, class: "block" do %>
-        <h1 class="text-2xl font-bold flex items-center">
-          <span class="text-amber-100">drill</span>
-          <span class="text-amber-300">J</span>
-          <span class="text-amber-100">obs.</span>
-          <span class="text-amber-400">X</span>
-          <span class="text-amber-300">Y</span>
-          <span class="text-amber-200">Z</span>
-        </h1>
+        <%= image_tag "drillcrew-logo.png", alt: "Logo", class: "h-16 w-auto object-contain" %>
       <% end %>
 
       <!-- Mobile menu button -->
@@ -26,16 +18,9 @@
     </div>
 
     <!-- Desktop layout -->
-    <div class="hidden md:flex justify-between items-center">
+    <div id="top-logo-browser" class="hidden md:flex justify-between items-center py-0">
       <%= link_to root_path, class: "block" do %>
-        <h1 class="text-3xl font-bold flex items-center">
-          <span class="text-amber-100">drill</span>
-          <span class="text-amber-300">J</span>
-          <span class="text-amber-100">obs.</span>
-          <span class="text-amber-400">X</span>
-          <span class="text-amber-300">Y</span>
-          <span class="text-amber-200">Z</span>
-        </h1>
+        <%= image_tag "drillcrew-logo.png", alt: "Logo", class: "h-20 w-auto object-contain" %>
       <% end %>
 
       <div class="flex items-center space-x-4">
