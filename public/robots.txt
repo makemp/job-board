@@ -1,1 +1,8 @@
-# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+# robots.txt — generated 2025-07-14
+
+User-agent: *
+
+Disallow: /admin/
+Disallow: /cable
+Disallow: /rails/active_storage/
+Disallow: /system/
