@@ -17,10 +17,7 @@ https://github.com/BaseSecrete/active_hashcash
 
 ## blazer
 
-### password rules -> dow we really need that?
-
-### search feature on region filters
-
+### password rules -> do we really need that?
 
 ### anti-virus integration for attachemnts
 

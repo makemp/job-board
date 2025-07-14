@@ -21,8 +21,10 @@
             Expired
           </button>
         <% else %>
-          <button class="bg-amber-800 text-white px-3 py-1 text-sm rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('<%= job_offer_path(job.id) %>');">
-            View
+          <button class="bg-amber-800 text-white px-3 py-1 text-sm rounded-full hover:bg-amber-700 transition-colors duration-300"
+                  data-action="click->job-preview#showPreview"
+                  data-job-preview-job-id-param="<%= job.id %>">
+            See more
           </button>
         <% end %>
       </div>
