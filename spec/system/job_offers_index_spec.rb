@@ -45,7 +45,7 @@ RSpec.describe "job_offers/index", type: :feature, js: true, driver: :selenium_c
               job = JobOffer.create!(
                 company_name: employer.company_name,
                 title: title,
-                location: region,
+                region: region,
                 employer: employer,
                 category: category,
                 description: description

@@ -2,7 +2,8 @@ class CreateJobOffers < ActiveRecord::Migration[8.0]
   def change
     create_table :job_offers, id: :ulid, default: -> { "ulid()" } do |t|
       t.string :title
-      t.string :location
+      t.string :region
+      t.string :subregion
       t.string :category
       t.string :application_type
       t.string :application_destination

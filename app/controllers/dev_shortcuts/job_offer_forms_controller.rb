@@ -6,7 +6,7 @@ module DevShortcuts
                                                             company_name: Faker::Company.name,
                                                             title: Faker::Job.title,
                                                             category: JobOffer::CATEGORIES.sample,
-                                                            location: JobOffer::REGIONS.sample,
+                                                            region: JobOffer::REGIONS.sample,
                                                             description: Faker::Lorem.paragraph})
     end
   end

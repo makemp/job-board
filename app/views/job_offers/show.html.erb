@@ -41,8 +41,8 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">
     <div class="<%= @job_offer.expired? ? 'bg-gray-100' : 'bg-amber-50' %> p-4 rounded-lg">
-      <p class="text-base sm:text-lg font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">Location</p>
-      <p class="text-sm sm:text-base <%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>"><%= @job_offer.location %></p>
+      <p class="text-base sm:text-lg font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">Region</p>
+      <p class="text-sm sm:text-base <%= @job_offer.expired? ? 'text-gray-500' : 'text-amber-700' %>"><%= @job_offer.region %></p>
     </div>
     <div class="<%= @job_offer.expired? ? 'bg-gray-100' : 'bg-amber-50' %> p-4 rounded-lg">
       <p class="text-base sm:text-lg font-semibold <%= @job_offer.expired? ? 'text-gray-600' : 'text-amber-800' %>">Category</p>

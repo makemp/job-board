@@ -13,7 +13,7 @@ class JobOfferForm
 
   attribute :category, :string
 
-  attribute :location, :string
+  attribute :region, :string
 
   attribute :description, :string
 
@@ -37,7 +37,7 @@ class JobOfferForm
   validates :application_type, presence: true, inclusion: {in: JobOffer::APPLICATION_TYPES}
   validates :application_destination, presence: true
 
-  validates :location, inclusion: {in: JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS}
+  validates :region, inclusion: {in: JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS}
 
   validate :logo_type_and_size
   validate :voucher_code_check

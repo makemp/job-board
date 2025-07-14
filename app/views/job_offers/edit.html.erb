@@ -41,9 +41,9 @@
         <%= error_messages_for(f, :category) %>
       </div>
       <div>
-        <%= f.label :location, class: "block text-sm font-medium text-amber-900" %>
-        <%= f.select :location, JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS, prompt: "Select location", class: "mt-2 w-full border border-gray-300 rounded-lg p-3 focus:ring-amber-500" %>
-        <%= error_messages_for(f, :location) %>
+        <%= f.label :region, class: "block text-sm font-medium text-amber-900" %>
+        <%= f.select :region, JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS, prompt: "Select location", class: "mt-2 w-full border border-gray-300 rounded-lg p-3 focus:ring-amber-500" %>
+        <%= error_messages_for(f, :region) %>
       </div>
     </div>
 

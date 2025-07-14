@@ -43,7 +43,7 @@ end
           job = JobOffer.create!(
             company_name: employer.company_name,
             title: title,
-            location: region,
+            region: region,
             employer: employer,
             category: category,
             description: Faker::Lorem.sentences(number: 200).join("\n\n"),
@@ -67,7 +67,7 @@ Admin.create!(email: "admin@admin.com", password: "Abcd1234!")
 ExternalJobOffer.from_hash({
   company: "University of Colorado Denver",
   title: "IELTS USA Examiner",
-  location: "USA",
+  region: "USA",
   application_destination: "https://minejobs.com/job-details/?title=IELTS_USA_Examiner&id=6308502",
   category: "Technicians"
 })
