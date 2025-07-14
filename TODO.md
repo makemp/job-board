@@ -6,15 +6,20 @@
 
 
 
+## review categories/regions
 
+### add province to region like Ohio or  Hampshire
 
-#### Rack attack or maybe a gem but not use cloudflare? 
+#### Rack attack or maybe a gem but not use cloudflare?
 
-#### robots.txt stuff
+## active_hashcash
+https://github.com/BaseSecrete/active_hashcash
 
+## blazer
 
+### password rules -> dow we really need that?
 
-### password rules
+### search feature on region filters
 
 
 ### anti-virus integration for attachemnts
@@ -23,4 +28,7 @@
 
 
 # Pre deploy:
-# think about env variables -> staging or production email sender, setup the email
+## Actual domain name
+## think about env variables -> staging or production email sender, setup the email
+## RorVsWild
+## Fly.io
