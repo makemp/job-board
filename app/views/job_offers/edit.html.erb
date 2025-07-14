@@ -45,6 +45,12 @@
         <%= f.select :region, JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS, prompt: "Select location", class: "mt-2 w-full border border-gray-300 rounded-lg p-3 focus:ring-amber-500" %>
         <%= error_messages_for(f, :region) %>
       </div>
+
+      <div>
+        <%= f.label :subregion, class: "block text-sm font-medium text-amber-900" %>
+        <%= f.text_field :subregion, class:  "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+        <%= error_messages_for(f, :subregion) %>
+      </div>
     </div>
 
     <%= render "job_offer_forms/application_type", f: f %>

@@ -8,6 +8,7 @@ class PlaceOrder
         company_name:,
         description:,
         region:,
+        subregion:,
         category:,
         terms_and_conditions:,
         application_type:,
@@ -17,9 +18,7 @@ class PlaceOrder
     end
 
     delegate :employer, to: :context
-    delegate :title, :description, :region, :category, :company_name, :terms_and_conditions,
-      :application_type, :application_destination,
-      to: :"context.info"
+    delegate(*JobOfferForm.attribute_names, to: :"context.info")
     delegate "voucher", "logo", to: :"context.info"
   end
 end

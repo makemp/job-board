@@ -10,4 +10,10 @@ module JobOfferHelper
       "Added " + time_ago_in_words(job.recent_action.created_at) + " ago"
     end
   end
+
+  def job_offer_location(job)
+    return job.region unless job.subregion.present?
+
+    "#{job.region}/#{job.subregion}"
+  end
 end

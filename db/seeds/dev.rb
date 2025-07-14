@@ -44,6 +44,7 @@ end
             company_name: employer.company_name,
             title: title,
             region: region,
+            subregion: [nil, Faker::Address.state].sample,
             employer: employer,
             category: category,
             description: Faker::Lorem.sentences(number: 200).join("\n\n"),

@@ -14,6 +14,7 @@ class JobOfferForm
   attribute :category, :string
 
   attribute :region, :string
+  attribute :subregion, :string
 
   attribute :description, :string
 

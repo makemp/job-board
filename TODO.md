@@ -8,7 +8,6 @@
 
 ## review categories/regions
 
-### add province to region like Ohio or  Hampshire
 
 #### Rack attack or maybe a gem but not use cloudflare?
 
@@ -22,6 +21,10 @@ https://github.com/BaseSecrete/active_hashcash
 ### anti-virus integration for attachemnts
 
 ### see if external offer is clicked - separate controller.
+
+### remove stripe data on order placement
+
+## bug with duplicate order placements /job offers?
 
 
 # Pre deploy:
