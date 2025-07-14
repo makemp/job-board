@@ -5,7 +5,7 @@ class JobOffersController < ApplicationController
 
     # Apply filters
     @jobs = @jobs.where(category: params[:category]) if params[:category].present?
-    @jobs = @jobs.where(location: params[:region]) if params[:region].present?
+    @jobs = @jobs.where(region: params[:region]) if params[:region].present?
 
     # Handle pagination
     @per_page = if params[:per_page].present?

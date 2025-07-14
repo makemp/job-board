@@ -39,10 +39,11 @@
           "Other Regions" => JobOffer::REGIONS
         } %>
 
-        <div>
+        <div data-controller="searchable-select" data-searchable-select-placeholder-value="Search regions...">
           <%= f.label :region, "Job Region", class: "block text-sm font-medium text-amber-900" %>
           <%= f.select :region, grouped_options_for_select(regions, f.object.region), { prompt: "Select region" },
-                       class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
+                       class: "mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50",
+                       data: { "searchable-select-target": "select" } %>
           <%= error_messages_for(f, :region) %>
         </div>
 
