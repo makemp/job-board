@@ -1,15 +1,15 @@
-Terms and Conditions for drilljobs.xyz
+Terms and Conditions for drillcrew.work
 Last Updated: 25 June 2024
 
 1. Introduction
 
-1.1. Welcome to drilljobs.xyz (the "Website"). These Terms and Conditions ("Terms") govern your use of the Website and its services (the "Service").
+1.1. Welcome to drillcrew.work (the "Website"). These Terms and Conditions ("Terms") govern your use of the Website and its services (the "Service").
 
 1.2. The Service is operated by Betete Lise Limited, a company registered in England and Wales under company number 13168303 ("we", "us", "our").
 
 1.3. By accessing or using our Service, you agree to be bound by these Terms. If you do not agree with any part of the terms, you must not use our Website.
 
-1.4. For any questions or support requests concerning these Terms, please contact us at support@drilljobs.xyz.
+1.4. For any questions or support requests concerning these Terms, please contact us at support@drillcrew.work.
 
 2. Definitions
 
@@ -53,7 +53,7 @@ d. Be defamatory, discriminatory, obscene, offensive, hateful, or inflammatory.
 
 5.2. Payment Processing: We use Stripe as our third-party payment processor. When you make a payment, you will be providing your payment details directly to Stripe. We do not store your full card number or billing details on our servers. Your use of the Stripe payment service is subject to Stripe's own terms and conditions.
 
-5.3. Refund Policy: A refund for a job advertisement fee may be requested if the Website experiences downtime of more than 24 cumulative hours during the active period of that job advertisement. The active period is defined as the duration selected at the time of purchase (e.g., 30 or 45 days). To request a refund, you must contact us at support@drilljobs.xyz.
+5.3. Refund Policy: A refund for a job advertisement fee may be requested if the Website experiences downtime of more than 24 cumulative hours during the active period of that job advertisement. The active period is defined as the duration selected at the time of purchase (e.g., 30 or 45 days). To request a refund, you must contact us at support@drillcrew.work.
 
 6. Data Protection and Privacy
 
@@ -70,7 +70,7 @@ c. Anonymous Data: We may collect anonymous data about your use of the Website, 
 
 7. Intellectual Property Rights
 
-7.1. Our Content: The drilljobs.xyz logo, and all text, graphics, and software created by us for the Website are our property. The logo of Betete Lise Limited may be used on other websites for attribution purposes, provided it is made clear that it represents our company.
+7.1. Our Content: The drillcrew.work logo, and all text, graphics, and software created by us for the Website are our property. The logo of Betete Lise Limited may be used on other websites for attribution purposes, provided it is made clear that it represents our company.
 
 7.2. Employer Content: You (or your licensors) retain ownership of the Content you post, including your company logos and job descriptions. By posting Content on our Website, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, display, and distribute that Content in connection with the operation of our Service.
 
