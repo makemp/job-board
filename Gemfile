@@ -91,3 +91,5 @@ gem "ratonvirus", git: "https://github.com/MaksJS/ratonvirus", branch: "feature/
 gem "ratonvirus-clamby" # Adapter for ClamAV
 
 gem "sluggi"
+
+gem "meta-tags", "~> 2.22"

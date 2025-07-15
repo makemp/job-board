@@ -1,3 +1,12 @@
+<%
+  # Set meta tags for completed order page
+  set_meta_tags(
+    title: "Order Confirmation - DrillCrew",
+    description: "Your job posting order has been processed. Check the status of your DrillCrew job posting and download your invoice.",
+    url: completed_order_url(@order_placement)
+  )
+%>
+
 <%= turbo_stream_from @order_placement %>
 <div id="<%= dom_id(@order_placement, :completed) %>">
   <% if @order_placement&.invoice_url.present? %>

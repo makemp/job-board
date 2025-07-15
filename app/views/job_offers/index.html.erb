@@ -1,3 +1,28 @@
+<%
+  # Set meta tags for job listings page
+  filter_description = []
+  filter_description << "#{params[:category]} jobs" if params[:category].present?
+  filter_description << "in #{params[:region]}" if params[:region].present?
+
+  page_title = if filter_description.any?
+    "#{filter_description.join(' ')} - DrillCrew Job Board"
+  else
+    "Browse Drilling & Mining & Oil Gas Jobs - DrillCrew"
+  end
+
+  page_description = if filter_description.any?
+    "Find #{filter_description.join(' ')} on DrillCrew. Browse verified job opportunities in the drilling, mining and energy sector."
+  else
+    "Browse the latest drilling & mining and oil & gas job opportunities. Find your next career move with top employers in the energy sector."
+  end
+
+  set_meta_tags(
+    title: page_title,
+    description: page_description,
+    url: job_offers_url(request.query_parameters)
+  )
+%>
+
 <div class="min-h-screen bg-amber-50">
   <!-- Filters -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 bg-amber-100 border-b border-amber-200">

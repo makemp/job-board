@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "DrillCrew" %></title>
+    <title><%= meta_title %></title>
     <%= favicon_link_tag  %>
+
+    <!-- Basic Meta Tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="<%= meta_description %>">
+    <meta name="keywords" content="drilling jobs, mining jobs & oil and gas jobs, energy careers, offshore drilling, onshore drilling, rig jobs">
+    <meta name="author" content="DrillCrew">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<%= meta_title %>">
+    <meta property="og:description" content="<%= meta_description %>">
+    <meta property="og:image" content="<%= meta_image %>">
+    <meta property="og:url" content="<%= meta_url %>">
+    <meta property="og:type" content="<%= meta_type %>">
+    <meta property="og:site_name" content="DrillCrew">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= meta_title %>">
+    <meta name="twitter:description" content="<%= meta_description %>">
+    <meta name="twitter:image" content="<%= meta_image %>">
+    <meta name="twitter:url" content="<%= meta_url %>">
+    <meta name="twitter:site" content="@drillcrew">
+
+    <!-- Additional Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#92400e">
+
     <%= action_cable_meta_tag %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -17,6 +44,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="canonical" href="<%= meta_url %>">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>

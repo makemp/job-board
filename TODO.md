@@ -23,9 +23,7 @@ https://github.com/BaseSecrete/active_hashcash
 ### see if external offer is clicked - separate controller.
 
 
-### go through mails and insert logo by any chance? 
-
-##  seo ? title and something?
+### go through mails and insert logo by any chance?
 
 # Pre deploy:
 ## Actual domain name

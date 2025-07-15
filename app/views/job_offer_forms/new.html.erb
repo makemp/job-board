@@ -1,3 +1,12 @@
+<%
+  # Set meta tags for job posting form
+  set_meta_tags(
+    title: "Post a Job - DrillCrew",
+    description: "Post your drilling & mining and oil & gas job opportunities on DrillCrew. Reach thousands of qualified candidates in the energy sector with our job board.",
+    url: new_job_offer_form_url
+  )
+%>
+
 <%= turbo_frame_tag "new_job_offer" do %>
 <div class="min-h-screen bg-amber-50 py-12">
   <div class="max-w-4xl mx-auto px-5 sm:px-5 lg:px-12">

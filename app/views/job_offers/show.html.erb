@@ -1,3 +1,18 @@
+<%
+  # Set meta tags for individual job page
+  job_title = "#{@job_offer.title} at #{@job_offer.company_name}"
+  job_description = truncate(strip_tags(@job_offer.description), length: 160)
+  job_description = "#{job_title} in #{@job_offer.region}. #{job_description}" if job_description.present?
+  job_description = "#{job_title} - Apply now on DrillCrew job board." if job_description.blank?
+
+  set_meta_tags(
+    title: "#{job_title} - DrillCrew",
+    description: job_description,
+    url: job_offer_url(@job_offer),
+    type: "article"
+  )
+%>
+
 <div class="mt-4 sm:mt-8 max-w-4xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-lg <%= 'opacity-60 grayscale' if @job_offer.expired? %>">
   <div class="flex flex-col sm:flex-row sm:items-start justify-between mb-4 sm:mb-6 relative">
     <!-- Copy URL Icon Button: mobile only, top right -->
