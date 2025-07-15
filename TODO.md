@@ -6,7 +6,7 @@
 
 
 
-## review categories/regions
+## review  /regions
 
 
 #### Rack attack or maybe a gem but not use cloudflare?

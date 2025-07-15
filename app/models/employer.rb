@@ -22,6 +22,8 @@ class Employer < User
 
   scope :valid, -> { where.not(confirmed_at: nil).where(closed_at: nil) }
 
+  encrypts :email, deterministic: true, downcase: true
+
   def password_required?
     false
   end

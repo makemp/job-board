@@ -9,6 +9,8 @@ class OrderPlacement < ApplicationRecord
   after_update_commit :broadcast_if_paid, if: :recently_paid_with_invoice_generated?
   after_create_commit :purge_stripe_data_later
 
+  encrypts :stripe_payload
+
   def free?
     read_attribute("free_order") && price.zero?
   end

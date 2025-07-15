@@ -14,7 +14,10 @@ the command above will also print out the webhook secret which needs to be store
 EDITOR="vim" bin/rails credentials:edit --environment development
 ```
 
-
+For encryption:
+bin/rails db:encryption:init
+and store them:
+EDITOR=vim bin/rails credentials:edit
 
 Libraries:
 vips  for image processing
