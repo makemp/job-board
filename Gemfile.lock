@@ -362,6 +362,9 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sluggi (4.0.0)
+      activerecord (~> 8.0)
+      railties (~> 8.0)
     solid_cable (3.0.8)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -470,6 +473,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-rails-omakase
   selenium-webdriver
+  sluggi
   solid_cable
   solid_cache
   solid_queue

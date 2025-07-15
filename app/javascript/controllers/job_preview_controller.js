@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["jobsList", "previewPanel", "previewContent", "mobilePreview"]
   static values = {
-    jobId: Number,
+    jobId: String,
     isMobile: Boolean
   }
 

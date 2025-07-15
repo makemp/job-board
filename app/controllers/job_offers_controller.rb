@@ -79,7 +79,7 @@ class JobOffersController < ApplicationController
 
   # POST /job_offers/:id/apply_with_form
   def apply_with_form
-    @job_offer = JobOffer.find(params[:id])
+    @job_offer = JobOffer.find_by_slug(params[:id])
 
     if @job_offer.expired?
       flash[:alert] = "This job offer has expired and is no longer accepting applications."
@@ -116,7 +116,7 @@ class JobOffersController < ApplicationController
   end
 
   def apply_with_url
-    @job_offer = JobOffer.find(params[:id])
+    @job_offer = JobOffer.find_by_slug(params[:id])
 
     if @job_offer.expired?
       flash[:alert] = "This job offer has expired and is no longer accepting applications."
@@ -135,7 +135,7 @@ class JobOffersController < ApplicationController
   end
 
   def job_offer
-    @job_offer ||= JobOffer.find(params[:id])
+    @job_offer ||= JobOffer.find_by_slug(params[:id])
   end
 
   def job_offer_form_params

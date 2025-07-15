@@ -1,4 +1,6 @@
 class JobOffer < ApplicationRecord
+  include Sluggi::Slugged
+
   CATEGORIES = %w[Drilling Mining Engineering Safety Technicians].freeze
   HIGHLIGHTED_REGIONS = ["Australia",
     "Canada",
@@ -60,6 +62,16 @@ class JobOffer < ApplicationRecord
     else
       update!(expired_on: time, expired_manually: time, **additional_params)
     end
+  end
+
+  def slug_candidates
+    ["#{employer.company_name}-#{title}",
+      "#{employer.company_name}-#{title}-#{region}-#{category}",
+      "#{employer.company_name}-#{title}-#{Time.current.to_i}"]
+  end
+
+  def slug_value_changed?
+    title_changed? || employer.company_name_changed?
   end
 
   def expired?

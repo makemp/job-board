@@ -25,7 +25,7 @@ https://github.com/BaseSecrete/active_hashcash
 
 ### go through mails and insert logo by any chance? 
 
-## slug url & seo
+##  seo ? title and something?
 
 # Pre deploy:
 ## Actual domain name
