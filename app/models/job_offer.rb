@@ -41,6 +41,10 @@ class JobOffer < ApplicationRecord
     eager_load(:employer, :recent_action).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
   end
 
+  scope :paid, -> do
+    eager_load(:order_placement).where.not(order_placements: {paid_on: nil})
+  end
+
   scope :sorted, -> do
     joins("INNER JOIN (SELECT job_offer_id, MAX(created_at) AS max_created_at
                                                    FROM job_offer_actions GROUP BY job_offer_id)

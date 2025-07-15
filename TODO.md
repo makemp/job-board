@@ -24,8 +24,7 @@ https://github.com/BaseSecrete/active_hashcash
 
 ### remove stripe data on order placement
 
-## bug with duplicate order placements /job offers?
-
+## slug url & seo
 
 # Pre deploy:
 ## Actual domain name

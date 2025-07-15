@@ -1,7 +1,7 @@
 class JobOffersController < ApplicationController
   before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview]
   def index
-    @jobs = JobOffer.valid.sorted.includes(:employer)
+    @jobs = JobOffer.valid.paid.sorted.includes(:employer, :order_placement)
 
     # Apply filters
     @jobs = @jobs.where(category: params[:category]) if params[:category].present?
