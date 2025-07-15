@@ -7,6 +7,7 @@ class OrderPlacement < ApplicationRecord
   delegate :employer, to: :job_offer, allow_nil: true
 
   after_update_commit :broadcast_if_paid, if: :recently_paid_with_invoice_generated?
+  after_create_commit :purge_stripe_data_later
 
   def free?
     read_attribute("free_order") && price.zero?
@@ -58,6 +59,10 @@ class OrderPlacement < ApplicationRecord
   end
 
   private
+
+  def purge_stripe_data_later
+    PurgeStripeDataOnOrderPlacement.set(wait: 7.days).perform_later(id)
+  end
 
   def invoice_stripe_payload
     return @invoice_stripe_payload if @invoice_stripe_payload.present?

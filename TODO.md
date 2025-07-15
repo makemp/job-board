@@ -22,7 +22,8 @@ https://github.com/BaseSecrete/active_hashcash
 
 ### see if external offer is clicked - separate controller.
 
-### remove stripe data on order placement
+
+### go through mails and insert logo by any chance? 
 
 ## slug url & seo
 
