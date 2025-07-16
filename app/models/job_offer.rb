@@ -1,7 +1,7 @@
 class JobOffer < ApplicationRecord
   include Sluggi::Slugged
 
-  CATEGORIES = %w[Drilling Mining Engineering Safety Technicians].freeze
+  CATEGORIES = Categories::CONFIG
   HIGHLIGHTED_REGIONS = ["Australia",
     "Canada",
     "USA",
