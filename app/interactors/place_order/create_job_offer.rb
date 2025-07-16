@@ -10,6 +10,7 @@ class PlaceOrder
         region:,
         subregion:,
         category:,
+        overcategory: JobOffer::CATEGORIES.overcategory_for(category),
         terms_and_conditions:,
         application_type:,
         application_destination:

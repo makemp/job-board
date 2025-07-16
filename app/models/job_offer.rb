@@ -1,7 +1,7 @@
 class JobOffer < ApplicationRecord
   include Sluggi::Slugged
 
-  CATEGORIES = Categories::CONFIG
+  CATEGORIES = Categories
   HIGHLIGHTED_REGIONS = ["Australia",
     "Canada",
     "USA",

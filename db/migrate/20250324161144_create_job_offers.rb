@@ -4,6 +4,7 @@ class CreateJobOffers < ActiveRecord::Migration[8.0]
       t.string :title
       t.string :region
       t.string :subregion
+      t.string :overcategory
       t.string :category
       t.string :application_type
       t.string :application_destination

@@ -34,7 +34,7 @@ class JobOfferForm
     format: {with: /\A.+@.+\z/i, message: "must look like an email"},
     confirmation: {case_sensitive: false}
 
-  validates :category, inclusion: {in: JobOffer::CATEGORIES}
+  validates :category, inclusion: {in: JobOffer::CATEGORIES.categories_names}
   validates :application_type, presence: true, inclusion: {in: JobOffer::APPLICATION_TYPES}
   validates :application_destination, presence: true
 

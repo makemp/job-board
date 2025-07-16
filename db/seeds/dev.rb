@@ -32,7 +32,7 @@ end
   employers.each do |employer|
     titles.each do |title|
       descriptions.each do |description|
-        JobOffer::CATEGORIES.each do |category|
+        JobOffer::CATEGORIES.overcategories_names.each do |overcategory|
           application_type = JobOffer::APPLICATION_TYPES.sample(1).first
           application_destination = if application_type == JobOffer::APPLICATION_TYPE_LINK
             Faker::Internet.url
@@ -46,7 +46,8 @@ end
             region: region,
             subregion: [nil, Faker::Address.state].sample,
             employer: employer,
-            category: category,
+            overcategory: overcategory,
+            category: JobOffer::CATEGORIES.categories_for(overcategory).sample,
             description: Faker::Lorem.sentences(number: 200).join("\n\n"),
             application_destination:,
             application_type:,

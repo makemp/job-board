@@ -58,4 +58,25 @@ class Categories
       "Drivers & Transport"
     ]
   }
+  def self.categories_names
+    CONFIG.values.flatten
+  end
+
+  def self.overcategories_names
+    CONFIG.keys
+  end
+
+  def self.categories_for(overcategory)
+    CONFIG[overcategory] || []
+  end
+
+  def self.sample
+    overcategory = overcategories_names.sample
+    category = categories_for(overcategory).sample
+    [overcategory, category]
+  end
+
+  def self.overcategory_for(category)
+    CONFIG.find { |_, categories| categories.include?(category) }&.first
+  end
 end
