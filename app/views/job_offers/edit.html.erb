@@ -37,7 +37,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
         <%= f.label :category, class: "block text-sm font-medium text-amber-900" %>
-        <%= f.select :category, JobOffer::CATEGORIES, prompt: "Select category", class: "mt-2 w-full border border-gray-300 rounded-lg p-3 focus:ring-amber-500" %>
+        <% grouped_categories = JobOffer::CATEGORIES.overcategories_names.map { |overcat| [overcat, JobOffer::CATEGORIES.categories_for(overcat)] }.to_h %>
+        <%= f.select :category, grouped_options_for_select(grouped_categories, f.object.category), prompt: "Select category", class: "mt-2 w-full border border-gray-300 rounded-lg p-3 focus:ring-amber-500" %>
         <%= error_messages_for(f, :category) %>
       </div>
       <div>
@@ -63,5 +64,3 @@
     <% end %>
   </div>
 </div>
-
-
