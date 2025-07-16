@@ -23,6 +23,7 @@
   )
 %>
 
+
 <div class="min-h-screen bg-amber-50">
   <!-- Filters -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 bg-amber-100 border-b border-amber-200">
@@ -34,7 +35,7 @@
       <div class="w-full lg:w-[30%]">
         <%= label_tag :category, 'Category', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :category,
-                       options_for_select(selectable_grouped_categories, params[:category]),
+            options_for_select(selectable_grouped_categories, params[:category]),
             include_blank: "All Categories",
             class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
