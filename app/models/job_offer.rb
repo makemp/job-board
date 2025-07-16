@@ -104,6 +104,15 @@ class JobOffer < ApplicationRecord
     employer.company_name
   end
 
+  def self.filter_by_category(category)
+    overcategory_check = CATEGORIES.categories_for(category).present?
+    if overcategory_check
+      where(overcategory: category)
+    else
+      where(category: category)
+    end
+  end
+
   delegate :logo, to: :employer
   delegate :paid_on, to: :order_placement, allow_nil: true
 end

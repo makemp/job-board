@@ -4,7 +4,7 @@ class JobOffersController < ApplicationController
     @jobs = JobOffer.valid.paid.sorted.includes(:employer, :order_placement)
 
     # Apply filters
-    @jobs = @jobs.where(category: params[:category]) if params[:category].present?
+    @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
     @jobs = @jobs.where(region: params[:region]) if params[:region].present?
 
     # Handle pagination
