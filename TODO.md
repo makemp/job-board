@@ -6,8 +6,6 @@
 
 
 
-## review  /regions
-
 
 #### Rack attack or maybe a gem but not use cloudflare?
 
@@ -26,6 +24,8 @@ https://github.com/BaseSecrete/active_hashcash
 ### go through mails and insert logo by any chance?
 
 ### validations of length
+
+## sort - ad featured as shown
 
 
 ### privacy policy example? https://rangefront.com/privacy-policy/ change mine

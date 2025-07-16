@@ -21,19 +21,12 @@ FOREIGN KEY ("blob_id")
   REFERENCES "active_storage_blobs" ("id")
 );
 CREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-07-16 12:47:26.588463', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-07-16 14:40:27.343795', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE TABLE IF NOT EXISTS "action_text_rich_texts" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "body" text, "record_type" varchar NOT NULL, "record_id" ulid NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE UNIQUE INDEX "index_action_text_rich_texts_uniqueness" ON "action_text_rich_texts" ("record_type", "record_id", "name") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "special_offers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text, "number_of_vouchers" integer NOT NULL, "price" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
-CREATE TABLE IF NOT EXISTS "order_placements" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "free_order" boolean DEFAULT 0 NOT NULL, "paid_on" datetime(6), "price" integer, "job_offer_id" ulid, "special_offer_id" ulid, "voucher_code" varchar DEFAULT 'STANDARD' NOT NULL, "ready_to_be_placed" boolean DEFAULT 0, "job_offer_form_params" json DEFAULT '{}', "stripe_payload" json DEFAULT '{}', "session_token" varchar, "payment_broadcasted" boolean DEFAULT 0, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "stripe_session_id" varchar /*application='JobBoard'*/, CONSTRAINT "fk_rails_de023b5fe1"
-FOREIGN KEY ("job_offer_id")
-  REFERENCES "job_offers" ("id")
-, CONSTRAINT "fk_rails_b0664bf563"
-FOREIGN KEY ("special_offer_id")
-  REFERENCES "special_offers" ("id")
-);
-CREATE INDEX "index_order_placements_on_job_offer_id" ON "order_placements" ("job_offer_id") /*application='JobBoard'*/;
-CREATE INDEX "index_order_placements_on_special_offer_id" ON "order_placements" ("special_offer_id") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "order_placements" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "free_order" boolean DEFAULT 0 NOT NULL, "paid_on" datetime(6), "price" integer, "orderable_type" varchar, "orderable_id" ulid, "voucher_code" varchar DEFAULT 'STANDARD' NOT NULL, "ready_to_be_placed" boolean DEFAULT 0, "job_offer_form_params" json DEFAULT '{}', "stripe_payload" json DEFAULT '{}', "session_token" varchar, "payment_broadcasted" boolean DEFAULT 0, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "stripe_session_id" varchar /*application='JobBoard'*/);
+CREATE INDEX "index_order_placements_on_orderable" ON "order_placements" ("orderable_type", "orderable_id") /*application='JobBoard'*/;
 CREATE UNIQUE INDEX "index_order_placements_on_stripe_session_id" ON "order_placements" ("stripe_session_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "job_offer_actions" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "action_type" varchar, "valid_till" datetime(6) NOT NULL, "job_offer_id" ulid NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_69aade34a8"
 FOREIGN KEY ("job_offer_id")

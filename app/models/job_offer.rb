@@ -29,9 +29,9 @@ class JobOffer < ApplicationRecord
 
   normalizes :application_destination, with: -> { it.downcase.strip }
 
-  has_many :order_placements
+  has_many :order_placements, as: :orderable
 
-  has_one :order_placement, -> { order(created_at: :desc) }, class_name: "OrderPlacement", inverse_of: :job_offer
+  has_one :order_placement, -> { order(created_at: :desc) }, class_name: "OrderPlacement", inverse_of: :orderable
 
   has_many :job_offer_actions, dependent: :destroy
 

@@ -30,9 +30,11 @@ class ExternalJobOffer < JobOffer
         region: hsh["location"],
         application_destination: hsh["application_destination"],
         category: hsh["category"],
+        overcategory: hsh["overcategory"],
         employer: employer
       }
     )
+    job_offer.order_placements.create!(paid_on: Time.current)
     job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
       valid_till: Time.current + Voucher.default_offer_duration)
   end

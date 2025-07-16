@@ -1,10 +1,9 @@
 class OrderPlacement < ApplicationRecord
-  belongs_to :job_offer, optional: true, inverse_of: :order_placement
-  belongs_to :special_offer, optional: true
+  belongs_to :orderable, polymorphic: true, optional: true, inverse_of: :order_placements
 
   validate :price_consistency
 
-  delegate :employer, to: :job_offer, allow_nil: true
+  delegate :employer, to: :orderable, allow_nil: true
 
   after_update_commit :broadcast_if_paid, if: :recently_paid_with_invoice_generated?
   after_create_commit :purge_stripe_data_later
@@ -25,7 +24,7 @@ class OrderPlacement < ApplicationRecord
 
   def job_offer_form_attributes
     jop = job_offer_form_params["attributes"]
-    jop = jop.merge(logo: job_offer.logo) if job_offer.logo.present?
+    jop = jop.merge(logo: orderable.logo) if orderable.respond_to?(:logo) && orderable.logo.present?
     jop
   end
 

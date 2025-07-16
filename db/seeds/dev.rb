@@ -50,10 +50,10 @@ end
             category: JobOffer::CATEGORIES.categories_for(overcategory).sample,
             description: Faker::Lorem.sentences(number: 200).join("\n\n"),
             application_destination:,
-            application_type:,
-            order_placement: OrderPlacement.create!(paid_on: Time.current)
+            application_type:
           )
 
+          job.order_placements << OrderPlacement.create!(paid_on: Time.current)
           job.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
             valid_till: Time.current + Voucher.default_offer_duration)
 
@@ -71,5 +71,6 @@ ExternalJobOffer.from_hash({
   title: "IELTS USA Examiner",
   region: "USA",
   application_destination: "https://minejobs.com/job-details/?title=IELTS_USA_Examiner&id=6308502",
-  category: "Technicians"
+  category: "Human Resources & Training",
+  overcategory: "Corporate & Support Services"
 })
