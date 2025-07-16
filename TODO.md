@@ -25,6 +25,11 @@ https://github.com/BaseSecrete/active_hashcash
 
 ### go through mails and insert logo by any chance?
 
+### validations of length
+
+
+### privacy policy example? https://rangefront.com/privacy-policy/ change mine
+
 # Pre deploy:
 ## Actual domain name
 ## think about env variables -> staging or production email sender, setup the email

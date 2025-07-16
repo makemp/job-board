@@ -5,15 +5,22 @@ class JobOffer < ApplicationRecord
   HIGHLIGHTED_REGIONS = ["Australia",
     "Canada",
     "USA",
+    "Argentina",
+    "Brazil",
+    "Colombia",
+    "Peru",
     "UAE",
+    "Saudi Arabia",
+    "Qatar",
+    "Kuwait",
+    "Iraq",
     "Chile",
     "South Africa",
     "Kazakhstan",
     "North Sea - Offshore",
     "Gulf of America (Mexico) - Offshore",
     "West Africa - Offshore",
-    "Remote/Rotational",
-    "Other"].freeze
+    "Remote/Rotational"].sort.freeze
   REGIONS = YAML.load_file(Rails.root.join("config", "regions.yml")).freeze
 
   APPLICATION_TYPE_LINK = "Link".freeze
