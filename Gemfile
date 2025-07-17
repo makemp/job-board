@@ -93,3 +93,5 @@ gem "ratonvirus-clamby" # Adapter for ClamAV
 gem "sluggi"
 
 gem "meta-tags", "~> 2.22"
+
+gem 'dotenv-rails', groups: [:development, :test]
