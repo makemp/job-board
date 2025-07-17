@@ -27,10 +27,10 @@ class ExternalJobOffer < JobOffer
       {
         application_type: hsh["company"], # yes, we are using this as a company name
         title: hsh["title"],
-        region: hsh["location"],
+        region: hsh["region"],
         application_destination: hsh["application_destination"],
         category: hsh["category"],
-        overcategory: hsh["overcategory"],
+        overcategory: JobOffer::CATEGORIES.overcategory_for(hsh["category"]),
         employer: employer
       }
     )
