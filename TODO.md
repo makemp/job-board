@@ -25,8 +25,6 @@ https://github.com/BaseSecrete/active_hashcash
 ### staging cookie auth
 
 
-### go through mails and insert logo by any chance?
-
 ## sort - ad featured as shown
 
 
