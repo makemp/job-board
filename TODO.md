@@ -22,13 +22,10 @@ https://github.com/BaseSecrete/active_hashcash
 
 ### see if external offer is clicked - separate controller.
 
-
 ### staging cookie auth
 
 
 ### go through mails and insert logo by any chance?
-
-### validations of length
 
 ## sort - ad featured as shown
 

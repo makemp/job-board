@@ -27,18 +27,20 @@ class JobOfferForm
   attr_accessor :logo
 
   validates_acceptance_of :terms_and_conditions, accept: [true, "y", "yes"]
-  validates :description, presence: true
-  validates :title, presence: true
-  validates :company_name, presence: true
+  validates :description, presence: true, length: {maximum: 15_000}
+  validates :title, presence: true, length: {maximum: 255}
+  validates :company_name, presence: true, length: {maximum: 255}
   validates :email, presence: true,
     format: {with: /\A.+@.+\z/i, message: "must look like an email"},
-    confirmation: {case_sensitive: false}
+    confirmation: {case_sensitive: false},
+    length: {maximum: 255}
 
   validates :category, inclusion: {in: JobOffer::CATEGORIES.categories_names}
   validates :application_type, presence: true, inclusion: {in: JobOffer::APPLICATION_TYPES}
-  validates :application_destination, presence: true
+  validates :application_destination, presence: true, length: {maximum: 600}
 
   validates :region, inclusion: {in: JobOffer::HIGHLIGHTED_REGIONS + JobOffer::REGIONS}
+  validates :subregion, {length: {maximum: 255}}
 
   validate :logo_type_and_size
   validate :voucher_code_check
