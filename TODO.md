@@ -4,7 +4,9 @@
 #### Voucher per domain. No open-domains like gmail, hotmail, etc.
 #### if JobOffers::Submit fails send email to admin? And maybe customer? If customer we need to filter out invalid vouchers. but I think it is done in JobOfferForm class
 
-
+#### 5 days to expiry, expired mails
+#### extend job offer
+#### sitemap
 
 
 #### Rack attack or maybe a gem but not use cloudflare?
@@ -19,6 +21,9 @@ https://github.com/BaseSecrete/active_hashcash
 ### anti-virus integration for attachemnts
 
 ### see if external offer is clicked - separate controller.
+
+
+### staging cookie auth
 
 
 ### go through mails and insert logo by any chance?

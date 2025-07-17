@@ -72,8 +72,11 @@
       
       <!-- Reset Filters -->
       <div class="w-full lg:w-[15%] flex justify-center lg:justify-end lg:items-end">
-        <%= link_to "Reset", job_offers_path,
-            class: "inline-flex items-center px-4 py-2 border border-transparent text-base sm:text-lg font-medium rounded-md shadow-sm text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300" %>
+        <button type="button"
+                data-action="click->filter#reset"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-base sm:text-lg font-medium rounded-md shadow-sm text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300">
+          Reset
+        </button>
       </div>
     <% end %>
   </div>

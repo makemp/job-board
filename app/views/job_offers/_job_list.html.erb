@@ -1,9 +1,49 @@
-<div class="grid gap-6">
-  <% jobs.each do |job| %>
-     <%if job.is_a?(ExternalJobOffer)  %>
-      <%= render 'external_job_card', job: job %>
-    <% else %>
-      <%= render 'job_card', job: job %>
+<% if jobs.any? %>
+  <div class="grid gap-6">
+    <% jobs.each do |job| %>
+       <%if job.is_a?(ExternalJobOffer)  %>
+        <%= render 'external_job_card', job: job %>
+      <% else %>
+        <%= render 'job_card', job: job %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% else %>
+  <div class="flex flex-col items-center justify-center py-16 px-4">
+    <div class="text-center max-w-md">
+      <!-- Icon -->
+      <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-amber-100 mb-6">
+        <svg class="h-10 w-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+
+      <!-- Heading -->
+      <h3 class="text-2xl font-semibold text-gray-900 mb-2">
+        No job offers found
+      </h3>
+
+      <!-- Description -->
+      <p class="text-gray-600 mb-6 leading-relaxed">
+        <% if params[:category].present? || params[:region].present? %>
+          We couldn't find any job offers matching your current filters. Try adjusting your search criteria or browse all available positions.
+        <% else %>
+          There are currently no job offers available. Please check back soon for new opportunities.
+        <% end %>
+      </p>
+
+      <!-- Action Button -->
+      <% if params[:category].present? || params[:region].present? %>
+        <button type="button"
+                data-reset-url="<%= job_offers_path %>"
+                onclick="this.querySelector('form') || document.querySelector('form[data-controller~=filter]').reset(); window.location.href = this.dataset.resetUrl"
+                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-200">
+          <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Reset filters
+        </button>
+      <% end %>
+    </div>
+  </div>
+<% end %>
