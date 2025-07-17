@@ -33,7 +33,7 @@
             Expired
           </button>
         <% else %>
-          <a href="<%= job.application_destination %>" target="_blank" rel="noopener noreferrer" class="bg-orange-600 text-white px-3 py-1 text-sm rounded-full hover:bg-orange-700 transition-colors duration-300 inline-flex items-center">
+          <a href="<%= apply_for_external_offer_job_offer_path(job) %>" target="_blank" rel="noopener noreferrer" class="bg-orange-600 text-white px-3 py-1 text-sm rounded-full hover:bg-orange-700 transition-colors duration-300 inline-flex items-center">
             Go to offer
             <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -124,7 +124,7 @@
               Expired
             </button>
           <% else %>
-            <a href="<%= job.application_destination %>" target="_blank" rel="noopener noreferrer" class="bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-700 transition-colors duration-300 inline-flex items-center">
+            <a href="<%= apply_for_external_offer_job_offer_path(job) %>" target="_blank" rel="noopener noreferrer" class="bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-700 transition-colors duration-300 inline-flex items-center">
               Go to offer
               <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>

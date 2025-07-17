@@ -1,5 +1,6 @@
 class JobOffersController < ApplicationController
-  before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview]
+  before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview,
+    :apply_for_external_offer]
   def index
     @jobs = JobOffer.valid.paid.sorted.includes(:employer, :order_placement)
 
@@ -124,6 +125,13 @@ class JobOffersController < ApplicationController
     end
 
     ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id
+
+    redirect_to @job_offer.application_destination, allow_other_host: true
+  end
+
+  def apply_for_external_offer
+    @job_offer = ExternalJobOffer.find_by_slug(params[:id])
+    ahoy.track "apply_external_job_offer", job_offer_id: @job_offer.id
 
     redirect_to @job_offer.application_destination, allow_other_host: true
   end

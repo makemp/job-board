@@ -46,7 +46,6 @@ class JobOfferForm
   validate :voucher_code_check
 
   validate :employer_check
-
   # Include attr_accessor attributes in attribute_names
   def self.attribute_names
     super + ["logo"]

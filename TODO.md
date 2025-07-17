@@ -6,6 +6,8 @@
 
 #### 5 days to expiry, expired mails
 #### extend job offer
+### privacy policy example? https://rangefront.com/privacy-policy/ change mine
+
 #### sitemap
 
 
@@ -16,18 +18,13 @@ https://github.com/BaseSecrete/active_hashcash
 
 ## blazer
 
-### password rules -> do we really need that?
-
 ### anti-virus integration for attachemnts
-
-### see if external offer is clicked - separate controller.
 
 ### staging cookie auth
 
 ## sort - ad featured as shown
 
 
-### privacy policy example? https://rangefront.com/privacy-policy/ change mine
 
 # Pre deploy:
 ## Actual domain name
