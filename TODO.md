@@ -22,11 +22,9 @@ https://github.com/BaseSecrete/active_hashcash
 
 ### staging cookie auth
 
-## sort - ad featured as shown
-
-
 
 # Pre deploy:
+## Integration with DuoCircle
 ## Actual domain name
 ## think about env variables -> staging or production email sender, setup the email
 ## RorVsWild

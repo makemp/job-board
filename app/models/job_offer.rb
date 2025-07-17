@@ -57,7 +57,7 @@ class JobOffer < ApplicationRecord
   scope :sorted, -> do
     joins("INNER JOIN (SELECT job_offer_id, MAX(created_at) AS max_created_at
                                                    FROM job_offer_actions GROUP BY job_offer_id)
-    max_actions ON job_offers.id = max_actions.job_offer_id").order(max_created_at: :desc)
+    max_actions ON job_offers.id = max_actions.job_offer_id").order(featured: :desc, max_created_at: :desc)
   end
 
   has_rich_text :description
