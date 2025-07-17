@@ -7,11 +7,12 @@ class Employers::SessionsController < Devise::SessionsController
   def create
     email = params[:employer][:email]
     password = params[:employer][:password]
+    remember_me = params[:employer][:remember_me] == "1"
 
     @employer = Employer.find_by(email: email)
 
     if @employer&.valid_password?(password)
-      sign_in(:employer, @employer)
+      sign_in(:employer, @employer, remember_me: remember_me)
 
       # Use turbo_stream to navigate to dashboard
       render turbo_stream: turbo_stream.replace("login_form", "<script>window.location.href = '#{after_sign_in_path_for(@employer)}';</script>")
@@ -44,10 +45,11 @@ class Employers::SessionsController < Devise::SessionsController
   # POST /employers/verify_code
   def verify_code
     email = params[:employer][:email]
+    remember_me = params[:employer][:remember_me] == "1"
     @employer = Employer.find_by(email: email)
 
     if @employer && @employer.login_code == params[:employer][:code] && @employer.login_code_sent_at > 10.minutes.ago
-      sign_in(:employer, @employer)
+      sign_in(:employer, @employer, remember_me: remember_me)
 
       # Use turbo_stream to navigate to dashboard
       render turbo_stream: turbo_stream.replace("login_form", "<script>window.location.href = '#{after_sign_in_path_for(@employer)}';</script>")

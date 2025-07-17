@@ -34,8 +34,8 @@
         </tr>
         </thead>
         <tbody>
-        <% current_employer.order_placements.eager_load(job_offer: :job_offer_actions).each do |order_placement| %>
-          <%= render 'job_offer', job_offer: order_placement.job_offer %>
+        <% current_employer.order_placements.includes(orderable: :job_offer_actions).each do |order_placement| %>
+          <%= render 'job_offer', job_offer: order_placement.orderable, order_placement: order_placement %>
         <% end %>
         </tbody>
       </table>

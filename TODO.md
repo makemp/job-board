@@ -24,7 +24,6 @@ https://github.com/BaseSecrete/active_hashcash
 
 ### staging cookie auth
 
-
 ## sort - ad featured as shown
 
 

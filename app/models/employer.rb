@@ -14,7 +14,7 @@ class Employer < User
   validates :stripe_customer_id, uniqueness: true, allow_nil: true
 
   # Devise configuration
-  devise :database_authenticatable, authentication_keys: [:email]
+  devise :database_authenticatable, :rememberable, authentication_keys: [:email]
 
   # Active Storage attachment for employer logo
 
@@ -41,5 +41,5 @@ class Employer < User
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable
+  # devise :database_authenticatable
 end
