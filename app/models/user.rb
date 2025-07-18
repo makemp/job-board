@@ -9,7 +9,7 @@ class User < ApplicationRecord
       errors.add :password, "must include at least one lowercase letter, one uppercase letter, and one special character"
     end
 
-    unless password.size < 8
+    if password.size < 8
       errors.add :password, "must be at least 8 characters long"
     end
   end

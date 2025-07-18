@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   # Add impersonation notification
   before_action :show_impersonation_notice
+  before_action :check_staging_access if ENV["STAGING_ENV"]
 
   private
 
@@ -22,5 +23,12 @@ class ApplicationController < ActionController::Base
 
   def impersonating?
     current_employer && current_admin
+  end
+
+  def check_staging_access
+    token = cookies[:staging_access]
+    unless token && StagingToken.exists?(value: token)
+      render plain: "Forbidden", status: :forbidden
+    end
   end
 end

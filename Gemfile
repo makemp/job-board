@@ -94,4 +94,4 @@ gem "sluggi"
 
 gem "meta-tags", "~> 2.22"
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem "dotenv-rails", groups: [:development, :test]

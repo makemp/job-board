@@ -21,6 +21,7 @@ https://github.com/BaseSecrete/active_hashcash
 ### anti-virus integration for attachemnts
 
 ### staging cookie auth
+### from above stripe is ok,
 
 
 # Pre deploy:

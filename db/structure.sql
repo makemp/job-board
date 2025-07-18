@@ -21,7 +21,7 @@ FOREIGN KEY ("blob_id")
   REFERENCES "active_storage_blobs" ("id")
 );
 CREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-07-16 14:40:27.343795', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-07-18 09:28:51.902716', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE TABLE IF NOT EXISTS "action_text_rich_texts" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "body" text, "record_type" varchar NOT NULL, "record_id" ulid NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE UNIQUE INDEX "index_action_text_rich_texts_uniqueness" ON "action_text_rich_texts" ("record_type", "record_id", "name") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "special_offers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text, "number_of_vouchers" integer NOT NULL, "price" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
@@ -44,7 +44,10 @@ CREATE UNIQUE INDEX "index_job_offers_on_slug" ON "job_offers" ("slug") /*applic
 CREATE TABLE IF NOT EXISTS "slugs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "slug" varchar NOT NULL, "sluggable_id" integer NOT NULL, "sluggable_type" varchar NOT NULL, "created_at" datetime(6));
 CREATE UNIQUE INDEX "index_slugs_on_slug_and_sluggable_type" ON "slugs" ("slug", "sluggable_type") /*application='JobBoard'*/;
 CREATE INDEX "index_slugs_on_sluggable_id" ON "slugs" ("sluggable_id") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "staging_tokens" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE UNIQUE INDEX "index_staging_tokens_on_value" ON "staging_tokens" ("value") /*application='JobBoard'*/;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250717210609'),
 ('20250715122622'),
 ('20250715122608'),
 ('20250705000001'),

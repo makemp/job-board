@@ -67,7 +67,10 @@ Rails.application.routes.draw do
     root to: "admin#index", as: :dashboard
     post "impersonate/:id", to: "admin#impersonate", as: :impersonate_employer
     delete "stop_impersonating", to: "admin#stop_impersonating", as: :stop_impersonating_employers
+    resources :staging_tokens, only: [:create, :destroy], defaults: {format: :text}
   end
+
+  get "/staging_access/:token", to: "staging_access#create", as: :staging_access, constraints: {token: /[A-Za-z0-9]+/}
 
   if Rails.env.development?
     scope module: :dev_shortcuts do
