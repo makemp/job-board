@@ -1,3 +1,18 @@
+<%
+  # Set meta tags for individual job page
+  job_title = "#{@job_offer.title} at #{@job_offer.company_name}"
+  job_description = truncate(strip_tags(@job_offer.description), length: 160)
+  job_description = "#{job_title} in #{@job_offer.region}. #{job_description}" if job_description.present?
+  job_description = "#{job_title} - Apply now on DrillCrew job board." if job_description.blank?
+
+  set_meta_tags(
+    title: "#{job_title} - DrillCrew -preview",
+    description: job_description,
+    url: job_offer_url(@job_offer),
+    type: "article"
+  )
+%>
+
 <div class="h-full bg-white overflow-y-auto">
   <div class="p-6">
     <!-- Header with close button -->
@@ -86,9 +101,10 @@
           </div>
         </div>
       <% elsif @job_offer.application_type == 'Form' %>
+        <%= turbo_frame_tag "job_offer_form-#{@job_offer.slug}" do %>
         <div class="bg-amber-50 p-4 rounded-lg">
           <h3 class="text-lg font-bold text-amber-900 mb-4">Apply for this job</h3>
-          <%= form_with url: apply_with_form_job_offer_path(@job_offer), local: true, html: { multipart: true, class: 'space-y-4' } do |f| %>
+          <%= form_with url: apply_with_form_job_offer_path(@job_offer), html: { multipart: true, class: 'space-y-4' } do |f| %>
             <div>
               <%= f.label :cv, 'Upload CV', class: 'block text-amber-900 mb-1' %>
               <%= f.file_field :cv, class: 'w-full bg-amber-700 border border-amber-800 rounded-md p-2 text-white', required: true, accept: '.pdf,.doc,.docx' %>
@@ -103,6 +119,7 @@
             <%= hashcash_hidden_field_tag %>
           <% end %>
         </div>
+        <% end  %> <!-- End of turbo_frame_tag -->
       <% else %>
         <%= link_to 'Apply Now', apply_with_url_job_offer_path(@job_offer), target: '_blank', rel: 'noopener noreferrer', class: 'block w-full text-center bg-amber-700 hover:bg-amber-800 text-white px-4 py-3 rounded-lg font-bold shadow transition-colors duration-300' %>
       <% end %>

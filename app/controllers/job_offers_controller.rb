@@ -2,7 +2,7 @@ class JobOffersController < ApplicationController
   before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview,
     :apply_for_external_offer]
 
-  before_action :check_hashcash, only: [:apply_with_form]
+  before_action -> { handle_check_hashcash("job_offer_form-#{params[:id]}") }, only: [:apply_with_form]
   def index
     @jobs = JobOffer.valid.paid.sorted.includes(:employer, :order_placement)
 
@@ -85,37 +85,50 @@ class JobOffersController < ApplicationController
     @job_offer = JobOffer.find_by_slug(params[:id])
 
     if @job_offer.expired?
-      flash[:alert] = "This job offer has expired and is no longer accepting applications."
-      redirect_to job_offer_path(@job_offer) and return
+      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+        partial: "shared/error_message",
+        locals: {message: "This job offer has expired and is no longer accepting applications.", job_offer: @job_offer}
+      return
     end
 
     cv = params[:cv]
     comments = params[:comments]
 
     if cv.nil?
-      flash[:alert] = "Please upload your CV."
-      redirect_to job_offer_path(@job_offer) and return
+      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+        partial: "shared/error_message",
+        locals: {message: "Please upload your CV.", job_offer: @job_offer}
+      return
     end
 
     unless cv.respond_to?(:content_type) && %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].include?(cv.content_type)
-      flash[:alert] = "Invalid CV file type. Only PDF, DOC, and DOCX are allowed."
-      redirect_to job_offer_path(@job_offer) and return
+      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+        partial: "shared/error_message",
+        locals: {message: "Invalid CV file type. Only PDF, DOC, and DOCX are allowed.", job_offer: @job_offer}
+      return
     end
+
     if cv.size > 5.megabytes
-      flash[:alert] = "CV file is too large (max 5MB)."
-      redirect_to job_offer_path(@job_offer) and return
+      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+        partial: "shared/error_message",
+        locals: {message: "CV file is too large (max 5MB).", job_offer: @job_offer}
+      return
     end
 
     if comments.present? && comments.length > 500
-      flash[:alert] = "Comments are too long (max 500 characters)."
-      redirect_to job_offer_path(@job_offer) and return
+      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+        partial: "shared/error_message",
+        locals: {message: "Comments are too long (max 500 characters).", job_offer: @job_offer}
+      return
     end
+
     @job_offer.job_offer_applications.create!(cv: cv, comments: comments).process
 
-    flash[:notice] = "Your application has been sent to the employer."
     ahoy.track "apply_with_form", job_offer_id: @job_offer.id
 
-    redirect_to job_offer_path(@job_offer)
+    render turbo_stream: turbo_stream.update("job_offer_form-#{@job_offer.slug}",
+      partial: "application_sent",
+      locals: {message: "Your application has been sent to the employer!", job_offer: @job_offer})
   end
 
   def apply_with_url
