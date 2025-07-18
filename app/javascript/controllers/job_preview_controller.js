@@ -218,43 +218,10 @@ export default class extends Controller {
       })
       .then(html => {
         this.previewPanelTarget.innerHTML = html
-        // Initialize Hashcash for dynamically inserted input with monkey patch fix
+        // Initialize Hashcash for dynamically inserted input
         const hashcashInput = this.previewPanelTarget.querySelector('input[data-hashcash]')
         if (hashcashInput && window.Hashcash) {
-          try {
-            // Create a patched version of Hashcash that fixes the variable scoping
-            const originalHashcash = window.Hashcash
-            function PatchedHashcash(input) {
-              var options = JSON.parse(input.getAttribute("data-hashcash"))
-              originalHashcash.disableParentForm(input, options)
-              input.dispatchEvent(new CustomEvent("hashcash:mint", {bubbles: true}))
-
-              originalHashcash.mint(options.resource, options, function(stamp) {
-                input.value = stamp.toString()
-                originalHashcash.enableParentForm(input, options)
-                input.dispatchEvent(new CustomEvent("hashcash:minted", {bubbles: true, detail: {stamp: stamp}}))
-              })
-
-              this.input = input
-              input.form.addEventListener("submit", this.preventFromAutoSubmitFromPasswordManagers.bind(this))
-            }
-
-            // Copy all static methods and properties
-            Object.setPrototypeOf(PatchedHashcash, originalHashcash)
-            Object.assign(PatchedHashcash, originalHashcash)
-            PatchedHashcash.prototype = originalHashcash.prototype
-
-            new PatchedHashcash(hashcashInput)
-          } catch (error) {
-            console.warn('Hashcash initialization failed:', error)
-            // Fallback: just ensure the form is enabled
-            const form = hashcashInput.form
-            if (form) {
-              form.querySelectorAll("[type=submit]").forEach(function(submit) {
-                submit.disabled = false
-              })
-            }
-          }
+          new Hashcash(hashcashInput)
         }
       })
       .catch(error => {

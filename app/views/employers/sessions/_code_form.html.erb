@@ -11,4 +11,5 @@
     <%= f.label :remember_me, class: "ml-2 text-gray-600" %>
   </div>
   <%= f.submit 'Sign in', class: "w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-amber-900 hover:bg-amber-700 transition-colors duration-300" %>
+  <%= hashcash_hidden_field_tag %>
 <% end %>
