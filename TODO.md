@@ -9,12 +9,7 @@
 ### privacy policy example? https://rangefront.com/privacy-policy/ change mine
 
 #### sitemap
-
-
-#### Rack attack or maybe a gem but not use cloudflare?
-
-## active_hashcash
-https://github.com/BaseSecrete/active_hashcash
+# above after the release can be.
 
 ## blazer
 

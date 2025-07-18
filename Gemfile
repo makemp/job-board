@@ -97,3 +97,4 @@ gem "sluggi"
 gem "meta-tags", "~> 2.22"
 
 gem "active_hashcash"
+gem "rack-attack"
