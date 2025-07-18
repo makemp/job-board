@@ -1,4 +1,12 @@
 class Employers::SessionsController < Devise::SessionsController
+  include ActiveHashcash
+
+  rescue_from ActionController::InvalidAuthenticityToken do
+    flash[:alert] = "You look like a bot."
+    redirect_to root_path
+  end
+
+  before_action :check_hashcash, only: [:create, :process_email, :verify_code]
   # GET /employers/sign_in
   def new
     super

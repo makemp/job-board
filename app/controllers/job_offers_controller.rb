@@ -1,6 +1,8 @@
 class JobOffersController < ApplicationController
   before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview,
     :apply_for_external_offer]
+
+  before_action :check_hashcash, only: [:apply_with_form]
   def index
     @jobs = JobOffer.valid.paid.sorted.includes(:employer, :order_placement)
 

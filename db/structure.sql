@@ -46,7 +46,11 @@ CREATE UNIQUE INDEX "index_slugs_on_slug_and_sluggable_type" ON "slugs" ("slug",
 CREATE INDEX "index_slugs_on_sluggable_id" ON "slugs" ("sluggable_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "staging_tokens" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE UNIQUE INDEX "index_staging_tokens_on_value" ON "staging_tokens" ("value") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "active_hashcash_stamps" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "version" varchar NOT NULL, "bits" integer NOT NULL, "date" date NOT NULL, "resource" varchar NOT NULL, "ext" varchar NOT NULL, "rand" varchar NOT NULL, "counter" varchar NOT NULL, "request_path" varchar, "ip_address" varchar, "context" json, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+CREATE INDEX "index_active_hashcash_stamps_on_ip_address_and_created_at" ON "active_hashcash_stamps" ("ip_address", "created_at") WHERE ip_address IS NOT NULL /*application='JobBoard'*/;
+CREATE UNIQUE INDEX "index_active_hashcash_stamps_unique" ON "active_hashcash_stamps" ("counter", "rand", "date", "resource", "bits", "version", "ext") /*application='JobBoard'*/;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250718105046'),
 ('20250717210609'),
 ('20250715122622'),
 ('20250715122608'),

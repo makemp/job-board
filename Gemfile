@@ -56,6 +56,8 @@ group :development, :test do
   gem "factory_bot_rails"
 
   gem "faker"
+
+  gem "dotenv-rails"
 end
 
 group :development do
@@ -94,4 +96,4 @@ gem "sluggi"
 
 gem "meta-tags", "~> 2.22"
 
-gem "dotenv-rails", groups: [:development, :test]
+gem "active_hashcash"

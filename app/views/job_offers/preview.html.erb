@@ -100,6 +100,7 @@
             <div>
               <%= f.submit 'Send Application', class: 'w-full bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg font-bold shadow transition-colors duration-300' %>
             </div>
+            <%= hashcash_hidden_field_tag %>
           <% end %>
         </div>
       <% else %>

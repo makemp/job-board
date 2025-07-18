@@ -110,6 +110,7 @@
           <div class="flex justify-end">
             <%= f.submit 'Send Application', class: 'bg-amber-700 hover:bg-amber-800 text-white px-6 py-3 rounded-lg font-bold shadow transition-colors duration-300' %>
           </div>
+          <%= hashcash_hidden_field_tag %>
         <% end %>
       </div>
     </div>

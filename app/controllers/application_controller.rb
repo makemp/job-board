@@ -1,4 +1,10 @@
 class ApplicationController < ActionController::Base
+  rescue_from ActionController::InvalidAuthenticityToken do
+    flash[:alert] = "You look like a bot."
+    redirect_to root_path
+  end
+
+  include ActiveHashcash
   before_action :assign_flash_from_query
 
   include Pagy::Backend
