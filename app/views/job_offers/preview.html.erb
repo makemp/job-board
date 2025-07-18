@@ -105,6 +105,7 @@
         <div class="bg-amber-50 p-4 rounded-lg">
           <h3 class="text-lg font-bold text-amber-900 mb-4">Apply for this job</h3>
           <%= form_with url: apply_with_form_job_offer_path(@job_offer), html: { multipart: true, class: 'space-y-4' } do |f| %>
+            <%= hashcash_hidden_field_tag %>
             <div>
               <%= f.label :cv, 'Upload CV', class: 'block text-amber-900 mb-1' %>
               <%= f.file_field :cv, class: 'w-full bg-amber-700 border border-amber-800 rounded-md p-2 text-white', required: true, accept: '.pdf,.doc,.docx' %>
@@ -116,7 +117,7 @@
             <div>
               <%= f.submit 'Send Application', class: 'w-full bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg font-bold shadow transition-colors duration-300' %>
             </div>
-            <%= hashcash_hidden_field_tag %>
+
           <% end %>
         </div>
         <% end  %> <!-- End of turbo_frame_tag -->

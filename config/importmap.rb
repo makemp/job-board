@@ -8,4 +8,4 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "@rails/request.js", to: "@rails--request.js.js" # @0.0.11
 pin "trix"
 pin "@rails/actiontext", to: "actiontext.esm.js"
-pin "hashcash.js", to: "hashcash.js"
+pin "hashcash", to: "hashcash.js"

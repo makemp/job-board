@@ -6,6 +6,8 @@ module HashcashCustoms
   end
 
   def handle_check_hashcash(turbo_tag_to_be_replaced = nil)
+    return unless ENV['HASHCASH_ENABLED'] == 'true'
+
     check_hashcash
   rescue ActionController::InvalidAuthenticityToken
     if request.xhr? || turbo_frame_request?
