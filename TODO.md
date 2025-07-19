@@ -16,6 +16,7 @@
 ### anti-virus integration for attachemnts
 
 ## dashboard  dla hascash
+## hashcash javascript trick dla loginu jak i dla preview zrobilem
 
 
 # Pre deploy:

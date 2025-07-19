@@ -6,9 +6,8 @@ module HashcashCustoms
   end
 
   def handle_check_hashcash(turbo_tag_to_be_replaced = nil)
-    return unless ENV["HASHCASH_ENABLED"] == "true"
-
-    check_hashcash
+    # check_hashcash
+    HashcashVerifier.verify(params[:hashcash], resource: request.remote_ip)
   rescue ActionController::InvalidAuthenticityToken
     if request.xhr? || turbo_frame_request?
       raise "Missing tag to be replaced" if turbo_tag_to_be_replaced.nil?
