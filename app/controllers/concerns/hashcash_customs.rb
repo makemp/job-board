@@ -6,9 +6,10 @@ module HashcashCustoms
   end
 
   def handle_check_hashcash(turbo_tag_to_be_replaced = nil)
-    # check_hashcash
-    HashcashVerifier.verify(params[:hashcash], resource: request.remote_ip)
-  rescue ActionController::InvalidAuthenticityToken
+    # request_remote_ip = Rails.env.production? ? request.remote_ip : "localhost"
+    HashcashVerifier.verify(params[:hashcash], resource: request.remote_ip, debug: true)
+  rescue HashcashVerifier::VerificationError => e
+    Rails.logger.warn(e.message)
     if request.xhr? || turbo_frame_request?
       raise "Missing tag to be replaced" if turbo_tag_to_be_replaced.nil?
       render turbo_stream: turbo_stream.replace(turbo_tag_to_be_replaced,

@@ -1,7 +1,7 @@
-<div class="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow">
+<div class="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow" data-controller="login">
   <h2 class="text-2xl font-semibold mb-6 text-center text-amber-900">Employer Sign In</h2>
 
-  <%= turbo_frame_tag "login_form" do %>
+  <%= turbo_frame_tag "login_form", data: { login_target: "container" } do %>
     <%= render "email_form" %>
   <% end %>
 
