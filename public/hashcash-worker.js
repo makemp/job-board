@@ -8,7 +8,7 @@
 /**
  * Checks if the leading bits of a hash buffer are all zero.
  */
-console.log('hashcash-worker.js');
+// console.log('hashcash-worker.js');
 function checkHash(hashBuffer, bits) {
     const hashView = new DataView(hashBuffer);
     let bitsChecked = 0;
@@ -43,7 +43,7 @@ function checkHash(hashBuffer, bits) {
  * Listen for a message from the main thread to start the work.
  */
 self.onmessage = async function(e) {
-    console.log("Hashcash worker started with data:", e.data);
+    // console.log("Hashcash worker started with data:", e.data);
     const { version, bits, date, resource, extension, rand } = e.data;
     const encoder = new TextEncoder();
     let counter = 0;
@@ -55,17 +55,17 @@ self.onmessage = async function(e) {
 
         // --- DEBUGGING LOGS ---
         // Log progress every 10,000 attempts to see if it's working.
-        if (counter % 10000 === 0) {
-            const hexDigest = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-            console.log(`Worker attempt #${counter}, hash: ${hexDigest.substring(0, 10)}...`);
-        }
+        // if (counter % 10000 === 0) {
+        //    const hexDigest = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+        //    console.log(`Worker attempt #${counter}, hash: ${hexDigest.substring(0, 10)}...`);
+        //}
         // --- END DEBUGGING ---
 
 
         if (checkHash(hashBuffer, bits)) {
             // --- DEBUGGING LOG ---
-            console.log(`%cSolution found at counter ${counter}!`, 'color: green; font-weight: bold;');
-            console.log("Sending stamp to main thread:", stampStr);
+           // console.log(`%cSolution found at counter ${counter}!`, 'color: green; font-weight: bold;');
+           // console.log("Sending stamp to main thread:", stampStr);
             // --- END DEBUGGING ---
 
             self.postMessage(stampStr);

@@ -7,7 +7,7 @@ module HashcashCustoms
 
   def handle_check_hashcash(turbo_tag_to_be_replaced = nil)
     # request_remote_ip = Rails.env.production? ? request.remote_ip : "localhost"
-    HashcashVerifier.verify(params[:hashcash], resource: request.remote_ip, debug: true)
+    HashcashVerifier.verify(params[:hashcash], resource: request.remote_ip, debug: false)
   rescue HashcashVerifier::VerificationError => e
     Rails.logger.warn(e.message)
     if request.xhr? || turbo_frame_request?

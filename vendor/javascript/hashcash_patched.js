@@ -2,7 +2,7 @@
 // NOTE: This is useless without mandatory server-side validation.
 
 const Hashcash = function(input) {
-  console.log("Hashcash constructor called for input:", input);
+  //console.log("Hashcash constructor called for input:", input);
   const options = JSON.parse(input.getAttribute("data-hashcash"));
   Hashcash.disableParentForm(input, options);
   input.dispatchEvent(new CustomEvent("hashcash:mint", { bubbles: true }));
@@ -11,7 +11,7 @@ const Hashcash = function(input) {
   const startedAt = performance.now();
 
   Hashcash.mint(options.resource, options, function(stamp) {
-    console.log("Callback received from worker with solved stamp:", stamp);
+   // console.log("Callback received from worker with solved stamp:", stamp);
     // Attach performance metrics to the final stamp object.
     stamp.startedAt = startedAt;
     stamp.endedAt = performance.now();
@@ -34,9 +34,9 @@ Hashcash.initializeNewInputs = function() {
   // Find all inputs that have the attribute but have not been initialized.
   const inputs = document.querySelectorAll("input[data-hashcash]:not([data-hashcash-initialized])");
 
-  if (inputs.length > 0) {
-    console.log(`Found ${inputs.length} new hashcash input(s). Initializing.`);
-  }
+  //if (inputs.length > 0) {
+  //  console.log(`Found ${inputs.length} new hashcash input(s). Initializing.`);
+  //}
 
   inputs.forEach(input => {
     // Mark as initialized to prevent running twice on the same element.
@@ -51,7 +51,7 @@ Hashcash.initializeNewInputs = function() {
  * including those added dynamically by frameworks like Turbo.
  */
 Hashcash.setup = function() {
-  console.log("1. Hashcash.setup() called. Setting up MutationObserver.");
+  //console.log("1. Hashcash.setup() called. Setting up MutationObserver.");
 
   // Use a MutationObserver to catch all dynamic additions to the page,
   // including initial load, Turbo Drive, and Turbo Streams. This is the most
@@ -122,7 +122,7 @@ Hashcash.secureRandom = function() {
 };
 
 Hashcash.mint = function(resource, options, callback) {
-  console.log("Minting called. Attempting to create worker from path:", options.worker_path || Hashcash.default.worker_path);
+  /// ("Minting called. Attempting to create worker from path:", options.worker_path || Hashcash.default.worker_path);
 
   try {
     const worker = new Worker(options.worker_path || Hashcash.default.worker_path);
@@ -144,19 +144,19 @@ Hashcash.mint = function(resource, options, callback) {
 
     // Listen for the solved stamp from the worker.
     worker.onmessage = function(e) {
-      console.log("Message received from worker:", e.data);
+      // console.log("Message received from worker:", e.data);
       const solvedStamp = Hashcash.Stamp.parse(e.data);
       callback(solvedStamp);
       worker.terminate();
     };
 
     worker.onerror = function(e) {
-      console.error(`Hashcash Worker Error: ${e.message}`, e);
+      // console.error(`Hashcash Worker Error: ${e.message}`, e);
       worker.terminate();
     };
 
     // Start the worker.
-    console.log("Sending data to worker:", stampData);
+    //console.log("Sending data to worker:", stampData);
     worker.postMessage(stampData);
 
   } catch (e) {

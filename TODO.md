@@ -13,10 +13,8 @@
 
 ## blazer
 
-### anti-virus integration for attachemnts
+### anti-virus integration for attachemnts - test it
 
-## dashboard  dla hascash
-## hashcash javascript trick dla loginu jak i dla preview zrobilem
 
 
 # Pre deploy:
