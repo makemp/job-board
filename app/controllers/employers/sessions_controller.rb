@@ -1,7 +1,7 @@
 class Employers::SessionsController < Devise::SessionsController
   include HashcashCustoms
 
-  before_action -> { handle_check_hashcash("login_form") }, only: [:create, :process_email, :verify_code, :forgot_password]
+  before_action -> { handle_check_hashcash("login_form") }, only: [:process_email]
 
   def create
     email = params[:employer][:email]

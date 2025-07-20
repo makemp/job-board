@@ -28,8 +28,7 @@ const Hashcash = function(input) {
 
 /**
  * Scans the document for any new hashcash inputs that have not yet been initialized.
- * This function is designed to be called multiple times, e.g., on page load and after
- * dynamic content changes (like Turbo Drive visits).
+ * This function is designed to be called multiple times.
  */
 Hashcash.initializeNewInputs = function() {
   // Find all inputs that have the attribute but have not been initialized.
@@ -48,50 +47,32 @@ Hashcash.initializeNewInputs = function() {
 
 
 /**
- * Sets up the initial listeners to detect and initialize hashcash inputs,
+ * Sets up a single, robust listener to detect and initialize hashcash inputs,
  * including those added dynamically by frameworks like Turbo.
  */
 Hashcash.setup = function() {
-  console.log("1. Hashcash.setup() called. Setting up listeners for dynamic content.");
+  console.log("1. Hashcash.setup() called. Setting up MutationObserver.");
 
-  // Listener for Turbo Drive page loads. This is the primary trigger for Turbo apps.
-  document.addEventListener("turbo:load", function() {
-    console.log("Event: 'turbo:load' detected. Scanning for hashcash inputs.");
+  // Use a MutationObserver to catch all dynamic additions to the page,
+  // including initial load, Turbo Drive, and Turbo Streams. This is the most
+  // reliable method for modern JavaScript frameworks.
+  const observer = new MutationObserver(() => {
+    // This callback fires whenever nodes are added or removed.
+    // We just re-run our scan. The `data-hashcash-initialized` attribute
+    // prevents re-initializing inputs that are already running.
     Hashcash.initializeNewInputs();
   });
 
-  // Fallback for initial page load if Turbo is not present or loads late.
-  document.addEventListener("DOMContentLoaded", function() {
-    console.log("Event: 'DOMContentLoaded' detected. Scanning for hashcash inputs.");
+  // Start observing the entire document for changes to its structure.
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+
+  // Perform an initial scan in case the script loads after the DOM is already ready.
+  // This handles the very first page load.
+  if (document.readyState === "complete" || document.readyState === "interactive") {
     Hashcash.initializeNewInputs();
-  });
-
-  // Use a MutationObserver to catch any other dynamic additions to the page.
-  // This is a robust way to handle content added by any framework.
-  const observer = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-        let needsScan = false;
-        mutation.addedNodes.forEach(node => {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            if (node.matches("input[data-hashcash]") || node.querySelector("input[data-hashcash]")) {
-              needsScan = true;
-            }
-          }
-        });
-        if(needsScan) {
-          console.log("DOM mutation detected. Rescanning for hashcash inputs.");
-          Hashcash.initializeNewInputs();
-        }
-      }
-    }
-  });
-
-  // Start observing the body for added/removed nodes.
-  observer.observe(document.body, { childList: true, subtree: true });
-
-  // Perform an initial scan in case the script loads after the DOM is ready.
-  Hashcash.initializeNewInputs();
+  } else {
+    document.addEventListener("DOMContentLoaded", () => Hashcash.initializeNewInputs(), { once: true });
+  }
 };
 
 
@@ -207,7 +188,7 @@ Hashcash.Stamp.prototype.toString = function() {
 // Moved performance logging here to keep the Stamp object clean.
 Hashcash.Stamp.prototype.logPerformance = function() {
   if (this.startedAt && this.endedAt) {
-    const duration = this.endedAt - this.startedAt;
+    const duration = this.endedAt - this.endedAt;
     const speed = Math.round(this.counter * 1000 / duration);
     console.debug(`Hashcash ${this.toString()} minted in ${duration.toFixed(0)}ms (${speed} hashes/sec)`);
   }
