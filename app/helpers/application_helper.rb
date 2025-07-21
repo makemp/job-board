@@ -36,4 +36,7 @@ module ApplicationHelper
   def meta_type
     content_for?(:meta_type) ? content_for(:meta_type) : "website"
   end
+
+  # Ensure flash_class is available in all views
+  include FlashHelper
 end

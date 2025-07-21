@@ -56,13 +56,14 @@
   </head>
 
   <body class="flex flex-col min-h-screen">
+  <%= render partial: "layouts/flash" %>
   <% if flash[:impersonation].present? %>
     <div class="relative bg-yellow-100 border border-yellow-400 text-yellow-800 p-3 text-center">
       <span class="absolute top-0 right-0 px-2 py-1 cursor-pointer" onclick="this.parentElement.style.display='none'">&times;</span>
       <%= flash[:impersonation].html_safe %>
     </div>
   <% end %>
-
+<!--
   <% if notice.present? %>
     <div class="relative bg-green-100 border border-green-400 text-green-800 p-2 rounded-md text-center">
       <span class="absolute top-0 right-0 px-2 py-1 cursor-pointer" onclick="this.parentElement.style.display='none'">&times;</span>
@@ -76,6 +77,7 @@
       <%= alert %>
     </div>
   <% end %>
+ -->
   <%= render partial: "commons/header" %>
   <main class="flex-grow">
     <%= yield %>

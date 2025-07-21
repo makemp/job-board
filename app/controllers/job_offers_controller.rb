@@ -85,7 +85,7 @@ class JobOffersController < ApplicationController
     @job_offer = JobOffer.find_by_slug(params[:id])
 
     if @job_offer.expired?
-      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.slug}"),
         partial: "shared/error_message",
         locals: {message: "This job offer has expired and is no longer accepting applications.", job_offer: @job_offer}
       return
@@ -95,30 +95,30 @@ class JobOffersController < ApplicationController
     comments = params[:comments]
 
     if cv.nil?
-      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+      render turbo_stream: turbo_stream.update("job_offer_form_error-#{@job_offer.slug}"),
         partial: "shared/error_message",
         locals: {message: "Please upload your CV.", job_offer: @job_offer}
       return
     end
 
     unless cv.respond_to?(:content_type) && %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].include?(cv.content_type)
-      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+      render turbo_stream: turbo_stream.update("job_offer_form_error-#{@job_offer.slug}"),
         partial: "shared/error_message",
         locals: {message: "Invalid CV file type. Only PDF, DOC, and DOCX are allowed.", job_offer: @job_offer}
       return
     end
 
     if cv.size > 5.megabytes
-      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+      render turbo_stream: turbo_stream.update("job_offer_form_error-#{@job_offer.slug}",
         partial: "shared/error_message",
-        locals: {message: "CV file is too large (max 5MB).", job_offer: @job_offer}
+        locals: {message: "CV file is too large (max 5MB).", job_offer: @job_offer})
       return
     end
 
-    if comments.present? && comments.length > 500
-      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.id}"),
+    if comments.present? && comments.length > 5000
+      render turbo_stream: turbo_stream.update("job_offer_form_error-#{@job_offer.slug}",
         partial: "shared/error_message",
-        locals: {message: "Comments are too long (max 500 characters).", job_offer: @job_offer}
+        locals: {message: "Comments are too long (max 5000 characters).", job_offer: @job_offer})
       return
     end
 
@@ -126,9 +126,18 @@ class JobOffersController < ApplicationController
 
     ahoy.track "apply_with_form", job_offer_id: @job_offer.id
 
-    render turbo_stream: turbo_stream.update("job_offer_form-#{@job_offer.slug}",
+    render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.slug}",
       partial: "application_sent",
       locals: {message: "Your application has been sent to the employer!", job_offer: @job_offer})
+  rescue ActiveRecord::RecordInvalid => e
+    if e.message.include?("virus")
+      Rails.logger.warn("Virus detected in CV upload: #{e.message}")
+      render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.slug}",
+        partial: "shared/error_message",
+        locals: {message: "Virus detected", job_offer: @job_offer}) and return
+    else
+      raise e
+    end
   end
 
   def apply_with_url

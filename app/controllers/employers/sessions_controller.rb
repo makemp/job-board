@@ -17,7 +17,10 @@ class Employers::SessionsController < Devise::SessionsController
       render turbo_stream: turbo_stream.replace("login_form", "<script>window.location.href = '#{after_sign_in_path_for(@employer)}';</script>")
     else
       flash.now[:alert] = "Invalid email or password"
-      render turbo_stream: turbo_stream.update("login_form", partial: "password_form", locals: {email: email}), status: :unprocessable_entity
+      render turbo_stream: [
+        turbo_stream.update("login_form", partial: "password_form", locals: {email: email}),
+        turbo_stream.update("flash", partial: "layouts/flash")
+      ], status: :unprocessable_entity
     end
   end
 
@@ -53,8 +56,11 @@ class Employers::SessionsController < Devise::SessionsController
       # Use turbo_stream to navigate to dashboard
       render turbo_stream: turbo_stream.replace("login_form", "<script>window.location.href = '#{after_sign_in_path_for(@employer)}';</script>")
     else
-      flash.now[:alert] = "Invalid or expired code"
-      render turbo_stream: turbo_stream.update("login_form", partial: "code_form", locals: {email: email}), status: :unprocessable_entity
+      flash[:alert] = "Invalid or expired code"
+      render turbo_stream: [
+        turbo_stream.update("login_form", partial: "code_form", locals: {email: email}),
+        turbo_stream.update("flash", partial: "layouts/flash")
+      ], status: :unprocessable_entity
     end
   end
 

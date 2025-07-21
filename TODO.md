@@ -13,6 +13,9 @@
 
 ## blazer
 
+### agent to seed new links
+### endpoint to add new links
+
 ### anti-virus integration for attachemnts - test it
 
 
