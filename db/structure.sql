@@ -49,7 +49,21 @@ CREATE UNIQUE INDEX "index_staging_tokens_on_value" ON "staging_tokens" ("value"
 CREATE TABLE IF NOT EXISTS "active_hashcash_stamps" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "version" varchar NOT NULL, "bits" integer NOT NULL, "date" date NOT NULL, "resource" varchar NOT NULL, "ext" varchar NOT NULL, "rand" varchar NOT NULL, "counter" varchar NOT NULL, "request_path" varchar, "ip_address" varchar, "context" json, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE INDEX "index_active_hashcash_stamps_on_ip_address_and_created_at" ON "active_hashcash_stamps" ("ip_address", "created_at") WHERE ip_address IS NOT NULL /*application='JobBoard'*/;
 CREATE UNIQUE INDEX "index_active_hashcash_stamps_unique" ON "active_hashcash_stamps" ("counter", "rand", "date", "resource", "bits", "version", "ext") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "blazer_queries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "creator_id" integer, "name" varchar, "description" text, "statement" text, "data_source" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE INDEX "index_blazer_queries_on_creator_id" ON "blazer_queries" ("creator_id") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "blazer_audits" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "query_id" integer, "statement" text, "data_source" varchar, "created_at" datetime(6));
+CREATE INDEX "index_blazer_audits_on_user_id" ON "blazer_audits" ("user_id") /*application='JobBoard'*/;
+CREATE INDEX "index_blazer_audits_on_query_id" ON "blazer_audits" ("query_id") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "blazer_dashboards" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "creator_id" integer, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE INDEX "index_blazer_dashboards_on_creator_id" ON "blazer_dashboards" ("creator_id") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "blazer_dashboard_queries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "dashboard_id" integer, "query_id" integer, "position" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE INDEX "index_blazer_dashboard_queries_on_dashboard_id" ON "blazer_dashboard_queries" ("dashboard_id") /*application='JobBoard'*/;
+CREATE INDEX "index_blazer_dashboard_queries_on_query_id" ON "blazer_dashboard_queries" ("query_id") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "blazer_checks" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "creator_id" integer, "query_id" integer, "state" varchar, "schedule" varchar, "emails" text, "slack_channels" text, "check_type" varchar, "message" text, "last_run_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE INDEX "index_blazer_checks_on_creator_id" ON "blazer_checks" ("creator_id") /*application='JobBoard'*/;
+CREATE INDEX "index_blazer_checks_on_query_id" ON "blazer_checks" ("query_id") /*application='JobBoard'*/;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250721162939'),
 ('20250718105046'),
 ('20250717210609'),
 ('20250715122622'),

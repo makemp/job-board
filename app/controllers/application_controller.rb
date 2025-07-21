@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   # Add impersonation notification
   before_action :show_impersonation_notice
-  before_action :check_staging_access if ENV["STAGING_ENV"]
+  # before_action :check_staging_access if ENV["STAGING_ENV"]
 
   private
 

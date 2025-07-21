@@ -63,6 +63,11 @@ Rails.application.routes.draw do
     sessions: "devise/sessions"
   }
 
+  authenticate :admin do
+    # This mounts the Blazer UI at the desired path, e.g., /admin/blazer
+    mount Blazer::Engine, at: "/admin/blazer"
+  end
+
   namespace :admin do
     root to: "admin#index", as: :dashboard
     post "impersonate/:id", to: "admin#impersonate", as: :impersonate_employer

@@ -84,7 +84,6 @@ class Rack::Attack
         req.path.include?("/etc/passwd") ||
         req.path.include?("wp-admin") ||
         req.path.include?("wp-login") ||
-        req.path.include?("/admin") ||
         req.path.include?("/phpmyadmin") ||
         req.path.include?(".env") ||
         req.path.include?(".git") ||
