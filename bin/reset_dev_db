@@ -20,7 +20,7 @@ fi
 rails db:drop
 rails db:migrate
 # completely rebuild the DB and run migrations
-
+RAILS_ENV=test rails db:migrate
 
 
 
