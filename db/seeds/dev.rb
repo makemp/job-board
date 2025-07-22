@@ -2,7 +2,7 @@ require "index_manager"
 
 ActiveRecord::Tasks::DatabaseTasks.truncate_all
 
-Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 79, offer_duration: 30.days})
+Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 79, offer_duration: 60.days})
 FreeVoucher.create!(code: "FREE", options: {price: 0, offer_duration: 15.days})
 Voucher.create!(enabled_till: 3.days.ago, code: "DISCOUNT", options: {price: 199, offer_duration: 30.days})
 

@@ -94,6 +94,13 @@ class JobOffersController < ApplicationController
     cv = params[:cv]
     comments = params[:comments]
 
+    unless params[:terms_and_conditions] == "1"
+      render turbo_stream: turbo_stream.update("job_offer_form_error-#{@job_offer.slug}"),
+        partial: "shared/error_message",
+        locals: {message: "You must accept the terms and conditions to apply.", job_offer: @job_offer}
+      return
+    end
+
     if cv.nil?
       render turbo_stream: turbo_stream.update("job_offer_form_error-#{@job_offer.slug}"),
         partial: "shared/error_message",

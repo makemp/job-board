@@ -59,16 +59,16 @@ Rails.application.routes.draw do
   get "/privacy", to: "job_offer_forms#privacy", as: :privacy
 
   # Admin authentication with Devise
-  devise_for :admins, path: "admin", controllers: {
+  devise_for :admins, path: "amdg", controllers: {
     sessions: "devise/sessions"
   }
 
   authenticate :admin do
     # This mounts the Blazer UI at the desired path, e.g., /admin/blazer
-    mount Blazer::Engine, at: "/admin/blazer"
+    mount Blazer::Engine, at: "/amdg/blazer"
   end
 
-  namespace :admin do
+  namespace :admin, path: "amdg" do
     root to: "admin#index", as: :dashboard
     post "impersonate/:id", to: "admin#impersonate", as: :impersonate_employer
     delete "stop_impersonating", to: "admin#stop_impersonating", as: :stop_impersonating_employers
