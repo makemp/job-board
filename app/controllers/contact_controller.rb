@@ -1,4 +1,5 @@
 class ContactController < ApplicationController
+  before_action -> { handle_check_hashcash("contact-form") }, only: [:create]
   def index
     @contact = Contact.new
   end

@@ -1,0 +1,1 @@
+ActiveHashcash.bits = 16

@@ -1,6 +1,4 @@
 class ConfirmationMailer < ApplicationMailer
-  default from: "no-reply@example.com"
-
   def confirmation_instructions(employer, token)
     @employer = employer
     @token = token

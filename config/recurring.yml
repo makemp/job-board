@@ -13,4 +13,4 @@
 production:
   expire_offers:
     class: JobOfferExpirationJob
-    schedule: every 1 minute
+    schedule: every 1 hour

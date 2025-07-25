@@ -99,3 +99,5 @@ gem "meta-tags", "~> 2.22"
 gem "active_hashcash"
 gem "rack-attack"
 gem "blazer"
+
+gem "dockerfile-rails", ">= 1.7", group: :development
