@@ -25,7 +25,7 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
     RAILS_HOST="0.0.0.0" \
-    RAILS_WEB_URL="jobboard-staging.fly.dev" \
+    RAILS_WEB_URL="staging.drillcrew.work" \
     HTTP_PORT="8080" \
     STAGING_ENV="true"
 

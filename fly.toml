@@ -15,7 +15,7 @@ console_command = '/rails/bin/rails console'
     PORT = "8080"
 
 [env]
-  DATABASE_URL = 'sqlite3:///data/production.sqlite3'
+  DATABASE_URL = 'sqlite3:///data/staging.sqlite3'
   RAILS_HOST = "0.0.0.0"
   PORT = '8080'
   SOLID_QUEUE_IN_PUMA = 'true'
@@ -32,7 +32,7 @@ console_command = '/rails/bin/rails console'
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 0
+  min_machines_running = 1
   processes = ['app']
 
   [[http_service.checks]]

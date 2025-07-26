@@ -23,3 +23,7 @@ Libraries:
 vips  for image processing
 geoip-database ??
 clamav for anti-virus
+
+
+
+SQLITE on prod: https://fly.io/docs/rails/advanced-guides/sqlite3/

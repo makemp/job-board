@@ -70,8 +70,8 @@
         <% unless current_employer&.logo.present? %>
         <div data-controller="logo-preview">
           <%= f.label :logo, "Company Logo", class: "block text-sm font-medium text-amber-900" %>
-          <%= image_tag (f.object.logo&.attached? ? f.object.logo : ""),
-                        class: "w-32 h-32 rounded-md object-cover border mb-2 #{'hidden' unless f.object.logo&.attached?}",
+          <%= image_tag "",
+                        class: "w-32 h-32 rounded-md object-cover border mb-2 hidden",
                         data: { "logo-preview-target": "output" } %>
           <%= f.file_field :logo,
                            accept: 'image/*',

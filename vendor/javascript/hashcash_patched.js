@@ -109,7 +109,7 @@ Hashcash.prototype.preventFromAutoSubmitFromPasswordManagers = function(event) {
 
 Hashcash.default = {
   version: 1,
-  bits: 20, // A reasonable default difficulty. Adjust as needed.
+  bits: 16, // Reduced from 20 to 16 for better mobile compatibility
   extension: null,
   worker_path: '/hashcash-worker.js' // Path to your worker script.
 };
@@ -188,7 +188,7 @@ Hashcash.Stamp.prototype.toString = function() {
 // Moved performance logging here to keep the Stamp object clean.
 Hashcash.Stamp.prototype.logPerformance = function() {
   if (this.startedAt && this.endedAt) {
-    const duration = this.endedAt - this.endedAt;
+    const duration = this.endedAt - this.startedAt;
     const speed = Math.round(this.counter * 1000 / duration);
     console.debug(`Hashcash ${this.toString()} minted in ${duration.toFixed(0)}ms (${speed} hashes/sec)`);
   }

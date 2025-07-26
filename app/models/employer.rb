@@ -18,7 +18,7 @@ class Employer < User
 
   # Active Storage attachment for employer logo
 
-  has_one_attached :logo
+  has_one_attached :logo, service: Rails.env
 
   scope :valid, -> { where.not(confirmed_at: nil).where(closed_at: nil) }
 
