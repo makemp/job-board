@@ -58,14 +58,14 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = {host: ENV.fetch("RAILS_WEB_URL"), protocol: "https"}
+  config.action_mailer.default_url_options = {host: ENV.fetch("RAILS_WEB_URL",""), protocol: "https"}
 
-  config.action_controller.default_url_options = {host: ENV.fetch("RAILS_WEB_URL")}
+  config.action_controller.default_url_options = {host: ENV.fetch("RAILS_WEB_URL", "")}
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   config.action_mailer.smtp_settings = {
-    user_name: Rails.application.credentials.dig(:smtp, :user_name),
-    password: Rails.application.credentials.dig(:smtp, :password),
+    user_name: ENV.fetch("SMTP_USERNAME", ""),
+    password: ENV.fetch("SMTP_PASSWORD", ""),
     address: "outbound.mailhop.org",
     port: "587",
     authentication: :plain

@@ -1,0 +1,3 @@
+ fly deploy --no-cache
+
+ fly secrets set -a jobboard-staging  blabh=balala

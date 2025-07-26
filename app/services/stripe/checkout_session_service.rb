@@ -1,6 +1,6 @@
 module Stripe
   class CheckoutSessionService
-    HOST = Rails.application.config.action_controller.default_url_options[:host]
+    HOST = ENV["RAILS_WEB_URL"].presence || Rails.application.config.action_controller.default_url_options[:host]
     PORT = Rails.application.config.action_controller.default_url_options[:port]
     URL_HELPERS = Rails.application.routes.url_helpers
 
