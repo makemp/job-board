@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include HashcashCustoms
   before_action :assign_flash_from_query
 
   include Pagy::Backend

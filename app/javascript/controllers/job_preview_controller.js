@@ -218,11 +218,6 @@ export default class extends Controller {
       })
       .then(html => {
         this.previewPanelTarget.innerHTML = html
-        // Initialize Hashcash for dynamically inserted input
-        const hashcashInput = this.previewPanelTarget.querySelector('input[data-hashcash]')
-        if (hashcashInput && window.Hashcash) {
-          new Hashcash(hashcashInput)
-        }
       })
       .catch(error => {
         console.error('Error loading preview:', error)

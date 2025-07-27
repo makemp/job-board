@@ -21,7 +21,7 @@ FOREIGN KEY ("blob_id")
   REFERENCES "active_storage_blobs" ("id")
 );
 CREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-07-23 22:17:25.151229', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-07-27 21:55:38.006840', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE TABLE IF NOT EXISTS "action_text_rich_texts" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "body" text, "record_type" varchar NOT NULL, "record_id" ulid NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE UNIQUE INDEX "index_action_text_rich_texts_uniqueness" ON "action_text_rich_texts" ("record_type", "record_id", "name") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "special_offers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text, "number_of_vouchers" integer NOT NULL, "price" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
@@ -46,9 +46,6 @@ CREATE UNIQUE INDEX "index_slugs_on_slug_and_sluggable_type" ON "slugs" ("slug",
 CREATE INDEX "index_slugs_on_sluggable_id" ON "slugs" ("sluggable_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "staging_tokens" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE UNIQUE INDEX "index_staging_tokens_on_value" ON "staging_tokens" ("value") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "active_hashcash_stamps" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "version" varchar NOT NULL, "bits" integer NOT NULL, "date" date NOT NULL, "resource" varchar NOT NULL, "ext" varchar NOT NULL, "rand" varchar NOT NULL, "counter" varchar NOT NULL, "request_path" varchar, "ip_address" varchar, "context" json, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
-CREATE INDEX "index_active_hashcash_stamps_on_ip_address_and_created_at" ON "active_hashcash_stamps" ("ip_address", "created_at") WHERE ip_address IS NOT NULL /*application='JobBoard'*/;
-CREATE UNIQUE INDEX "index_active_hashcash_stamps_unique" ON "active_hashcash_stamps" ("counter", "rand", "date", "resource", "bits", "version", "ext") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "blazer_queries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "creator_id" integer, "name" varchar, "description" text, "statement" text, "data_source" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE INDEX "index_blazer_queries_on_creator_id" ON "blazer_queries" ("creator_id") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "blazer_audits" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "query_id" integer, "statement" text, "data_source" varchar, "created_at" datetime(6));
@@ -64,7 +61,6 @@ CREATE INDEX "index_blazer_checks_on_creator_id" ON "blazer_checks" ("creator_id
 CREATE INDEX "index_blazer_checks_on_query_id" ON "blazer_checks" ("query_id") /*application='JobBoard'*/;
 INSERT INTO "schema_migrations" (version) VALUES
 ('20250721162939'),
-('20250718105046'),
 ('20250717210609'),
 ('20250715122622'),
 ('20250715122608'),
