@@ -7,7 +7,7 @@ class JobOfferApplication < ApplicationRecord
   def process
     # remove the CV file after 7 days from the job offer's valid till date at the moment it was created
     PurgeJobOfferApplicationFileJob.set(wait_until: determine_time).perform_later(id)
-    JobApplicationMailer.application_email(job_offer_application: self).deliver_later
+    JobApplicationMailer.application_email(job_offer_application_id: id).deliver_later
   end
 
   private
