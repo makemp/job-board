@@ -1,0 +1,82 @@
+<%#
+  1. data-controller="toggle-fields": Connects this whole block to our JS controller.
+  2. data-action: Tells Stimulus to run the `toggle` method on change.
+  3. data-toggle-fields-target: Defines the elements our controller can find.
+%>
+
+<%# ... inside your <div data-controller="toggle-fields"> ... %>
+
+<%# This container aligns the label and the new tooltip icon horizontally %>
+<div class="flex items-center space-x-2">
+  <label class="block text-sm font-medium text-amber-900">Application Type</label>
+
+  <%# --- Tooltip Start --- %>
+  <%#
+    The `relative` and `group` classes on this container are essential.
+    `relative` provides a positioning anchor for the tooltip popup.
+    `group` allows us to show the tooltip when hovering anywhere over this container.
+  %>
+  <div class="relative flex items-center group">
+    <%# This is the visible '?' icon %>
+    <span class="flex items-center justify-center w-5 h-5 bg-amber-800 rounded-full cursor-pointer text-white text-xs font-semibold">
+      ?
+    </span>
+
+    <%#
+      This is the hidden tooltip popup.
+      - `invisible group-hover:visible`: This is the magic. It's hidden by default,
+        and becomes visible when the parent `group` is hovered.
+      - `absolute bottom-full mb-2`: Positions the tooltip above the '?' icon.
+      - The other classes style it to look like a clean, modern tooltip.
+    %>
+    <div class="absolute bottom-full mb-2 w-64 p-3 bg-amber-800 text-white text-sm rounded-lg shadow-lg invisible group-hover:visible z-10">
+      Choose how candidates will apply for this job.
+      <ul class="list-disc list-inside mt-2">
+        <li><strong>Form:</strong> You will receive applications via email.</li>
+        <li><strong>Link:</strong> Candidates will be sent to an external URL to apply.</li>
+      </ul>
+      <%# This little div creates the arrow/pointer at the bottom of the tooltip %>
+      <div class="absolute -translate-x-1/2 top-full w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-gray-800"></div>
+    </div>
+  </div>
+  <%# --- Tooltip End --- %>
+</div>
+
+
+<div class="mb-6" data-controller="toggle-fields">
+  <div class="flex space-x-6 mb-4">
+    <% JobOffer::APPLICATION_TYPES.each do |type| %>
+      <label class="inline-flex items-center text-amber-900">
+        <%= f.radio_button :application_type, type,
+                           checked: (f.object.application_type == type),
+                           class: "form-radio h-4 w-4 text-amber-800 focus:ring-amber-500 border-gray-300",
+                           data: {
+                             action: "change->toggle-fields#toggle",
+                             toggle_fields_target: "radio"
+                           } %>
+        <span class="ml-2 text-sm"><%= type %></span>
+      </label>
+    <% end %>
+  </div>
+
+  <%# Container for the "Form" field %>
+  <div class="mb-4" data-toggle-fields-target="formInputContainer">
+    <label class="block text-sm font-medium text-amber-900">Email Address to send CV*</label>
+    <%= f.email_field :application_destination,
+                      class: "pl-1 mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50",
+                      placeholder: "Enter email address",
+                      required: true,
+                      data: { toggle_fields_target: "formInput" } %>
+  </div>
+
+  <%# Container for the "Link" field %>
+  <div class="mb-4" data-toggle-fields-target="linkInputContainer">
+    <label class="block text-sm font-medium text-amber-900">Application URL*</label>
+    <%= f.url_field :application_destination,
+                    class: "pl-1 mt-1 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50",
+                    placeholder: "https://example.com/apply",
+                    required: true,
+                    data: { toggle_fields_target: "linkInput" } %>
+  </div>
+  <%= error_messages_for(f, :application_destination) %>
+</div>

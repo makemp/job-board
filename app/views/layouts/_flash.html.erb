@@ -1,0 +1,9 @@
+<div id="flash">
+  <% flash.each do |type, message| %>
+    <% next if type.to_s == "impersonation" %>
+    <div class="relative <%= flash_class(type) %> p-2 rounded-md text-center mb-0 flash-message">
+      <span class="absolute top-0 right-0 px-2 py-0 cursor-pointer" onclick="this.parentElement.style.display='none'">&times;</span>
+      <%= message %>
+    </div>
+  <% end %>
+</div>

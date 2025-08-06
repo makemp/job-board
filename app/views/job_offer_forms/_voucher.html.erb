@@ -11,7 +11,7 @@
     <%# Add Stimulus target data attribute %>
     <%# The name attribute ('voucher_code') might not be strictly necessary if only JS uses it %>
     <%= text_field_tag :voucher_code, # Can be any unique name/id
-                       nil, # Initial value (can be pre-filled if needed, e.g. from params or session)
+                       job&.voucher_placeholder, # Initial value (can be pre-filled if needed, e.g. from params or session)
                        id: :voucher_code_input_id, # Match the label's 'for'
                        class: "mt-5 block w-full rounded-md border border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50",
                        data: { voucher_target: "codeInput" } %>
@@ -28,7 +28,7 @@
   <%# Dedicated element for status/error messages, targeted by Stimulus %>
   <%# Replaces the need for error_messages_for here %>
   <div data-voucher-target="status" class="mt-1 text-sm text-red-600">
-    <%# Status messages will appear here via Stimulus controller %>
+    <%# Server-side validation error for voucher code %>
   </div>
 
 </div>

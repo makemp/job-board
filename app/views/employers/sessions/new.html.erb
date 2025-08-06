@@ -1,0 +1,11 @@
+<div class="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow" data-controller="login">
+  <h2 class="text-2xl font-semibold mb-6 text-center text-amber-900">Employer Sign In</h2>
+
+  <%= turbo_frame_tag "login_form", data: { login_target: "container" } do %>
+    <%= render "email_form" %>
+  <% end %>
+
+  <div class="mt-8 text-center">
+    <p class="text-gray-700">Don't have an account? <%= link_to 'Place an order', new_job_offer_forms_path, class: "text-blue-600 hover:underline" %></p>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+/* Custom styles for job offer category dropdown */
+
+/* Base select styling */
+select[data-category-dropdown] {
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23666" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+  padding-right: 32px;
+}
+
+/* Try webkit-specific option styling (Safari/Chrome) */
+select[data-category-dropdown] option.parent-option-joboffers {
+  font-weight: bold !important;
+  background: linear-gradient(to bottom, #fef3c7, #fef3c7) !important;
+  color: #92400e !important;
+  padding: 8px 12px !important;
+}
+
+select[data-category-dropdown] option.child-option-joboffers {
+  font-weight: normal !important;
+  background: linear-gradient(to bottom, #fffbeb, #fffbeb) !important;
+  color: #78350f !important;
+  padding: 6px 12px 6px 24px !important;
+}
+
+/* Mozilla-specific styling (Firefox) */
+@-moz-document url-prefix() {
+  select[data-category-dropdown] option.parent-option-joboffers {
+    font-weight: bold !important;
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+  }
+
+  select[data-category-dropdown] option.child-option-joboffers {
+    font-weight: normal !important;
+    background-color: #fffbeb !important;
+    color: #78350f !important;
+    text-indent: 16px !important;
+  }
+}
+
+/* Alternative text-based visual distinction */
+select[data-category-dropdown] option.parent-option-joboffers::before {
+  content: "🔸 ";
+}
+
+select[data-category-dropdown] option.child-option-joboffers::before {
+  content: "  └ ";
+}

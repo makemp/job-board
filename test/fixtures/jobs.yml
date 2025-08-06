@@ -2,7 +2,7 @@
 
 one:
   title: MyString
-  location: MyString
+  region: MyString
   company: MyString
   description: MyText
   salary: MyString
@@ -12,7 +12,7 @@ one:
 
 two:
   title: MyString
-  location: MyString
+  region: MyString
   company: MyString
   description: MyText
   salary: MyString

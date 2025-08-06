@@ -1,10 +1,22 @@
-class Ahoy::Store < Ahoy::DatabaseStore
-end
+# --- Standard Ahoy Configuration ---
 
-# set to true for JavaScript tracking
+# Set to true for JavaScript tracking if you are using the Ahoy.js library
 Ahoy.api = false
 
-# set to true for geocoding (and add the geocoder gem to your Gemfile)
-# we recommend configuring local geocoding as well
-# see https://github.com/ankane/ahoy#geocoding
-Ahoy.geocode = false
+# GDPR compliance
+Ahoy.mask_ips = true
+Ahoy.cookies = :none
+
+Ahoy.geocode = true
+Ahoy.job_queue = :low_priority
+
+class Ahoy::Store < Ahoy::DatabaseStore
+  def track_visit(data)
+    data[:ip] = request.env["HTTP_CF_CONNECTING_IP"] || request.remote_ip
+    super
+  end
+
+  def authenticate(_)
+    # do not track
+  end
+end

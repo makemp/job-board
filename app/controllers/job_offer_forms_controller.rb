@@ -1,6 +1,14 @@
 class JobOfferFormsController < ApplicationController
   def new
-    @job = JobOfferForm.new
+    if params[:job_offer_form]
+      @job = JobOfferForm.new(job_offer_form_params)
+    elsif params[:order_placement_id]
+      params_ = OrderPlacement.find(params[:order_placement_id]).job_offer_form_attributes
+      @job = JobOfferForm.new(params_)
+      @job.logo = params_[:logo]
+    else
+      @job = JobOfferForm.new(application_type: "Form")
+    end
   end
 
   def update
@@ -70,10 +78,16 @@ class JobOfferFormsController < ApplicationController
     end
   end
 
+  def terms_and_conditions
+  end
+
+  def privacy
+  end
+
   private
 
   def job_offer_form_params
-    params.require(:job_offer_form).permit!.tap do |whitelisted|
+    params.require(:job_offer_form).permit(*JobOfferForm.attribute_names).tap do |whitelisted|
       whitelisted[:voucher_code] = params[:voucher_code] if params[:voucher_code].present?
     end
   end

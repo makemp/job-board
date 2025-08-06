@@ -1,0 +1,136 @@
+<div class="job-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200 <%= 'opacity-50 grayscale' if job.expired? %>" data-job-id="<%= job.id %>">
+  <div class="p-4 sm:p-6">
+    <!-- Mobile layout - stacked vertically -->
+    <div class="block md:hidden">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center">
+          <% if job.logo.attached? %>
+            <%= image_tag job.logo, class: "h-12 w-12 sm:h-16 sm:w-16 object-contain mr-3 #{'opacity-50' if job.expired?}" %>
+          <% end %>
+          <div>
+            <h2 class="text-lg sm:text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900' %>">
+              <%= job.title %>
+              <% if job.expired? %>
+                <span class="text-xs sm:text-sm text-red-500 block">(EXPIRED)</span>
+              <% end %>
+            </h2>
+          </div>
+        </div>
+        <% if job.expired? %>
+          <button class="bg-gray-400 text-gray-600 px-3 py-1 text-sm rounded-full cursor-not-allowed" disabled>
+            Expired
+          </button>
+        <% else %>
+          <button class="bg-amber-800 text-white px-3 py-1 text-sm rounded-full hover:bg-amber-700 transition-colors duration-300"
+                  data-action="click->job-preview#showPreview"
+                  data-job-preview-job-id-param="<%= job.slug %>">
+            See more
+          </button>
+        <% end %>
+      </div>
+
+      <!-- Job meta information - mobile -->
+      <div class="space-y-2 mb-3">
+        <div class="flex items-center text-sm <%= job.expired? ? 'text-gray-400' : 'text-amber-600' %>">
+          <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+          </svg>
+          <%= job.employer.company_name %>
+        </div>
+        <div class="flex items-center text-sm <%= job.expired? ? 'text-gray-400' : 'text-amber-600' %>">
+          <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+          </svg>
+          <%= job_offer_location(job) %>
+        </div>
+        <div class="flex items-center text-sm <%= job.expired? ? 'text-gray-400' : 'text-amber-600' %>">
+          <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+          </svg>
+          <%= job.category %>
+        </div>
+      </div>
+
+      <!-- Timestamp - mobile -->
+      <div class="text-right">
+            <span class="text-xs <%= job.expired? ? 'text-gray-400' : 'text-amber-600' %> flex items-center justify-end">
+              <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+              </svg>
+              <%= timestamp_as_words(job) %>
+            </span>
+      </div>
+    </div>
+
+    <!-- Desktop layout - horizontal -->
+    <div class="hidden md:block">
+      <div class="flex justify-between items-start relative">
+        <div class="flex-grow pr-6">
+          <% if job.logo.attached? %>
+            <%= image_tag job.logo, class: "h-16 w-16 object-contain mb-3 #{'opacity-50' if job.expired?}" %>
+          <% else %>
+            <div class="h-16 w-16 mb-3 bg-transparent"></div>
+          <% end %>
+
+          <div class="space-y-2">
+            <h2 class="text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900' %> leading-tight">
+              <%= job.title %>
+              <% if job.expired? %>
+                <span class="text-sm text-red-500 ml-2">(EXPIRED)</span>
+              <% end %>
+            </h2>
+
+            <!-- Job Meta Information -->
+            <div class="flex items-center gap-4 text-sm <%= job.expired? ? 'text-gray-400' : 'text-amber-600' %>">
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+                    </svg>
+                    <%= job.employer_company_name %>
+                  </span>
+              <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                    </svg>
+                <%= job_offer_location(job) %>
+              </span>
+              <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                <%= job.category %>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right side content - Button only -->
+        <div class="flex-shrink-0">
+          <% if job.expired? %>
+            <button class="bg-gray-400 text-gray-600 px-6 py-2 rounded-full cursor-not-allowed" disabled>
+              Expired
+            </button>
+          <% else %>
+            <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300 cursor-pointer"
+                    data-action="click->job-preview#showPreview"
+                    data-job-preview-job-id-param="<%= job.slug %>">
+              See more
+            </button>
+          <% end %>
+        </div>
+
+        <!-- Timestamp at absolute right corner -->
+        <div class="absolute bottom-0 right-0">
+              <span class="text-sm <%= job.expired? ? 'text-gray-400' : 'text-amber-600' %> flex items-center whitespace-nowrap">
+                <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+                <span class="truncate max-w-32">
+                  <%= timestamp_as_words(job) %>
+                </span>
+              </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

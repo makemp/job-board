@@ -1,61 +1,49 @@
-<div class="grid gap-6">
-  <% jobs.each do |job| %>
-    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200">
-      <div class="p-6">
-        <div class="flex justify-between relative">
-          <div class="flex-grow">
-            <% if job.logo.attached? %>
-              <%= image_tag job.logo, class: "h-16 w-16 object-contain mb-3" %>
-            <% end %>
-            
-            <div class="flex items-center gap-4">
-              <h2 class="text-xl font-semibold text-amber-900"><%= job.title %></h2>
-              
-              <!-- Job Meta Information -->
-              <div class="flex items-center gap-4 text-sm text-amber-600">
-                <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-                  </svg>
-                  <%= job.location %>
-                </span>
-                <span class="flex items-center">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
-                  </svg>
-                  <%= job.category %>
-                </span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Right side content -->
-          <div class="flex flex-col justify-between ml-6">
-            <!-- Button centered vertically -->
-            <div class="flex items-center h-full">
-              <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300" onclick="event.preventDefault(); Turbo.visit('<%= job_offer_path(job.id) %>');">
-              See more
-              </button>
-            </div>
-            
-            <!-- Timestamp at bottom -->
-            <div class="text-right">
-              <span class="text-sm text-amber-600 flex items-center justify-end">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                </svg>
-                <%= if job.created_at.today?
-                      "Added Today"
-                    elsif job.created_at.yesterday?
-                      "Added Yesterday"
-                    else
-                      "Added " + time_ago_in_words(job.created_at) + " ago"
-                    end %>
-              </span>
-            </div>
-          </div>
-        </div>
+<% if jobs.any? %>
+  <div class="grid gap-6">
+    <% jobs.each do |job| %>
+       <%if job.is_a?(ExternalJobOffer)  %>
+        <%= render 'external_job_card', job: job %>
+      <% else %>
+        <%= render 'job_card', job: job %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="flex flex-col items-center justify-center py-16 px-4">
+    <div class="text-center max-w-md">
+      <!-- Icon -->
+      <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-amber-100 mb-6">
+        <svg class="h-10 w-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
       </div>
+
+      <!-- Heading -->
+      <h3 class="text-2xl font-semibold text-gray-900 mb-2">
+        No job offers found
+      </h3>
+
+      <!-- Description -->
+      <p class="text-gray-600 mb-6 leading-relaxed">
+        <% if params[:category].present? || params[:region].present? %>
+          We couldn't find any job offers matching your current filters. Try adjusting your search criteria or browse all available positions.
+        <% else %>
+          There are currently no job offers available. Please check back soon for new opportunities.
+        <% end %>
+      </p>
+
+      <!-- Action Button -->
+      <% if params[:category].present? || params[:region].present? %>
+        <button type="button"
+                data-reset-url="<%= job_offers_path %>"
+                onclick="this.querySelector('form') || document.querySelector('form[data-controller~=filter]').reset(); window.location.href = this.dataset.resetUrl"
+                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-200">
+          <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Reset filters
+        </button>
+      <% end %>
     </div>
-  <% end %>
-</div> 
+  </div>
+<% end %>

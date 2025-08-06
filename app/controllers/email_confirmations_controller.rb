@@ -2,9 +2,9 @@ class EmailConfirmationsController < ApplicationController
   MSG = "If email exists and is not confirmed, a confirmation email will be sent to it. Check your inbox.".freeze
   def email_confirmed
     job_offer = Registrations::ConfirmEmailService.call!(params[:token])
-    flash[:notice] = "Email confirmed successfully. Your job offer is now visible!"
-    sign_in job_offer.employer
-    redirect_to job_offer_path(job_offer, success: true)
+    sign_in(job_offer.employer)
+    session = Stripe::CheckoutSessionService.call(order_placement: job_offer.order_placement)
+    redirect_to session.url, allow_other_host: true
   rescue Registrations::ConfirmEmailService::ConfirmationError => e
     flash[:alert] = e.message
     redirect_to root_path

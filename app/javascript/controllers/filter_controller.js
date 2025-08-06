@@ -73,4 +73,32 @@ export default class extends Controller {
     // Update the browser history
     history.pushState({}, "", url)
   }
+
+  reset(event) {
+    event.preventDefault()
+
+    // Clear all form fields
+    const form = this.element
+    form.reset()
+
+    // Navigate to the base URL without any parameters
+    const baseUrl = form.action
+    Turbo.visit(baseUrl)
+  }
+
+  resetFromFrame(event) {
+    // This method can be called from anywhere in the document
+    event.preventDefault()
+
+    // Find the filter form
+    const form = document.querySelector('[data-controller*="filter"]')
+    if (form) {
+      // Clear all form fields
+      form.reset()
+
+      // Navigate to the base URL without any parameters
+      const baseUrl = form.action
+      Turbo.visit(baseUrl)
+    }
+  }
 }

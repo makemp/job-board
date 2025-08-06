@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Job Board" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><%= meta_title %></title>
+    <%= favicon_link_tag  %>
+
+    <!-- Basic Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="<%= meta_description %>">
+    <meta name="keywords" content="drilling jobs, mining jobs & oil and gas jobs, energy careers, offshore drilling, onshore drilling, rig jobs">
+    <meta name="author" content="DrillCrew">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<%= meta_title %>">
+    <meta property="og:description" content="<%= meta_description %>">
+    <meta property="og:image" content="<%= meta_image %>">
+    <meta property="og:url" content="<%= meta_url %>">
+    <meta property="og:type" content="<%= meta_type %>">
+    <meta property="og:site_name" content="DrillCrew">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= meta_title %>">
+    <meta name="twitter:description" content="<%= meta_description %>">
+    <meta name="twitter:image" content="<%= meta_image %>">
+    <meta name="twitter:url" content="<%= meta_url %>">
+    <meta name="twitter:site" content="@drillcrew">
+
+    <!-- Additional Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#92400e">
+
+    <%= action_cable_meta_tag %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -15,31 +44,45 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="canonical" href="<%= meta_url %>">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
     <%= javascript_importmap_tags %>
+
   </head>
 
-  <body>
+  <body class="flex flex-col min-h-screen">
+  <%= render partial: "layouts/flash" %>
+  <% if flash[:impersonation].present? %>
+    <div class="relative bg-yellow-100 border border-yellow-400 text-yellow-800 p-3 text-center">
+      <span class="absolute top-0 right-0 px-2 py-1 cursor-pointer" onclick="this.parentElement.style.display='none'">&times;</span>
+      <%= flash[:impersonation].html_safe %>
+    </div>
+  <% end %>
+<!--
   <% if notice.present? %>
-    <div class="relative bg-green-100 border border-green-400 text-green-800 p-2 rounded-md mb-4 text-center">
+    <div class="relative bg-green-100 border border-green-400 text-green-800 p-2 rounded-md text-center">
       <span class="absolute top-0 right-0 px-2 py-1 cursor-pointer" onclick="this.parentElement.style.display='none'">&times;</span>
       <%= notice %>
     </div>
   <% end %>
 
   <% if alert.present? %>
-    <div class="relative bg-red-100 border border-red-400 text-red-800 p-2 rounded-md mb-4 text-center">
+    <div class="relative bg-red-100 border border-red-400 text-red-800 p-2 rounded-md text-center">
       <span class="absolute top-0 right-0 px-2 py-1 cursor-pointer" onclick="this.parentElement.style.display='none'">&times;</span>
       <%= alert %>
     </div>
   <% end %>
+ -->
   <%= render partial: "commons/header" %>
-      <%= yield %>
+  <main class="flex-grow">
+    <%= yield %>
+  </main>
+
   <%= render partial: "commons/cookie_notice" %>
+  <%= render partial: "commons/footer" %>
   </body>
 </html>

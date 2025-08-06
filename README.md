@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Stripe stuff
+First you might to log in:
+```
+stripe login
+```
+then you need to run process to listen for events:
+```
+stripe listen --forward-to localhost:3000/stripe/webhook
+```
+the command above will also print out the webhook secret which needs to be stored here:
+```
+EDITOR="vim" bin/rails credentials:edit --environment development
+```
 
-Things you may want to cover:
+For encryption:
+bin/rails db:encryption:init
+and store them:
+EDITOR=vim bin/rails credentials:edit
 
-* Ruby version
+Libraries:
+vips  for image processing
+geoip-database ??
+clamav for anti-virus
 
-* System dependencies
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+SQLITE on prod: https://fly.io/docs/rails/advanced-guides/sqlite3/

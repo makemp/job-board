@@ -2,12 +2,19 @@ class CreateJobOffers < ActiveRecord::Migration[8.0]
   def change
     create_table :job_offers, id: :ulid, default: -> { "ulid()" } do |t|
       t.string :title
-      t.string :location
+      t.string :region
+      t.string :subregion
+      t.string :overcategory
       t.string :category
-      t.boolean :apply_with_job_board
+      t.string :application_type
+      t.string :application_destination
+      t.datetime :expired_on
+      t.datetime :expired_manually
       t.boolean :featured
       t.boolean :approved, default: false, null: false
-      t.references :employer, null: false, foreign_key: true, type: :ulid
+      t.boolean :terms_and_conditions, default: false
+      t.string :type
+      t.references :employer, null: false, foreign_key: {to_table: :users}, type: :ulid
 
       t.timestamps
     end

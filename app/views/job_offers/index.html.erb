@@ -1,23 +1,49 @@
+<%
+  # Set meta tags for job listings page
+  filter_description = []
+  filter_description << "#{params[:category]} jobs" if params[:category].present?
+  filter_description << "in #{params[:region]}" if params[:region].present?
+
+  page_title = if filter_description.any?
+    "#{filter_description.join(' ')} - DrillCrew Job Board"
+  else
+    "Browse Drilling & Mining & Oil Gas Jobs - DrillCrew"
+  end
+
+  page_description = if filter_description.any?
+    "Find #{filter_description.join(' ')} on DrillCrew. Browse verified job opportunities in the drilling, mining and energy sector."
+  else
+    "Browse the latest drilling & mining and oil & gas job opportunities. Find your next career move with top employers in the energy sector."
+  end
+
+  set_meta_tags(
+    title: page_title,
+    description: page_description,
+    url: job_offers_url(request.query_parameters)
+  )
+%>
+
+
 <div class="min-h-screen bg-amber-50">
   <!-- Filters -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-amber-100 border-b border-amber-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 bg-amber-100 border-b border-amber-200">
     <%= form_with(url: job_offers_path, method: :get,
                   data: { controller: "filter", turbo_frame: "jobs" },
-                  class: "space-y-4 sm:space-y-0 sm:flex sm:flex-wrap sm:gap-4") do %>
-      
+                  class: "space-y-4 lg:space-y-0 lg:flex lg:flex-wrap lg:gap-4") do %>
+
       <!-- Category Filter -->
-      <div class="w-full sm:w-[30%]">
-        <%= label_tag :category, 'Category', class: "block text-lg font-medium text-amber-800 mb-1" %>
+      <div class="w-full lg:w-[30%]">
+        <%= label_tag :category, 'Category', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :category,
-            options_for_select(JobOffer::CATEGORIES, selected: params[:category]),
+            options_for_select(selectable_grouped_categories, params[:category]),
             include_blank: "All Categories",
-            class: "w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
       </div>
       
       <!-- Region Filter -->
-      <div class="w-full sm:w-[30%]">
-        <%= label_tag :region, 'Region', class: "block text-lg font-medium text-amber-800 mb-1" %>
+      <div class="w-full lg:w-[30%]" data-controller="searchable-select" data-searchable-select-placeholder-value="Search regions...">
+        <%= label_tag :region, 'Region', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :region,
             content_tag(:optgroup, 
               options_for_select(JobOffer::HIGHLIGHTED_REGIONS, selected: params[:region]),
@@ -25,41 +51,65 @@
             ) +
             content_tag(:optgroup,
               options_for_select(JobOffer::REGIONS.reject { |r| JobOffer::HIGHLIGHTED_REGIONS.include?(r) }, selected: params[:region]),
-              label: "All Regions"
+              label: "Regions"
             ),
-            include_blank: "All Locations",
-            class: "w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
-            data: { action: "change->filter#submit" } %>
+            include_blank: "All Regions",
+            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+            data: {
+              action: "change->filter#submit",
+              "searchable-select-target": "select"
+            } %>
       </div>
       
       <!-- Per Page Filter -->
-      <div class="w-full sm:w-[20%]">
-        <%= label_tag :per_page, 'Results per page', class: "block text-lg font-medium text-amber-800 mb-1" %>
+      <div class="w-full lg:w-[20%]">
+        <%= label_tag :per_page, 'Results per page', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :per_page,
             options_for_select([["10", 10], ["20", 20], ["50", 50], ["All", "all"]], selected: params[:per_page] || 20),
-            class: "w-full text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
       </div>
       
       <!-- Reset Filters -->
-      <div class="w-full sm:w-[15%] flex justify-end items-end">
-        <%= link_to "Reset", job_offers_path,
-            class: "inline-flex items-center px-4 py-2 border border-transparent text-lg font-medium rounded-md shadow-sm text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300" %>
+      <div class="w-full lg:w-[15%] flex justify-center lg:justify-end lg:items-end">
+        <button type="button"
+                data-action="click->filter#reset"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-base sm:text-lg font-medium rounded-md shadow-sm text-white bg-amber-800 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300">
+          Reset
+        </button>
       </div>
     <% end %>
   </div>
 
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <%= turbo_frame_tag "jobs" do %>
-      <!-- Top Pagination -->
-      <%= render partial: "pagination" %>
-
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-controller="job-preview">
+    <div class="flex gap-6">
       <!-- Jobs List -->
-      <%= render partial: "job_list", locals: { jobs: @jobs } %>
-      
-      <!-- Bottom Pagination -->
-      <%= render partial: "pagination" %>
-    <% end %>
+      <div id="jobs-list" class="w-full lg:w-full transition-all duration-300" data-job-preview-target="jobsList">
+        <%= turbo_frame_tag "jobs" do %>
+          <!-- Top Pagination -->
+          <%= render partial: "pagination",  locals: { position: :top } %>
+
+          <!-- Jobs List -->
+          <%= render partial: "job_list", locals: { jobs: @jobs } %>
+
+          <!-- Bottom Pagination -->
+          <%= render partial: "pagination",  locals: { position: :bottom } %>
+        <% end %>
+      </div>
+
+      <!-- Job Preview Panel (hidden by default) -->
+      <div id="job-preview" class="hidden lg:block lg:w-1/2 bg-white rounded-lg shadow-lg border border-amber-200 sticky top-6 h-[calc(100vh-8rem)] overflow-hidden" data-job-preview-target="previewPanel">
+        <div class="flex items-center justify-center h-full text-gray-500">
+          <div class="text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <p class="text-lg font-medium">Select a job to view details</p>
+            <p class="text-sm">Click on "See more" to preview job details</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </div>

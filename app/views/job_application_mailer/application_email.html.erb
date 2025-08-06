@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="header">New Job Application</div>
+  <p>Hello</p>
+  <p>You have received a new application for your job offer: <strong><%= @job_offer.title %></strong>.</p>
+  <p><strong>Candidate's message:</strong></p>
+  <blockquote style="background:#fef3c7;padding:10px;border-radius:5px;color:#92400e;"><%= @comments.presence || 'No message provided.' %></blockquote>
+  <p>The candidate's CV is attached to this email.</p>
+  <div class="footer">This message was sent automatically from your job board.</div>
+</div>
+
