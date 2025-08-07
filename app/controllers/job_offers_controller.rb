@@ -11,7 +11,7 @@ class JobOffersController < ApplicationController
 
     # Handle pagination
     @per_page = if params[:per_page].present?
-      (params[:per_page] == "all") ? nil : params[:per_page].to_i
+      params[:per_page].to_i
     else
       20 # Default per page
     end
