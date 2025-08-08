@@ -41,25 +41,7 @@
             data: { action: "change->filter#submit" } %>
       </div>
       
-      <!-- Region Filter -->
-      <div class="w-full lg:w-[30%]" data-controller="searchable-select" data-searchable-select-placeholder-value="Search regions...">
-        <%= label_tag :region, 'Region', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
-        <%= select_tag :region,
-            content_tag(:optgroup, 
-              options_for_select(JobOffer::HIGHLIGHTED_REGIONS, selected: params[:region]),
-              label: "Featured Regions"
-            ) +
-            content_tag(:optgroup,
-              options_for_select(JobOffer::REGIONS.reject { |r| JobOffer::HIGHLIGHTED_REGIONS.include?(r) }, selected: params[:region]),
-              label: "Regions"
-            ),
-            include_blank: "All Regions",
-            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
-            data: {
-              action: "change->filter#submit",
-              "searchable-select-target": "select"
-            } %>
-      </div>
+      <%= render 'region_search', params: params%>
       
       <!-- Per Page Filter -->
       <div class="w-full lg:w-[20%]">
