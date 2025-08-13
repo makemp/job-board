@@ -13,7 +13,7 @@ class JobOffersController < ApplicationController
     # Handle pagination
     @per_page = if params[:per_page].present?
       per_page_ = params[:per_page].to_i
-      per_page_ > MAX_PER_PAGE ? MAX_PER_PAGE : per_page_
+      (per_page_ > MAX_PER_PAGE) ? MAX_PER_PAGE : per_page_
     else
       20 # Default per page
     end
@@ -22,7 +22,6 @@ class JobOffersController < ApplicationController
     page_param = params[:page].present? ? params[:page].to_i : 1
     @pagy, @jobs = pagy(@jobs, limit: @per_page, page: page_param)
     # raise @pagy.inspect
-    
 
     # Respond to both HTML and Turbo requests
     respond_to do |format|
