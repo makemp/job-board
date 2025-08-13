@@ -9,8 +9,20 @@
         display: none !important;
     }
 </style>
+<% anti_bot_seed = rand(1000) %>
+<div data-controller="anti-bot"
+     data-anti-bot-seed-value="<%= anti_bot_seed %>"
+     data-anti-bot-multiplier-value="11"
+     data-anti-bot-offset-value="34">
 <%= form_with(url: job_offer_forms_path, method: :post, model: job,  class: "space-y-6") do |f| %>
     <div class="bg-white rounded-lg shadow-xl p-12">
+      <%= f.hidden_field :anti_bot_token, data: { anti_bot_target: "hiddenField" } %>
+      <%= f.hidden_field :anti_bot_seed, value: anti_bot_seed %>
+
+      <div style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+        <%= f.text_field :given_name, tabindex: "-1", autocomplete: "new-password" %>
+        <%= f.text_field :family_name, tabindex: "-1", autocomplete: "new-password"%>
+      </div>
       <div class="space-y-6">
         <div>
           <%= f.label :title, "Job Title*", class: "block text-sm font-medium text-amber-900" %>
@@ -169,3 +181,4 @@
     </div>
 
   <% end %>
+</div>

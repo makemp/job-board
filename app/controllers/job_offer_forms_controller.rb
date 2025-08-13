@@ -1,4 +1,5 @@
 class JobOfferFormsController < ApplicationController
+  include AntiBot
   def new
     if params[:job_offer_form]
       @job = JobOfferForm.new(job_offer_form_params)
@@ -55,6 +56,13 @@ class JobOfferFormsController < ApplicationController
   end
 
   def create
+    unless valid_anti_bot_token?
+      render turbo_stream: turbo_stream.replace("voucher_applied_modal"),
+        partial: "shared/error_message",
+        locals: {message: "Security validation failed. Please try again.", job_offer: @job_offer}
+      return
+    end
+
     @job = JobOfferForm.new(job_offer_form_params)
     respond_to do |format|
       if @job.valid?
@@ -85,6 +93,10 @@ class JobOfferFormsController < ApplicationController
   end
 
   private
+
+  def anti_bot_params
+    params["job_offer_form"].slice(*AntiBot::FIELDS)
+  end
 
   def job_offer_form_params
     params.require(:job_offer_form).permit(*JobOfferForm.attribute_names).tap do |whitelisted|
