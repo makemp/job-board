@@ -42,13 +42,24 @@ export default class extends Controller {
         this.element.dataset.antiBotTimestamp = timestamp;
         this.element.dataset.antiBotSeed = seed;
 
-        // ALSO store the timestamp in a hidden field so backend can use the exact same timestamp
-        let timestampField = this.element.querySelector('input[name="contact[anti_bot_timestamp]"]');
+        const form = this.element.querySelector('form');
+        if (!form) return;
+
+        let timestampFieldName = 'anti_bot_timestamp';
+        const anyInput = form.querySelector('input[name*="["]');
+        if (anyInput) {
+            const modelNameMatch = anyInput.name.match(/^(.*?)\[/);
+            if (modelNameMatch && modelNameMatch[1]) {
+                timestampFieldName = `${modelNameMatch[1]}[anti_bot_timestamp]`;
+            }
+        }
+
+        let timestampField = form.querySelector(`input[name="${timestampFieldName}"]`);
         if (!timestampField) {
             timestampField = document.createElement('input');
             timestampField.type = 'hidden';
-            timestampField.name = 'contact[anti_bot_timestamp]';
-            this.element.querySelector('form').appendChild(timestampField);
+            timestampField.name = timestampFieldName;
+            form.appendChild(timestampField);
         }
         timestampField.value = timestamp;
 

@@ -1,4 +1,5 @@
 class JobOffersController < ApplicationController
+  include AntiBot
   MAX_PER_PAGE = 50
   before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview,
     :apply_for_external_offer]
@@ -79,6 +80,13 @@ class JobOffersController < ApplicationController
   # POST /job_offers/:id/apply_with_form
   def apply_with_form
     @job_offer = JobOffer.find_by_slug(params[:id])
+
+    unless valid_anti_bot_token?
+      render turbo_stream: turbo_stream.update("job_offer_form_error-#{@job_offer.slug}"),
+        partial: "shared/error_message",
+        locals: {message: "Security validation failed. Please try again.", job_offer: @job_offer}
+      return
+    end
 
     if @job_offer.expired?
       render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.slug}"),
@@ -164,6 +172,10 @@ class JobOffersController < ApplicationController
   end
 
   private
+
+  def anti_bot_params
+    @anti_bot_params ||= params.slice(*AntiBot::FIELDS)
+  end
 
   def authenticate_employer!
     raise ActiveRecord::RecordNotFound unless job_offer.employer == current_employer

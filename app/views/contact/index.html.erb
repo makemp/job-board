@@ -20,12 +20,17 @@
       <% anti_bot_seed = rand(1000) %>
       <div data-controller="anti-bot"
            data-anti-bot-seed-value="<%= anti_bot_seed %>"
-           data-anti-bot-multiplier-value="7"
-           data-anti-bot-offset-value="42">
+           data-anti-bot-multiplier-value="11"
+           data-anti-bot-offset-value="34">
         <%= form_with model: @contact, url: contact_path, local: true, class: "space-y-6", id: 'contact-form' do |form| %>
           <!-- Anti-bot hidden fields -->
           <%= form.hidden_field :anti_bot_token, data: { anti_bot_target: "hiddenField" } %>
           <%= form.hidden_field :anti_bot_seed, value: anti_bot_seed %>
+
+          <div style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+            <%= form.text_field :given_name, tabindex: "-1", autocomplete: "new-password" %>
+            <%= form.text_field :family_name, tabindex: "-1", autocomplete: "new-password"%>
+          </div>
 
           <% if @contact.errors.any? %>
             <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">

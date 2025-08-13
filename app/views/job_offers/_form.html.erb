@@ -11,11 +11,23 @@
       </div>
     </div>
   <% elsif @job_offer.application_type == 'Form' %>
+  <% anti_bot_seed = rand(1000) %>
+  <div data-controller="anti-bot"
+       data-anti-bot-seed-value="<%= anti_bot_seed %>"
+       data-anti-bot-multiplier-value="11"
+       data-anti-bot-offset-value="34">
     <%= turbo_frame_tag "job_offer_form-#{@job_offer.slug}" do %>
     <div class="flex justify-center my-6 sm:my-8">
       <div class="w-full max-w-xl bg-amber-50 p-4 sm:p-6 rounded-lg shadow">
         <h3 class="text-xl font-bold text-amber-900 mb-4">Apply for this job</h3>
         <%= form_with url: apply_with_form_job_offer_path(@job_offer), html: { multipart: true, class: 'space-y-4' } do |f| %>
+          <%= f.hidden_field :anti_bot_token, data: { anti_bot_target: "hiddenField" } %>
+          <%= f.hidden_field :anti_bot_seed, value: anti_bot_seed %>
+
+          <div style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+            <%= f.text_field :given_name, tabindex: "-1", autocomplete: "new-password" %>
+            <%= f.text_field :family_name, tabindex: "-1", autocomplete: "new-password"%>
+          </div>
           <div>
             <%= f.label :cv, 'Upload CV', class: 'block text-amber-900 mb-1' %>
             <%= f.file_field :cv, class: 'w-full bg-amber-700 border border-amber-800 rounded-md p-2 text-white', required: true, accept: '.pdf,.doc,.docx' %>
@@ -38,6 +50,7 @@
       </div>
     </div>
     <% end  %> <!-- End of turbo_frame_tag -->
+  </div>
   <% else %>
     <div class="flex justify-center my-6 sm:my-8">
       <%= link_to 'Apply Now', apply_with_url_job_offer_path(@job_offer), target: '_blank', rel: 'noopener noreferrer', class: 'inline-block bg-amber-700 hover:bg-amber-800 text-white px-8 py-4 rounded-lg text-xl font-bold shadow transition-colors duration-300' %>
