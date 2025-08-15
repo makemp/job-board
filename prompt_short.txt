@@ -297,27 +297,142 @@ You know these regions in YAML format:
 </DATA_PROVIDED_BY_USER>
 
 <OUTPUT_FORMAT>
-An json array of json objects:
+json object with the following keys/values:
 ```
 {
-"company": <company name>,
+"company_name": <company name>,
 "title": <the job title>,
 "region": <use provided regions to match the region of the job>,
 "category": <use provided job categories to match the job category>,
+"subregion": <It can be empty, be a town/city name like "Sydney" or any other region like "Great Dividing Range". Do not use region names from the prompt..
 "application_destination": <the original url of the offer>
-"expires_at" <the date when the job offer expires in format YYYY-MM-DD>. If not hiven 7 days from now.
+"description": <for who is this job, describe it in max 3 sentences>
 }
 ```
 </OUTPUT_FORMAT>
 
 <TASK>
-here is url: https://www.careermine.com/job/2342865/fixed-plant-fitter/
+here is the url:
+https://jobs.shell.com/job/qatar/instrument-sub-system-lead/25244/85015812208
+here is url text:
+What’s the role
+
+The Instrument Sub-System Lead is accountable for availability, arrangement of any necessary service or support contracts, and lifecycle management of Qatar Shell Gas To Liquid (QSGTL) PLC-based Control and Safeguarding Systems (Sub-Systems). In QSGTL, there are 25 Sub-Systems deployed offshore and onshore process areas, and the office buildings.
+
+The Instrument Sub-System Lead must maintain skill-level competence in primary role dimensions and act as the ultimate Subject Matter Expert in PLC-based Control Automation and Safeguarding Technologies present in QSGTL. This role is a Line Manager for the Sub-System team with diverse team members consisting of Shell staff and Direct contractors.
+
+You will have the opportunity to thrive in:
+
+Complex Operations Management: Oversee daily administration and lifecycle activities of a large, intricate Sub-Systems landscape while maintaining reliability and availability.
+
+Cross-Functional Coordination: Act as the primary interface across diverse teams—Production Operations, Engineering, Technology, IDT, and vendors—navigating varied work cultures and dependencies.
+
+Operational Continuity: Execute work within a live plant environment without disrupting production, relying on multiple contractors and remote support organizations.
+
+What you’ll be doing
+You will be accountable for the following role dimensions:
+
+Sub-Systems Control System Custodian – maintain PLC-based Control and Safeguarding systems (Sub-Systems), accountable for Sub-Systems overall availability and arrangement of any necessary service or support contracts, manage Lifecycle Upgrade activities and oversee Project funnel for Sub-Systems.
+
+Ensure Sub-System Reliability: Oversee maintenance strategies, inspections, and performance monitoring to minimize downtime and optimize operations.
+
+Manage Contracts & Budgets: Handle R&M and project contracts with OEM vendors, ensuring performance and budget compliance.
+
+Support Strategic Maintenance Planning: Assist in developing preventive, predictive, and corrective maintenance programs, including Honeywell A360 and turnaround lifecycle planning.
+
+Drive Risk & Obsolescence Management: Conduct root cause investigations, manage obsolescence risks, and implement mitigation strategies for aging equipment.
+
+Ensure Compliance & Security: Support deployment of QSGTL PCD-I Program, manage asset inventory, access control, and ensure alignment with OEM and internal standards.
+
+Technical Authority - QSGTL Instrument Sub-System Lead must maintain Process Automation Control and Optimization (PACO) TA-3 competencies or be ready to get PACO TA-3 assessment.
+
+Support business ability to make quality risk-based decisions.
+
+Assure as necessary design and effectiveness of QSGTL Sub-Systems controls.
+
+Evaluate QSGTL Sub-Systems related changes as part of its Management of Change process.
+
+Identify alternative risk reduction methods, mitigations, and considerations.
+
+Line Manager – Instrument Sub-System Lead is responsible for management of Instrument Sub-System team consisting of Shell staff and Direct Contractors.
+
+Team Leadership & Development: Lead the Sub-System team, ensuring competency, mentoring, and career growth through succession planning and training.
+
+Operational Coordination: Align team activities with QSGTL goals to ensure efficient and effective Sub-System operations.
+
+Compliance & Standards: Ensure adherence to QSGTL’s HSSE, HR, PTW, MOC, and Qatarization processes while promoting technical standards and best practices.
+
+Strategic Alignment: Translate instrumentation strategy into actionable Sub-System roadmaps and drive continuous improvement using data.
+
+Culture & Agility: Foster a collaborative, high-performance culture, manage conflicts, and implement agile practices for team adaptability.
+
+What you bring
+
+Possessing these qualifications is considered a significant asset and may enhance a candidate’s effectiveness and success in the role:
+
+Bachelor’s in Control Automation & Instrumentation Engineering with 10+ years in large-scale industrial environments; professional accreditations are a plus.
+
+Proven ability to manage control systems and lead technical teams across various PLC platforms (e.g., Siemens, GE, HIMA).
+
+Project & Contract Management: Background in managing engineering projects and vendor contracts; FEED and Detailed Design.
+
+Deep understanding of automation system design, scientific principles, and interdependent technologies.
+
+Communication & Leadership: Effective communicator with leadership capabilities to mentor, motivate, and collaborate across teams.
+
+Reliability Engineering: Experienced in applying RCA, FMEA, and risk-based approaches to enhance system reliability.
+
+Hands-On Technical Skills: Proficient in instrumentation assembly, loop testing, network validation, and smart instrumentation integration.
+
+Documentation & Standards: Capable of preparing and evaluating engineering documents including wiring diagrams, control narratives, and network architectures.
+
+Problem Solving & Analysis: Strong analytical skills for diagnosing complex issues and implementing effective solutions.
+
+Process Knowledge: Skilled in Production Operations processes (AMS, SAP, MOC, PtW, etc.) and lifecycle management.
+
+It is a Site based position requiring daily travel to site (Ras Laffan) and visible site presence.
+Compliance to Company’s code of conduct, Procedures and Permit-To-Work System are mandatory requirements.
+
+What we offer
+
+You bring your skills and experience to Shell and in return you work with talented, committed people on one of the most important challenges facing our planet. You’ll have the opportunity to develop the skills you need to grow in an environment where we value honesty, integrity, and respect for one another. You’ll be able to balance your priorities as you become the best version of yourself.
+
+Progress as a person as we work on the energy transition together.
+
+Continuously grow the transferable skills you need to get ahead.
+
+Work at the forefront of technology, trends, and practices.
+
+Collaborate with experienced colleagues with unique expertise.
+
+Achieve your balance in a values-led culture that encourages you to be the best version of yourself.
+
+Benefit from flexible working hours, and the possibility of remote/mobile working.
+
+Perform at your best with a competitive starting salary and annual performancerelated salary increase – our pay and benefits packages are considered to be among the best in the world.
+
+Take advantage of paid parental leave, including for non-birthing parents.
+
+Join an organisation working to become one of the most diverse and inclusive in the world. We strongly encourage applicants of all genders, ages, ethnicities, cultures, abilities, sexual orientation, and life experiences to apply.
+
+Grow as you progress through diverse career opportunities in national and
+
+international teams.
+
+Gain access to a wide range of training and development programmes.
+
+We'd like you to know that Shell has a bold goal: to become one of the world’s most diverse and inclusive companies. You can get to know more about how we're working towards that goal, click here.
+
+We are committed to attracting a broader and more diverse pool of candidates. If this position doesn’t feel like the perfect fit for your qualifications right now, we’d still love to hear from you. Consider creating a profile in our Talent Community so we can keep you in mind for future opportunities that may align with your skills.
+
+Shell in Qatar
+
+The State of Qatar has been on a remarkable journey of economic development and growth. At Shell, we are immensely proud to have been invited to be a partner in this exciting journey. Since 2006, Shell has invested over $20 billion in Qatar to build a highly material business. As the largest foreign investor in the country, and working closely with QatarEnergy, we are committed to deliver long term value for Qatar and Shell for decades to come. Today, the scope of Shell’s partnership with QatarEnergy covers key elements of the oil and gas business.
+
+Interested? Share this page with yourself or people you know.
+
 
 return  data in mentioned format for this webpage.
 
 </TASK>
-
-<HINT>
-You can find consing/expiring date in <dd class="mds-list__value"> </dd> tag
-</HINT>
 

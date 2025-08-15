@@ -5,6 +5,12 @@ class Admin::ExternalOffersController < ApplicationController
   def create
     url = params[:url]
     html = params[:html]
+    json = params[:json]
+
+    if json.present?
+      JobOffers::CreateExternalJobOffer.call(json)
+      redirect_to admin_dashboard_path, notice: "External offer created successfully" and return
+    end
 
     if url.blank? || html.blank?
       redirect_to admin_dashboard_path, alert: "URL and HTML content are required"

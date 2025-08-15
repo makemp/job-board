@@ -40,6 +40,6 @@ class ExternalJobOffer < JobOffer
   end
 
   def employer_company_name
-    application_type
+    the_company_name
   end
 end

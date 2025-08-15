@@ -72,13 +72,17 @@ class JobOffer < ApplicationRecord
   end
 
   def slug_candidates
-    ["#{employer.company_name}-#{title}-#{region}-#{category}",
-      "#{employer.company_name}-#{title}",
-      "#{employer.company_name}-#{title}-#{Time.current.to_i}"]
+    ["#{the_company_name}-#{title}-#{region}-#{category}",
+      "#{the_company_name}-#{title}",
+      "#{the_company_name}-#{title}-#{Time.current.to_i}"]
   end
 
   def slug_value_changed?
     title_changed? || region_changed? || category_changed? || employer.company_name_changed?
+  end
+
+  def the_company_name
+    company_name.presence || employer&.company_name || "Unknown Company"
   end
 
   def expired?
@@ -101,7 +105,7 @@ class JobOffer < ApplicationRecord
   end
 
   def employer_company_name
-    employer.company_name
+    the_company_name
   end
 
   def self.filter_by_category(category)
