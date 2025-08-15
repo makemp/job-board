@@ -66,11 +66,12 @@ end
 
 Admin.create!(email: "admin@admin.com", password: "Abcd1234!")
 
-ExternalJobOffer.from_hash({
-  company: "University of Colorado Denver",
+ExternalJobOffer.create({
+  company_name: "University of Colorado Denver",
   title: "IELTS USA Examiner",
   region: "USA",
   application_destination: "https://minejobs.com/job-details/?title=IELTS_USA_Examiner&id=6308502",
   category: "Human Resources & Training",
-  overcategory: "Corporate & Support Services"
+  overcategory: "Corporate & Support Services",
+  employer: JobOffers::CreateExternalJobOffer.employer
 })

@@ -1,5 +1,32 @@
 module JobOffers
   class CreateExternalJobOffer
+    def self.company_name(url)
+      base = URI.parse(url).host&.downcase
+
+      case base
+      when /shell\.com/
+        "Shell"
+      when /exxonmobil\.com/
+        "ExxonMobil"
+      when /chevron\.com/
+        "Chevron"
+      when /totalenergies\.com/
+        "TotalEnergies"
+      when /slb\.com/
+        "Schlumberger"
+      when /halliburton\.com/
+        "Halliburton"
+      when /bakerhughes\.com/
+        "Baker Hughes"
+      when /bhp\.com/
+        "BHP"
+      when /riotinto\.com/
+        "Rio Tinto"
+      when /glencore\.com/
+        "Glencore"
+      end
+    end
+
     def self.call(job_offer_params, url)
       new(job_offer_params, url).call
     end
@@ -32,8 +59,13 @@ module JobOffers
 
     def params
       params_ = job_offer_params.is_a?(Hash) ? job_offer_params : JSON.parse(job_offer_params)
-      params_.merge(employer: self.class.employer, application_destination: url,
+      params_.merge!(employer: self.class.employer, application_destination: url,
         overcategory: JobOffer::CATEGORIES.overcategory_for(job_offer_params["category"]))
+      known_company_name = self.class.company_name(url)
+      if known_company_name.present?
+        params_['company_name'] = known_company_name
+      end
+      params_
     end
 
     attr_reader :job_offer_params, :url

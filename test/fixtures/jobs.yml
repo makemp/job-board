@@ -7,7 +7,6 @@ one:
   description: MyText
   salary: MyString
   apply_url: MyString
-  is_featured: false
   employer: one
 
 two:
@@ -17,5 +16,4 @@ two:
   description: MyText
   salary: MyString
   apply_url: MyString
-  is_featured: false
   employer: two
