@@ -9,16 +9,15 @@ class Admin::ExternalOffersController < ApplicationController
 
     if json.present?
       JobOffers::CreateExternalJobOffer.call(json)
-      redirect_to admin_dashboard_path, notice: "External offer created successfully" and return
+      redirect_to admin_dashboard_path + "#add-offer", notice: "External offer created successfully" and return
     end
 
     if url.blank? || html.blank?
-      redirect_to admin_dashboard_path, alert: "URL and HTML content are required. Or JSON field"
+      redirect_to admin_dashboard_path + "#add-offer", alert: "URL and HTML content are required. Or JSON field"
       return
     end
 
-    # Here you can add logic to save the external offer
-    # For now, we'll just show a success message
-    redirect_to admin_dashboard_path, notice: "External offer created successfully"
+    JobOffers::CreateExternalJobOffer.call(Ai::ExternalJobOfferService.call(url, html))
+    redirect_to admin_dashboard_path + "#add-offer", notice: "External offer created successfully"
   end
 end
