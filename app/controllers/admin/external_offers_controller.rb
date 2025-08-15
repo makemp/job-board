@@ -7,17 +7,17 @@ class Admin::ExternalOffersController < ApplicationController
     html = params[:html]
     json = params[:json]
 
-    if json.present?
-      JobOffers::CreateExternalJobOffer.call(json)
+    if json.present? && url.present?
+      JobOffers::CreateExternalJobOffer.call(json, url)
       redirect_to admin_dashboard_path + "#add-offer", notice: "External offer created successfully" and return
     end
 
     if url.blank? || html.blank?
-      redirect_to admin_dashboard_path + "#add-offer", alert: "URL and HTML content are required. Or JSON field"
+      redirect_to admin_dashboard_path + "#add-offer", alert: "URL and HTML content are required. Or JSON field and URL"
       return
     end
 
-    JobOffers::CreateExternalJobOffer.call(Ai::ExternalJobOfferService.call(url, html))
+    JobOffers::CreateExternalJobOffer.call(Ai::ExternalJobOfferService.call(html), url)
     redirect_to admin_dashboard_path + "#add-offer", notice: "External offer created successfully"
   end
 end

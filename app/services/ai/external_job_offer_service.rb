@@ -2,12 +2,11 @@ module Ai
   class ExternalJobOfferService
     AI_URL = URI("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent").freeze
 
-    def self.call(url, text)
-      new(url, text).call
+    def self.call(text)
+      new(text).call
     end
 
-    def initialize(url, text)
-      @url = url
+    def initialize(text)
       @text = text
     end
 
@@ -20,8 +19,7 @@ module Ai
         "X-goog-api-key" => ENV["GEMINI_API_KEY"])
 
       prompt = File.read(Rails.root.join("config/prompts/external_job.txt"))
-      prompt.sub("<URL_PLACEHOLDER>", url)
-      prompt.sub("<TEXT_PLACEHOLDER>", text)
+      prompt = prompt.sub("<TEXT_PLACEHOLDER>", text)
 
       request.body = {
         contents: [
@@ -49,6 +47,6 @@ module Ai
 
     private
 
-    attr_reader :url, :text
+    attr_reader :text
   end
 end

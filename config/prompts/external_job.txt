@@ -305,15 +305,12 @@ json object with the following keys/values:
 "region": <use provided regions to match the region of the job>,
 "category": <use provided job categories to match the job category>,
 "subregion": <It can be empty, be a town/city name like "Sydney" or any other region like "Great Dividing Range". Do not use region names from the prompt..
-"application_destination": <the original url of the offer>
 "description": <for who is this job, describe it in max 3 sentences>
 }
 ```
 </OUTPUT_FORMAT>
 
 <TASK>
-here is the url:
-<URL_PLACEHOLDER>
 here is url text:
 <TEXT_PLACEHOLDER>
 

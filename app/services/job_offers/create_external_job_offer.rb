@@ -1,7 +1,7 @@
 module JobOffers
   class CreateExternalJobOffer
-    def self.call(job_offer_params)
-      new(job_offer_params).call
+    def self.call(job_offer_params, url)
+      new(job_offer_params, url).call
     end
 
     def self.employer
@@ -16,8 +16,9 @@ module JobOffers
       @employer.reload
     end
 
-    def initialize(job_offer_params)
+    def initialize(job_offer_params, url)
       @job_offer_params = job_offer_params
+      @url = url
     end
 
     def call
@@ -31,10 +32,10 @@ module JobOffers
 
     def params
       params_ = job_offer_params.is_a?(Hash) ? job_offer_params : JSON.parse(job_offer_params)
-      params_.merge(employer: self.class.employer,
+      params_.merge(employer: self.class.employer, application_destination: url,
         overcategory: JobOffer::CATEGORIES.overcategory_for(job_offer_params["category"]))
     end
 
-    attr_reader :job_offer_params
+    attr_reader :job_offer_params, :url
   end
 end
