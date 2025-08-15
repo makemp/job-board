@@ -13,7 +13,7 @@ class Admin::ExternalOffersController < ApplicationController
     end
 
     if url.blank? || html.blank?
-      redirect_to admin_dashboard_path, alert: "URL and HTML content are required"
+      redirect_to admin_dashboard_path, alert: "URL and HTML content are required. Or JSON field"
       return
     end
 

@@ -8,53 +8,38 @@
   </div>
 
   <!-- Tab Navigation -->
-  <div class="border-b border-gray-200 mb-6">
-    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-      <button class="tab-button active border-transparent text-gray-900 whitespace-nowrap border-b-2 font-medium text-sm py-2 px-1 border-blue-500 text-blue-600"
-              data-target="employers-tab"
-              onclick="switchTab(event, 'employers-tab')">
-        Employers
-      </button>
-      <button class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 font-medium text-sm py-2 px-1"
-              data-target="add-offer-tab"
-              onclick="switchTab(event, 'add-offer-tab')">
-        Add External Offer
-      </button>
-    </nav>
-  </div>
-
-  <!-- Tab Content -->
-  <div class="tab-content">
-    <div id="employers-tab" class="tab-panel active">
-      <%= render 'employers', employers: @employers %>
+  <div data-controller="tabs" data-tabs-initial-tab-value="employers">
+    <div class="border-b border-gray-200 mb-6">
+      <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+        <button class="tab-button active border-transparent text-gray-900 whitespace-nowrap border-b-2 font-medium text-sm py-2 px-1 border-blue-500 text-blue-600"
+                data-tabs-target="tab"
+                data-tab-name="employers"
+                data-action="click->tabs#show">
+          Employers
+        </button>
+        <button class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap border-b-2 font-medium text-sm py-2 px-1"
+                data-tabs-target="tab"
+                data-tab-name="add-offer"
+                data-action="click->tabs#show">
+          Add External Offer
+        </button>
+      </nav>
     </div>
-    <div id="add-offer-tab" class="tab-panel hidden">
-      <%= render 'add_external_offer' %>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <div id="employers-tab"
+           class="tab-panel active"
+           data-tabs-target="pane"
+           data-tab-name="employers">
+        <%= render 'employers', employers: @employers %>
+      </div>
+      <div id="add-offer-tab"
+           class="tab-panel hidden"
+           data-tabs-target="pane"
+           data-tab-name="add-offer">
+        <%= render 'add_external_offer' %>
+      </div>
     </div>
   </div>
 </div>
-
-<script>
-function switchTab(event, tabId) {
-  // Remove active class from all tab buttons
-  document.querySelectorAll('.tab-button').forEach(button => {
-    button.classList.remove('active', 'border-blue-500', 'text-blue-600');
-    button.classList.add('border-transparent', 'text-gray-500');
-  });
-
-  // Add active class to clicked tab button
-  event.target.classList.add('active', 'border-blue-500', 'text-blue-600');
-  event.target.classList.remove('border-transparent', 'text-gray-500');
-
-  // Hide all tab panels
-  document.querySelectorAll('.tab-panel').forEach(panel => {
-    panel.classList.add('hidden');
-    panel.classList.remove('active');
-  });
-
-  // Show selected tab panel
-  const selectedPanel = document.getElementById(tabId);
-  selectedPanel.classList.remove('hidden');
-  selectedPanel.classList.add('active');
-}
-</script>
