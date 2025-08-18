@@ -7,17 +7,34 @@ class Admin::ExternalOffersController < ApplicationController
     html = params[:html]
     json = params[:json]
 
-    if json.present? && url.present?
-      JobOffers::CreateExternalJobOffer.call(json, url)
-      redirect_to admin_dashboard_path + "#add-offer", notice: "External offer created successfully" and return
-    end
+    begin
+      if json.present? && url.present?
+        JobOffers::CreateExternalJobOffer.call(json, url)
+        respond_to do |format|
+          format.html { redirect_to admin_dashboard_path + "#add-offer", notice: "External offer created successfully" }
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("flash-messages", partial: "shared/flash", locals: {message: "External offer created successfully", type: "notice"}) }
+        end
+        return
+      end
 
-    if url.blank? || html.blank?
-      redirect_to admin_dashboard_path + "#add-offer", alert: "URL and HTML content are required. Or JSON field and URL"
-      return
-    end
+      if url.blank? || html.blank?
+        respond_to do |format|
+          format.html { redirect_to admin_dashboard_path + "#add-offer", alert: "URL and HTML content are required. Or JSON field and URL" }
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("flash-messages", partial: "shared/flash", locals: {message: "URL and HTML content are required. Or JSON field and URL", type: "alert"}) }
+        end
+        return
+      end
 
-    JobOffers::CreateExternalJobOffer.call(Ai::ExternalJobOfferService.call(html), url)
-    redirect_to admin_dashboard_path + "#add-offer", notice: "External offer created successfully"
+      JobOffers::CreateExternalJobOffer.call(Ai::ExternalJobOfferService.call(html), url)
+      respond_to do |format|
+        format.html { redirect_to admin_dashboard_path + "#add-offer", notice: "External offer created successfully" }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("flash-messages", partial: "shared/flash", locals: {message: "External offer created successfully", type: "notice"}) }
+      end
+    rescue => e
+      respond_to do |format|
+        format.html { redirect_to admin_dashboard_path + "#add-offer", alert: "Error creating external offer: #{e.message}" }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("flash-messages", partial: "shared/flash", locals: {message: "Error creating external offer: #{e.message}", type: "alert"}) }
+      end
+    end
   end
 end

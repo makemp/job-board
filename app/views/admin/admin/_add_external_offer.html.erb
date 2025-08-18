@@ -1,7 +1,27 @@
-<div class="mt-8">
+<div class="mt-8" data-controller="external-offer" data-action="turbo:submit-end->external-offer#handleSubmitEnd">
+  <!-- Flash Messages Container -->
+  <div id="flash-messages">
+    <!-- Flash messages will appear here -->
+  </div>
+
   <h2 class="text-xl font-semibold mb-4">Add External Offer</h2>
 
-  <%= form_with url: admin_external_offers_path, method: :post, local: true, class: "space-y-6" do |form| %>
+  <%= form_with url: admin_external_offers_path, method: :post, data: {
+    "external-offer-target": "form",
+    "action": "turbo:submit-start->external-offer#submit"
+  }, class: "space-y-6" do |form| %>
+
+    <!-- Loading Indicator -->
+    <div data-external-offer-target="loadingIndicator" class="hidden">
+      <div class="flex items-center justify-center p-4 bg-blue-50 rounded-md border border-blue-200">
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-blue-700 font-medium">Creating external offer...</span>
+      </div>
+    </div>
+
     <div>
       <%= form.label :url, "URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
       <%= form.text_field :url,
@@ -17,7 +37,6 @@
           placeholder: "Enter HTML content or plain text for the job offer..." %>
     </div>
 
-
     <div>
       <%= form.label :json, "JSON", class: "block text-sm font-medium text-gray-700 mb-2" %>
       <%= form.text_area :json,
@@ -28,8 +47,8 @@
 
     <div>
       <%= form.submit "Create",
-          class: "px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
+          data: { "external-offer-target": "submitButton" },
+          class: "px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" %>
     </div>
   <% end %>
 </div>
-

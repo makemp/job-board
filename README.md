@@ -33,3 +33,15 @@ https://gemini.google.com/app/084680b9db528fd8
 
 
 SEO: compactkeywords.com
+
+
+Shell, https://jobs.shell.com/
+ExxonMobil, https://jobs.exxonmobil.com/
+Chevron, https://careers.chevron.com/
+TotalEnergies, https://careers.totalenergies.com/en
+Schlumberger (SLB), https://careers.slb.com/
+Halliburton, https://jobs.halliburton.com/
+Baker Hughes, https://careers.bakerhughes.com/
+BHP, https://www.bhp.com/careers/job-openings
+Rio Tinto, https://www.riotinto.com/careers
+Glencore, https://www.glencore.com/careers/career-opportunities

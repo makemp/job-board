@@ -40,8 +40,16 @@ class Admin::ExportsController < ApplicationController
       .where(expired_on: nil) # Only get non-expired offers
       .order(:created_at)
 
-    if job_offer_type != "All"
-      scope = scope.where(offer_type: job_offer_type)
+    scope = if job_offer_type == "Drilling/Mining"
+      scope.where(offer_type: %w[Mining Drilling Drilling/Mining])
+    elsif job_offer_type == "Other"
+      scope.where(offer_type: "Other")
+    elsif job_offer_type == "Mining"
+      scope.where(offer_type: %w[Mining Drilling/Mining])
+    elsif job_offer_type == "Drilling"
+      scope.where(offer_type: %w[Drilling Drilling/Mining])
+    else
+      scope
     end
 
     scope.limit(limit)
