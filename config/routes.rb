@@ -73,7 +73,9 @@ Rails.application.routes.draw do
     post "impersonate/:id", to: "admin#impersonate", as: :impersonate_employer
     delete "stop_impersonating", to: "admin#stop_impersonating", as: :stop_impersonating_employers
     resources :staging_tokens, only: [:create, :destroy], defaults: {format: :text}
-    resources :external_offers, only: [:create]
+    resources :external_offers, only: [:create] do
+      post :check_url, on: :collection
+    end
     resources :exports, only: [:index] do
       post :generate, on: :collection
     end

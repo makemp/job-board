@@ -2,6 +2,31 @@ class Admin::ExternalOffersController < ApplicationController
   before_action :authenticate_admin!
   skip_before_action :show_impersonation_notice
 
+  def check_url
+    url = params[:url]
+
+    if url.blank?
+      render json: {exists: false, message: ""}
+      return
+    end
+
+    existing_offer = ExternalJobOffer.find_by(application_destination: url)
+
+    if existing_offer
+      render json: {
+        exists: true,
+        message: "An external offer with this URL already exists: \"#{existing_offer.title}\" at #{existing_offer.the_company_name}",
+        offer: {
+          title: existing_offer.title,
+          company: existing_offer.the_company_name,
+          created_at: existing_offer.created_at.strftime("%B %d, %Y")
+        }
+      }
+    else
+      render json: {exists: false, message: ""}
+    end
+  end
+
   def create
     url = params[:url]
     html = params[:html]
