@@ -8,9 +8,11 @@ class Admin::ExportsController < ApplicationController
     from_date = Date.parse(params[:from_date])
     to_date = Date.parse(params[:to_date])
     job_offer_type = params[:job_offer_type]
+    source_type = params[:source_type]
     platform = params[:platform]
+    limit = params[:limit]&.to_i || 15
 
-    job_offers = fetch_job_offers(from_date, to_date, job_offer_type)
+    job_offers = fetch_job_offers(from_date, to_date, job_offer_type, source_type, limit)
     markdown_content = generate_markdown(job_offers, platform)
 
     render json: {markdown: markdown_content}
@@ -22,18 +24,27 @@ class Admin::ExportsController < ApplicationController
 
   private
 
-  def fetch_job_offers(from_date, to_date, job_offer_type)
-    scope = JobOffer.includes(:employer)
+  def fetch_job_offers(from_date, to_date, job_offer_type, source_type, limit)
+    # Start with the base scope depending on source type
+    scope = case source_type
+    when "JobOffer"
+      JobOffer.where(type: nil) # Regular JobOffers have type: nil
+    when "ExternalJobOffer"
+      ExternalJobOffer.all
+    else
+      JobOffer.all # This includes both JobOffer and ExternalJobOffer
+    end
+
+    scope = scope.includes(:employer)
       .where(created_at: from_date.beginning_of_day..to_date.end_of_day)
       .where(expired_on: nil) # Only get non-expired offers
       .order(:created_at)
 
-    if job_offer_type == "Mining/Drilling"
-      scope = scope.where(offer_type: %w[Mining Drilling Mining/Drilling])
-    elsif job_offer_type != "All"
+    if job_offer_type != "All"
       scope = scope.where(offer_type: job_offer_type)
     end
-    scope
+
+    scope.limit(limit)
   end
 
   def generate_markdown(job_offers, platform)
@@ -60,7 +71,7 @@ class Admin::ExportsController < ApplicationController
       content += "🌍 #{offer.region}"
       content += " - #{offer.subregion}" if offer.respond_to?(:subregion) && offer.subregion.present?
       content += "\n"
-      content += "🔗 [Apply Now](#{offer.application_destination})\n\n"
+      content += "🔗 [Apply Now](#{job_offer_url(offer)})\n\n"
     end
 
     content += "#Mining #Drilling #Jobs #Career"
@@ -78,7 +89,7 @@ class Admin::ExportsController < ApplicationController
       offer_type = offer.respond_to?(:offer_type) ? offer.offer_type : "N/A"
       offer_type ||= "N/A"
 
-      content += "| #{offer.the_company_name} | #{offer.title} | #{location} | #{offer_type} | [Apply](#{offer.application_destination}) |\n"
+      content += "| #{offer.the_company_name} | #{offer.title} | #{location} | #{offer_type} | [Apply](#{job_offer_url(offer)}) |\n"
     end
 
     content
@@ -92,7 +103,7 @@ class Admin::ExportsController < ApplicationController
       content += "   📍 Location: #{offer.region}"
       content += " - #{offer.subregion}" if offer.respond_to?(:subregion) && offer.subregion.present?
       content += "\n"
-      content += "   🔗 Apply: #{offer.application_destination}\n\n"
+      content += "   🔗 Apply: #{job_offer_url(offer)}\n\n"
     end
 
     content += "Follow us for more opportunities! #Mining #Drilling #Jobs #Career #Opportunities"
@@ -112,7 +123,7 @@ class Admin::ExportsController < ApplicationController
       offer_type = offer.respond_to?(:offer_type) ? offer.offer_type : "N/A"
       offer_type ||= "N/A"
       content += "💼 Type: #{offer_type}\n"
-      content += "🔗 Apply Now: #{offer.application_destination}\n\n"
+      content += "🔗 Apply Now: #{job_offer_url(offer)}\n\n"
       content += "---\n\n"
     end
 
@@ -137,10 +148,18 @@ class Admin::ExportsController < ApplicationController
       offer_type ||= "N/A"
       content += "**Type:** #{offer_type}\n"
       content += "**Created:** #{offer.created_at.strftime("%B %d, %Y")}\n"
-      content += "**Apply:** #{offer.application_destination}\n\n"
+      content += "**Apply:** #{job_offer_url(offer)}\n\n"
       content += "---\n\n"
     end
 
     content
   end
+
+  # rubocop:disable Style/ClassEqualityComparison
+  def job_offer_url(offer)
+    return Rails.application.routes.url_helpers.job_offer_url(offer, host: request.host_with_port) if offer.class == JobOffer
+    return Rails.application.routes.url_helpers.job_offer_url(offer, host: request.host_with_port) if offer.application_type == JobOffer::APPLICATION_TYPE_FORM
+    offer.application_destination
+  end
+  # rubocop:enable Style/ClassEqualityComparison
 end

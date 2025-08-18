@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="export"
 export default class extends Controller {
-  static targets = ["fromDate", "toDate", "jobType", "platform", "output", "exportButton"]
+  static targets = ["fromDate", "toDate", "jobType", "sourceType", "platform", "limit", "output", "exportButton"]
 
   connect() {
     this.setDefaultDates()
@@ -24,7 +24,9 @@ export default class extends Controller {
     const fromDate = this.fromDateTarget.value
     const toDate = this.toDateTarget.value
     const jobType = this.jobTypeTarget.value
+    const sourceType = this.sourceTypeTarget.value
     const platform = this.platformTarget.value
+    const limit = this.limitTarget.value
 
     if (!fromDate || !toDate) {
       alert("Please select both from and to dates")
@@ -33,6 +35,11 @@ export default class extends Controller {
 
     if (new Date(fromDate) > new Date(toDate)) {
       alert("From date cannot be later than to date")
+      return
+    }
+
+    if (!limit || limit < 1 || limit > 10000) {
+      alert("Please enter a valid limit between 1 and 10000")
       return
     }
 
@@ -50,7 +57,9 @@ export default class extends Controller {
           from_date: fromDate,
           to_date: toDate,
           job_offer_type: jobType,
-          platform: platform
+          source_type: sourceType,
+          platform: platform,
+          limit: parseInt(limit)
         })
       })
 
