@@ -63,7 +63,7 @@ module JobOffers
         overcategory: JobOffer::CATEGORIES.overcategory_for(job_offer_params["category"]))
       known_company_name = self.class.company_name(url)
       if known_company_name.present?
-        params_['company_name'] = known_company_name
+        params_["company_name"] = known_company_name
       end
       params_
     end

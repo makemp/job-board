@@ -74,6 +74,9 @@ Rails.application.routes.draw do
     delete "stop_impersonating", to: "admin#stop_impersonating", as: :stop_impersonating_employers
     resources :staging_tokens, only: [:create, :destroy], defaults: {format: :text}
     resources :external_offers, only: [:create]
+    resources :exports, only: [:index] do
+      post :generate, on: :collection
+    end
   end
 
   get "/staging_access/:token", to: "staging_access#create", as: :staging_access, constraints: {token: /[A-Za-z0-9]+/}
