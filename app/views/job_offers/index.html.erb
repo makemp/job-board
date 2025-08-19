@@ -70,7 +70,7 @@
 
     <div class="flex gap-6">
       <!-- Jobs List -->
-      <div id="jobs-list" class="w-full lg:w-full transition-all duration-300" data-job-preview-target="jobsList">
+      <div id="jobs-list" class="w-full lg:w-full transition-all duration-300" data-job-preview-target="jobsList" data-controller="scroll-to-jobs" data-scroll-to-jobs-offset-value="100">
         <%= turbo_frame_tag "jobs" do %>
           <!-- Top Pagination -->
           <%= render partial: "pagination",  locals: { position: :top } %>

@@ -19,14 +19,13 @@ export default class extends Controller {
     if (event.target.id === "jobs") {
       // Use requestAnimationFrame to ensure browser has finished rendering
       requestAnimationFrame(() => {
-        // Get the top position of the filter section
-        const filterSection = document.querySelector("header")
-        if (filterSection) {
-          const filterTop = filterSection.offsetTop
-          window.scrollTo({
-            top: filterTop,
-            behavior: "smooth"
-          })
+        // Find the scroll-to-jobs controller and trigger scroll
+        const jobsList = document.getElementById("jobs-list")
+        if (jobsList) {
+          const scrollToJobsController = this.application.getControllerForElementAndIdentifier(jobsList, "scroll-to-jobs")
+          if (scrollToJobsController) {
+            scrollToJobsController.scroll()
+          }
         }
       })
     }
