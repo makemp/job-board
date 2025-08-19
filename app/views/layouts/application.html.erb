@@ -47,8 +47,8 @@
     <link rel="canonical" href="<%= meta_url %>">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload", preload: false %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", preload: false %>
 
     <%= javascript_importmap_tags %>
 
