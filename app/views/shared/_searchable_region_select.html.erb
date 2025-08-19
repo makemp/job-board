@@ -1,0 +1,71 @@
+<div class="<%= local_assigns[:container_class] || 'w-full' %>"
+     data-controller="searchable-select"
+     data-searchable-select-placeholder-value="Search regions...">
+
+  <%= form.label field_name, label_text, class: "block text-sm font-medium text-gray-700 mb-1" %>
+
+  <div class="relative">
+    <%= text_field_tag "#{field_name}_search",
+        (selected_value.present? ? selected_value : nil),
+        class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+        placeholder: "Search regions...",
+        data: {
+          "searchable-select-target": "search",
+          action: "input->searchable-select#filterOptions focus->searchable-select#showDropdown blur->searchable-select#hideDropdownDelayed keydown->searchable-select#handleKeydown"
+        } %>
+
+    <div data-searchable-select-target="dropdown"
+         class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto hidden">
+
+      <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 font-medium border-b border-gray-200"
+           data-searchable-select-target="option"
+           data-action="mousedown->searchable-select#selectAllRegions"
+           data-value=""
+           data-always-visible="true">
+        All Regions
+      </div>
+
+      <div class="px-3 py-2 text-sm font-semibold text-gray-700 bg-gray-100 border-b">
+        Featured Regions
+      </div>
+      <% JobOffer::HIGHLIGHTED_REGIONS.each do |region| %>
+        <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 <%= 'bg-amber-200' if selected_value == region %>"
+             data-searchable-select-target="option"
+             data-action="mousedown->searchable-select#selectOption"
+             data-value="<%= region %>">
+          <%= region %>
+        </div>
+      <% end %>
+
+      <div class="px-3 py-2 text-sm font-semibold text-gray-700 bg-gray-100 border-b">
+        Regions
+      </div>
+      <% (JobOffer::REGIONS - JobOffer::HIGHLIGHTED_REGIONS).each do |region| %>
+        <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 <%= 'bg-amber-200' if selected_value == region %>"
+             data-searchable-select-target="option"
+             data-action="mousedown->searchable-select#selectOption"
+             data-value="<%= region %>">
+          <%= region %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= form.select field_name,
+      content_tag(:optgroup,
+        options_for_select(JobOffer::HIGHLIGHTED_REGIONS.map { |r| [r, r] }, selected: selected_value),
+        label: "Featured Regions"
+      ) +
+      content_tag(:optgroup,
+        options_for_select(JobOffer::REGIONS.reject { |r| JobOffer::HIGHLIGHTED_REGIONS.include?(r) }.map { |r| [r, r] }, selected: selected_value),
+        label: "Regions"
+      ),
+      { include_blank: "All Regions" },
+      {
+        class: "hidden",
+        data: {
+          "searchable-select-target": "select",
+          **additional_data
+        }
+      } %>
+</div>

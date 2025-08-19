@@ -1,0 +1,46 @@
+<div id="job-alert-widget"
+     class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-start justify-center p-4 sm:p-6 lg:p-8"
+     data-controller="job-alert"
+     data-job-alert-create-url-value="<%= job_alerts_path %>"
+     data-action="click->job-alert#hide">
+
+  <!-- Widget Content -->
+  <div class="relative w-full max-w-lg mx-auto mt-4 sm:mt-8 lg:mt-16 bg-white rounded-lg shadow-xl border border-gray-200 max-h-[90vh] overflow-y-auto"
+       data-action="click->job-alert#stopPropagation">
+
+    <!-- Header -->
+    <div class="sticky top-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-4 rounded-t-lg">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center min-w-0 flex-1">
+          <div class="flex-shrink-0">
+            <div class="flex items-center justify-center h-10 w-10 rounded-full bg-amber-100">
+              <svg class="h-5 w-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-12"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1h6v6h-6z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-3 min-w-0 flex-1">
+            <h3 class="text-base sm:text-lg font-medium text-gray-900 truncate">Create Job Alert</h3>
+            <p class="text-xs sm:text-sm text-gray-500 truncate">
+              Get notified about <span data-job-alert-target="preview" class="font-medium text-amber-600">all jobs</span>
+            </p>
+          </div>
+        </div>
+        <button type="button"
+                class="ml-3 flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors p-2 -m-2"
+                data-action="click->job-alert#hide">
+          <span class="sr-only">Close</span>
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Form Container -->
+    <div id="job-alert-form" class="px-4 sm:px-6 py-4" data-job-alert-target="form">
+      <%= render "job_alerts/form", alert_form: JobAlertForm.new %>
+    </div>
+  </div>
+</div>

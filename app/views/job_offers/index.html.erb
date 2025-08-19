@@ -65,6 +65,9 @@
 
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-controller="job-preview">
+    <!-- Job Alert Trigger -->
+    <%= render "job_alerts/trigger" %>
+
     <div class="flex gap-6">
       <!-- Jobs List -->
       <div id="jobs-list" class="w-full lg:w-full transition-all duration-300" data-job-preview-target="jobsList">
@@ -94,4 +97,7 @@
       </div>
     </div>
   </main>
+
+  <!-- Job Alert Widget Modal -->
+  <%= render "job_alerts/widget" %>
 </div>

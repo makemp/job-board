@@ -10,7 +10,7 @@ class ContactController < ApplicationController
     # Validate anti-bot token before processing the form
     unless valid_anti_bot_token?
       @contact.errors.add(:base, "Security validation failed. Please try again.")
-      render :index, status: :unprocessable_entity
+      render :index, status: :unprocessable_conten
       return
     end
 
@@ -18,7 +18,7 @@ class ContactController < ApplicationController
       ContactMailer.contact_email(@contact).deliver_now
       redirect_to contact_path, notice: "Your message has been sent."
     else
-      render :index, status: :unprocessable_entity
+      render :index, status: :unprocessable_conten
     end
   end
 

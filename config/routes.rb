@@ -29,6 +29,14 @@ Rails.application.routes.draw do
   resource :job_offer_forms, only: %i[new create] do
     patch :update, on: :collection
   end
+
+  # Job Alerts
+  resources :job_alerts, only: %i[index show new create edit update destroy]
+  get "job_alerts/confirm/:token", to: "job_alerts#confirm", as: "confirm_job_alert"
+  get "job_alerts/manage/:token", to: "job_alerts#manage", as: "manage_job_alert"
+  patch "job_alerts/manage/:token", to: "job_alerts#update_via_token", as: "update_job_alert_via_token"
+  delete "job_alerts/unsubscribe/:token", to: "job_alerts#unsubscribe", as: "unsubscribe_job_alert"
+
   namespace :employers do
     get "dashboard", to: "dashboard#index", as: :dashboard
     patch "dashboard/password", to: "dashboard#update_password", as: :update_password
