@@ -305,7 +305,9 @@ json object with the following keys/values:
 "region": <use provided regions to match the region of the job>,
 "category": <use provided job categories to match the job category>,
 "subregion": <It can be empty, be a town/city name like "Sydney" or any other region like "Great Dividing Range". Do not use region names from the prompt..
-"description": <for who is this job, describe it in max 3 sentences>,
+"description": <Adopt the persona of a friendly and professional recruiter. Write a short, compelling job summary (max 3 sentences) that speaks directly to the ideal candidate. Start with an engaging hook, clearly state the core opportunity, and use a welcoming tone. Ensure the sentences have varied lengths to create a natural rhythm.>,
+
+,
 "offer_type": <choose job offer type among these four values: Drilling or Mining or Drilling/Mining or Other>
 }
 ```
