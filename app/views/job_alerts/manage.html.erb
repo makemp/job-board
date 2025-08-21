@@ -63,7 +63,7 @@
                   <div>
                     <%= form.label :category, class: "block text-sm font-medium text-gray-700 mb-1" %>
                     <%= form.select :category,
-                          options_for_select([['All Categories', '']] + Categories.categories_names.map { |cat| [cat, cat] }, filter.category),
+                          options_for_select([['All Categories', '']] + selectable_grouped_categories, filter.category),
                           {},
                           { class: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm" } %>
                   </div>
@@ -130,7 +130,7 @@
             <div>
               <%= form.label :category, class: "block text-sm font-medium text-gray-700 mb-1" %>
               <%= form.select :category,
-                    options_for_select([['All Categories', '']] + Categories.categories_names.map { |cat| [cat, cat] }),
+                    options_for_select([['All Categories', '']] + selectable_grouped_categories),
                     {},
                     { class: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm" } %>
             </div>
