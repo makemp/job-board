@@ -101,16 +101,6 @@ export default class extends Controller {
     }
   }
 
-  // Handle form submission success
-  handleSuccess(event) {
-  }
-
-  // Reset form to sync with current page filters
-  resetToCurrentFilters() {
-    this.syncFiltersFromPage()
-  }
-
-  // Prevent event propagation when clicking inside the modal
   stopPropagation(event) {
     event.stopPropagation()
   }

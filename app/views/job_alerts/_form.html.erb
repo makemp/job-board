@@ -1,174 +1,174 @@
-<%= form_with model: JobAlertForm.new,
-              url: job_alerts_path,
-              method: :post,
-              data: {
-                controller: "job-alert",
-                action: "turbo:submit-end->job-alert#handleSuccess",
-                turbo_frame: "job-alert-form"
-              },
-              class: "space-y-6" do |form| %>
+<%= turbo_frame_tag "job-alert-form" do %>
+  <%= form_with model: alert_form,
+                url: job_alerts_path,
+                method: :post,
+                data: {
+                  controller: "job-alert"
+                },
+                class: "space-y-6" do |form| %>
 
-  <% if alert_form.errors.any? %>
-    <div class="rounded-md bg-red-50 p-4">
-      <div class="flex">
-        <div class="flex-shrink-0">
-          <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-          </svg>
-        </div>
-        <div class="ml-3">
-          <h3 class="text-sm font-medium text-red-800">Please fix the following errors:</h3>
-          <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
-            <% alert_form.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <!-- Email (for JobAlert) -->
-  <div>
-    <%= form.label :email, "Email", class: "block text-sm font-medium text-gray-700 mb-1" %>
-    <%= form.email_field :email,
-        placeholder: "your@email.com",
-        class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
-  </div>
-
-  <!-- Nested JobAlertFilter fields -->
-  <%= form.fields_for :alert_form, [alert_form] do |filter_form| %>
-
-    <!-- Filters Section -->
-    <div class="space-y-4">
-      <!-- Category Filter -->
-      <div>
-        <%= filter_form.label :category, "Category", class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= filter_form.select :category,
-            options_for_select(selectable_grouped_categories, alert_form.category),
-            { include_blank: "All Categories" },
-            {
-              class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50",
-              data: {
-                job_alert_target: "categoryField",
-                action: "change->job-alert#filterChanged"
-              }
-            } %>
-      </div>
-
-      <!-- Region Filter -->
-      <div class="w-full"
-           data-controller="searchable-select"
-           data-searchable-select-placeholder-value="Search regions...">
-
-        <%= filter_form.label :region, "Region", class: "block text-sm font-medium text-gray-700 mb-1" %>
-
-        <div class="relative">
-          <%= text_field_tag "job_alert_form[alert_form][region_search]",
-                             alert_form.region,
-              class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
-              placeholder: "Search regions...",
-              data: {
-                "searchable-select-target": "search",
-                action: "input->searchable-select#filterOptions focus->searchable-select#showDropdown blur->searchable-select#hideDropdownDelayed keydown->searchable-select#handleKeydown"
-              } %>
-
-          <div data-searchable-select-target="dropdown"
-               class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto hidden">
-
-            <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 font-medium border-b border-gray-200"
-                 data-searchable-select-target="option"
-                 data-action="mousedown->searchable-select#selectAllRegions"
-                 data-value=""
-                 data-always-visible="true">
-              All Regions
-            </div>
-
-            <div class="px-3 py-2 text-sm font-semibold text-gray-700 bg-gray-100 border-b">
-              Featured Regions
-            </div>
-            <% JobOffer::HIGHLIGHTED_REGIONS.each do |region| %>
-              <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 <%= 'bg-amber-200' if alert_form.region == region %>"
-                   data-searchable-select-target="option"
-                   data-action="mousedown->searchable-select#selectOption"
-                   data-value="<%= region %>">
-                <%= region %>
-              </div>
-            <% end %>
-
-            <div class="px-3 py-2 text-sm font-semibold text-gray-700 bg-gray-100 border-b">
-              Regions
-            </div>
-            <% (JobOffer::REGIONS - JobOffer::HIGHLIGHTED_REGIONS).each do |region| %>
-              <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 <%= 'bg-amber-200' if alert_form.region == region %>"
-                   data-searchable-select-target="option"
-                   data-action="mousedown->searchable-select#selectOption"
-                   data-value="<%= region %>">
-                <%= region %>
-              </div>
-            <% end %>
+    <% if alert_form.errors.any? %>
+      <div class="rounded-md bg-red-50 p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-red-800">Please fix the following errors:</h3>
+            <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
+              <% alert_form.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
           </div>
         </div>
-
-        <%= filter_form.select :region,
-            content_tag(:optgroup,
-              options_for_select(JobOffer::HIGHLIGHTED_REGIONS.map { |r| [r, r] }, selected: alert_form.region),
-              label: "Featured Regions"
-            ) +
-            content_tag(:optgroup,
-              options_for_select(JobOffer::REGIONS.reject { |r| JobOffer::HIGHLIGHTED_REGIONS.include?(r) }.map { |r| [r, r] }, selected: alert_form.region),
-              label: "Regions"
-            ),
-            { include_blank: "All Regions" },
-            {
-              class: "hidden",
-              data: {
-                "searchable-select-target": "select",
-                job_alert_target: "regionField",
-                action: "change->job-alert#filterChanged"
-              }
-            } %>
       </div>
-    </div>
+    <% end %>
 
-    <!-- Frequency -->
+    <!-- Email (for JobAlert) -->
     <div>
-      <%= filter_form.label :frequency, "Frequency", class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= filter_form.select :frequency,
-          options_for_select([
-            ["Daily", "daily"],
-            ["Weekly", "weekly"],
-            ["Monthly", "monthly"]
-          ], alert_form.frequency || "weekly"),
-          {},
-          { class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" } %>
-      <p class="mt-1 text-sm text-gray-500">How often would you like to receive job alerts?</p>
+      <%= form.label :email, "Email", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.email_field :email,
+          placeholder: "your@email.com",
+          class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" %>
     </div>
-  <% end %>
 
-  <!-- Actions -->
-  <div class="pt-4 space-y-3 sm:space-y-0 sm:flex sm:items-center sm:justify-between">
-    <!-- Sync Filters Button - Hidden on mobile for cleaner UI -->
-    <button type="button"
-            class="hidden sm:inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors"
-            data-action="click->job-alert#resetToCurrentFilters">
-      <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-      </svg>
-      Sync Filters
-    </button>
+    <!-- Nested JobAlertFilter fields -->
+    <%= form.fields_for :alert_form, alert_form do |filter_form| %>
 
-    <!-- Main Action Buttons -->
-    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
+      <!-- Filters Section -->
+      <div class="space-y-4">
+        <!-- Category Filter -->
+        <div>
+          <%= filter_form.label :category, "Category", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= filter_form.select :category,
+              options_for_select(selectable_grouped_categories, alert_form.category),
+              { include_blank: "All Categories" },
+              {
+                class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50",
+                data: {
+                  job_alert_target: "categoryField",
+                  action: "change->job-alert#filterChanged"
+                }
+              } %>
+        </div>
+
+        <!-- Region Filter -->
+        <div class="w-full"
+            data-controller="searchable-select"
+            data-searchable-select-placeholder-value="Search regions...">
+
+          <%= filter_form.label :region, "Region", class: "block text-sm font-medium text-gray-700 mb-1" %>
+
+          <div class="relative">
+            <%= text_field_tag "job_alert_form[alert_form][region_search]",
+                              alert_form.region,
+                class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+                placeholder: "Search regions...",
+                data: {
+                  "searchable-select-target": "search",
+                  action: "input->searchable-select#filterOptions focus->searchable-select#showDropdown blur->searchable-select#hideDropdownDelayed keydown->searchable-select#handleKeydown"
+                } %>
+
+            <div data-searchable-select-target="dropdown"
+                class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto hidden">
+
+              <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 font-medium border-b border-gray-200"
+                  data-searchable-select-target="option"
+                  data-action="mousedown->searchable-select#selectAllRegions"
+                  data-value=""
+                  data-always-visible="true">
+                All Regions
+              </div>
+
+              <div class="px-3 py-2 text-sm font-semibold text-gray-700 bg-gray-100 border-b">
+                Featured Regions
+              </div>
+              <% JobOffer::HIGHLIGHTED_REGIONS.each do |region| %>
+                <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 <%= 'bg-amber-200' if alert_form.region == region %>"
+                    data-searchable-select-target="option"
+                    data-action="mousedown->searchable-select#selectOption"
+                    data-value="<%= region %>">
+                  <%= region %>
+                </div>
+              <% end %>
+
+              <div class="px-3 py-2 text-sm font-semibold text-gray-700 bg-gray-100 border-b">
+                Regions
+              </div>
+              <% (JobOffer::REGIONS - JobOffer::HIGHLIGHTED_REGIONS).each do |region| %>
+                <div class="px-3 py-2 cursor-pointer hover:bg-amber-100 text-gray-900 <%= 'bg-amber-200' if alert_form.region == region %>"
+                    data-searchable-select-target="option"
+                    data-action="mousedown->searchable-select#selectOption"
+                    data-value="<%= region %>">
+                  <%= region %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <%= filter_form.select :region,
+              content_tag(:optgroup,
+                options_for_select(JobOffer::HIGHLIGHTED_REGIONS.map { |r| [r, r] }, selected: alert_form.region),
+                label: "Featured Regions"
+              ) +
+              content_tag(:optgroup,
+                options_for_select(JobOffer::REGIONS.reject { |r| JobOffer::HIGHLIGHTED_REGIONS.include?(r) }.map { |r| [r, r] }, selected: alert_form.region),
+                label: "Regions"
+              ),
+              { include_blank: "All Regions" },
+              {
+                class: "hidden",
+                data: {
+                  "searchable-select-target": "select",
+                  job_alert_target: "regionField",
+                  action: "change->job-alert#filterChanged"
+                }
+              } %>
+        </div>
+      </div>
+
+      <!-- Frequency -->
+      <div>
+        <%= filter_form.label :frequency, "Frequency", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= filter_form.select :frequency,
+            options_for_select([
+              ["Daily", "daily"],
+              ["Weekly", "weekly"],
+              ["Monthly", "monthly"]
+            ], alert_form.frequency || "weekly"),
+            {},
+            { class: "w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50" } %>
+        <p class="mt-1 text-sm text-gray-500">How often would you like to receive job alerts?</p>
+      </div>
+    <% end %>
+
+    <!-- Actions -->
+    <div class="pt-4 space-y-3 sm:space-y-0 sm:flex sm:items-center sm:justify-between">
+      <!-- Sync Filters Button - Hidden on mobile for cleaner UI -->
       <button type="button"
-              class="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors"
-              data-action="click->job-alert#hide">
-        Cancel
+              class="hidden sm:inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors"
+              data-action="click->job-alert#resetToCurrentFilters">
+        <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        Sync Filters
       </button>
 
-      <%= form.submit "Create Alert Filter",
-          class: "w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors",
-          data: { turbo_submits_with: "Creating..." } %>
+      <!-- Main Action Buttons -->
+      <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
+        <button type="button"
+                class="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors"
+                data-action="click->job-alert#hide">
+          Cancel
+        </button>
+
+        <%= form.submit "Create Alert Filter",
+            class: "w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors",
+            data: { turbo_submits_with: "Creating..." } %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

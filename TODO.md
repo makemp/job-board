@@ -24,3 +24,11 @@
 ## think about env variables -> staging or production email sender, setup the email
 ## RorVsWild
 ## Fly.io
+
+
+## Form guards for create job aleets
+ javascript token
+ latency thing.
+ 
+ maybe both forms, hm?
+ 
