@@ -5,10 +5,9 @@ class CreateJobAlertFilters < ActiveRecord::Migration[8.0]
       t.string :category
       t.string :region
       t.string :frequency
-      t.boolean :active
       t.string :confirmation_token
       t.datetime :confirmed_at
-      t.boolean :enabled
+      t.boolean :enabled, default: false
 
       t.timestamps
     end

@@ -38,8 +38,7 @@ class JobAlertForm
             category: inst.category,
             region: inst.region,
             frequency: inst.frequency,
-            confirmation_token: SecureRandom.hex(16),
-            enabled: true
+            confirmation_token: SecureRandom.hex(16)
           )
         end
 
