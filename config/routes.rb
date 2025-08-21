@@ -34,13 +34,13 @@ Rails.application.routes.draw do
   resources :job_alerts, only: %i[index show new create edit update destroy] do
     resources :job_alert_filters, only: %i[create update destroy], shallow: true
   end
-  get "job_alerts/confirm/:token", to: "job_alerts#confirm", as: "confirm_job_alert"
-  get "job_alerts/manage/:token", to: "job_alerts#manage", as: "manage_job_alert"
-  patch "job_alerts/manage/:token", to: "job_alerts#update_via_token", as: "update_job_alert_via_token"
-  delete "job_alerts/unsubscribe/:token", to: "job_alerts#unsubscribe", as: "unsubscribe_job_alert"
+  get "job_alerts/confirm/:filter_token", to: "job_alerts#confirm", as: "confirm_job_alert"
+  get "job_alerts/manage/:management_token", to: "job_alerts#manage", as: "manage_job_alert"
+  patch "job_alerts/manage/:management_token", to: "job_alerts#update_via_token", as: "update_job_alert_via_token"
+  delete "job_alerts/unsubscribe/:management_token", to: "job_alerts#unsubscribe", as: "unsubscribe_job_alert"
   # Job Alert Filter management via token
-  patch "job_alert_filters/:id/toggle/:token", to: "job_alert_filters#toggle", as: "toggle_job_alert_filter"
-  patch "job_alert_filters/:id/update/:token", to: "job_alert_filters#update_via_token", as: "update_job_alert_filter_via_token"
+  patch "job_alert_filters/:id/toggle/:management_token", to: "job_alert_filters#toggle", as: "toggle_job_alert_filter"
+  patch "job_alert_filters/:id/update/:management_token", to: "job_alert_filters#update", as: "update_job_alert_filter"
 
   namespace :employers do
     get "dashboard", to: "dashboard#index", as: :dashboard

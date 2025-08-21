@@ -29,17 +29,17 @@ class JobAlertsController < ApplicationController
   end
 
   def confirm
-    @job_alert_filter = JobAlertFilter.find_by(confirmation_token: params[:token])
+    @job_alert_filter = JobAlertFilter.find_by(confirmation_token: params[:filter_token])
     head :not_found and return if @job_alert_filter.nil?
     @job_alert_filter.update!(confirmed_at: Time.current, enabled: true)
     management_token = @job_alert_filter.job_alert.management_token
-    redirect_to manage_job_alert_path(token: management_token)
+    redirect_to manage_job_alert_path(management_token: management_token)
   end
 
   def manage
-    @job_alert = JobAlert.find_by(management_token: params[:token])
+    @job_alert = JobAlert.find_by(management_token: params[:management_token])
     head :not_found and return if @job_alert.nil?
-    redirect_to confirm_job_alert_path(token: params[:token]) unless @job_alert.active?
+    redirect_to confirm_job_alert_path(management_token: params[:management_token]) unless @job_alert.active?
   end
 
   def update_via_token

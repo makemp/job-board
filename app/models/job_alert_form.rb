@@ -16,7 +16,56 @@ class JobAlertForm
   validates :region, inclusion: {in: JobOffer::REGIONS + JobOffer::HIGHLIGHTED_REGIONS}
   validates :category, inclusion: {in: JobOffer::CATEGORIES.categories_names + JobOffer::CATEGORIES.overcategories_names}
 
-  attr_reader :job_alert_filter, :job_alert
+  def self.update_existing_filter(alert_attrs)
+    job_alert = JobAlert.find_by(management_token: alert_attrs[:management_token])
+    return nil unless job_alert&.active? # should not happen
+
+    inst = new.tap do |form|
+      form.email = job_alert.email
+      form.category = alert_attrs[:category]
+      form.region = alert_attrs[:region_search]
+      form.frequency = alert_attrs[:frequency]
+    end
+
+    if inst.valid?
+      job_alert_filter = job_alert.job_alert_filters.find(alert_attrs[:filter_id])
+      return nil unless job_alert_filter # should not happen
+
+      job_alert_filter.update!(
+        category: inst.category,
+        region: inst.region,
+        frequency: inst.frequency
+      )
+    end
+
+    inst
+  end
+
+  def self.add_new_filter(alert_attrs)
+    job_alert = JobAlert.find_by(management_token: alert_attrs[:management_token])
+    return nil unless job_alert&.active? # should not happen
+
+    inst = new.tap do |form|
+      form.email = job_alert.email
+      form.category = alert_attrs[:category]
+      form.region = alert_attrs[:region_search]
+      form.frequency = alert_attrs[:frequency]
+    end
+
+    if inst.valid?
+      job_alert.job_alert_filters.create!(
+        category: inst.category,
+        region: inst.region,
+        frequency: inst.frequency,
+        enabled: true
+      )
+    end
+    inst
+  end
+
+  def self.find_by_token(token)
+    JobAlertFilter.find_by(confirmation_token: token)
+  end
 
   def self.create(params)
     inst = new.tap do |form|
