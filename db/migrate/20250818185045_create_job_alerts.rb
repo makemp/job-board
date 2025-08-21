@@ -4,6 +4,7 @@ class CreateJobAlerts < ActiveRecord::Migration[8.0]
       t.references :user, null: true, foreign_key: true, type: :ulid
       t.string :email
       t.string :management_token
+      t.datetime :confirmed_at
 
       t.timestamps
     end

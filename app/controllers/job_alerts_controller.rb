@@ -29,23 +29,35 @@ class JobAlertsController < ApplicationController
   end
 
   def confirm
-    @job_alert_filter = JobAlertFilter.find_by(confirmation_token: params[:filter_token])
-    head :not_found and return if @job_alert_filter.nil?
-    @job_alert_filter.update!(confirmed_at: Time.current, enabled: true)
-    management_token = @job_alert_filter.job_alert.management_token
-    redirect_to manage_job_alert_path(management_token: management_token)
+    JobAlert.transaction do
+      JobAlertFilter.transaction do
+        @job_alert_filter = JobAlertFilter.find_by(confirmation_token: params[:id])
+        head :not_found and return if @job_alert_filter.nil?
+        @job_alert_filter.update!(confirmed_at: Time.current, enabled: true)
+        @job_alert_filter.job_alert.update!(confirmed_at: Time.current)
+        management_token = @job_alert_filter.job_alert.management_token
+        redirect_to manage_job_alert_path(management_token: management_token)
+      end
+    end
   end
 
   def manage
     @job_alert = JobAlert.find_by(management_token: params[:management_token])
     head :not_found and return if @job_alert.nil?
-    redirect_to confirm_job_alert_path(management_token: params[:management_token]) unless @job_alert.active?
+    redirect_to confirm_job_alert_path(id: params[:management_token]) unless @job_alert.active?
   end
 
   def update_via_token
   end
 
   def unsubscribe
+    @job_alert = JobAlert.find_by(management_token: params[:management_token])
+    head :not_found and return if @job_alert.nil?
+
+    @job_alert.destroy!
+
+    flash[:notice] = "You have successfully unsubscribed from job alerts."
+    redirect_to root_path
   end
 
   def edit

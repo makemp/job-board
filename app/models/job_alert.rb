@@ -3,6 +3,6 @@ class JobAlert < ApplicationRecord
   has_many :job_alert_filters, dependent: :destroy, inverse_of: :job_alert
 
   def active?
-    job_alert_filters.any?(&:confirmed_at?)
+    confirmed_at.present?
   end
 end

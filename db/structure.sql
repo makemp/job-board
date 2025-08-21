@@ -21,7 +21,7 @@ FOREIGN KEY ("blob_id")
   REFERENCES "active_storage_blobs" ("id")
 );
 CREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-08-19 20:04:10.622321', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE TABLE IF NOT EXISTS "vouchers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "code" varchar NOT NULL, "options" json DEFAULT '{}', "enabled_till" datetime(6) DEFAULT '2225-08-21 21:09:25.861761', "type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE TABLE IF NOT EXISTS "action_text_rich_texts" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "body" text, "record_type" varchar NOT NULL, "record_id" ulid NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE UNIQUE INDEX "index_action_text_rich_texts_uniqueness" ON "action_text_rich_texts" ("record_type", "record_id", "name") /*application='JobBoard'*/;
 CREATE TABLE IF NOT EXISTS "special_offers" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text, "number_of_vouchers" integer NOT NULL, "price" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
@@ -59,12 +59,12 @@ CREATE INDEX "index_blazer_dashboard_queries_on_query_id" ON "blazer_dashboard_q
 CREATE TABLE IF NOT EXISTS "blazer_checks" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "creator_id" integer, "query_id" integer, "state" varchar, "schedule" varchar, "emails" text, "slack_channels" text, "check_type" varchar, "message" text, "last_run_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE INDEX "index_blazer_checks_on_creator_id" ON "blazer_checks" ("creator_id") /*application='JobBoard'*/;
 CREATE INDEX "index_blazer_checks_on_query_id" ON "blazer_checks" ("query_id") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "job_alerts" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "user_id" ulid, "email" varchar, "management_token" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_266c7adc9b"
+CREATE TABLE IF NOT EXISTS "job_alerts" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "user_id" ulid, "email" varchar, "management_token" varchar, "confirmed_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_266c7adc9b"
 FOREIGN KEY ("user_id")
   REFERENCES "users" ("id")
 );
 CREATE INDEX "index_job_alerts_on_user_id" ON "job_alerts" ("user_id") /*application='JobBoard'*/;
-CREATE TABLE IF NOT EXISTS "job_alert_filters" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "job_alert_id" ulid NOT NULL, "category" varchar, "region" varchar, "frequency" varchar, "active" boolean, "confirmation_token" varchar, "confirmed_at" datetime(6), "enabled" boolean, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1221b6b34b"
+CREATE TABLE IF NOT EXISTS "job_alert_filters" ("id" ulid DEFAULT (ulid()) NOT NULL PRIMARY KEY, "job_alert_id" ulid NOT NULL, "category" varchar, "region" varchar, "frequency" varchar, "confirmation_token" varchar, "confirmed_at" datetime(6), "enabled" boolean DEFAULT 0, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1221b6b34b"
 FOREIGN KEY ("job_alert_id")
   REFERENCES "job_alerts" ("id")
 );
