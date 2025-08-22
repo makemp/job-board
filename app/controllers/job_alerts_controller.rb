@@ -1,4 +1,6 @@
 class JobAlertsController < ApplicationController
+  include AntiBot
+
   def index
     # Since there's no user authentication, redirect to root or show empty state
     @job_alerts = JobAlert.none
@@ -15,6 +17,13 @@ class JobAlertsController < ApplicationController
   end
 
   def create
+    unless valid_anti_bot_token?
+      render turbo_stream: turbo_stream.replace("job-alert-form", partial: "job_alerts/form", locals: {
+        alert_form: @job_alert_form
+      })
+      return
+    end
+
     @job_alert_form = JobAlertForm.create(job_alert_params)
 
     if @job_alert_form.errors.present?
@@ -70,6 +79,10 @@ class JobAlertsController < ApplicationController
   end
 
   private
+
+  def anti_bot_params
+    params["job_alert_form"].slice(*AntiBot::FIELDS)
+  end
 
   def job_alert_params
     params.expect(job_alert_form: [:email, alert_form: [:category, :region, :name, :frequency, :region_search]])
