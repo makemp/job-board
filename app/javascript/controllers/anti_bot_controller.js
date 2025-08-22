@@ -6,8 +6,8 @@ export default class extends Controller {
     static targets = ["hiddenField", "form"]
     static values = {
         seed: Number,
-        multiplier: { type: Number, default: 7 },
-        offset: { type: Number, default: 42 }
+        multiplier: { type: Number, default: 11 },
+        offset: { type: Number, default: 34 }
     }
 
     connect() {
