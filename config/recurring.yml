@@ -14,3 +14,24 @@ production:
   expire_offers:
     class: JobOfferExpirationJob
     schedule: every 1 hour
+
+# Job Alerts Cron Jobs
+job_alerts_daily:
+  class_name: JobAlertsJob
+  cron: "0 1 * * 2-7"  # Every day at 1 AM except Monday (Tuesday-Sunday)
+  arguments:
+    frequency: "daily"
+
+job_alerts_weekly:
+  class_name: JobAlertsJob
+  cron: "0 1 * * 1"  # Every Monday at 1 AM
+  guard: "Date.current.day > 7"  # Skip first Monday of the month
+  arguments:
+    frequency: "weekly"
+
+job_alerts_monthly:
+  class_name: JobAlertsJob
+  cron: "0 1 * * 1"  # Monday at 1 AM
+  guard: "Date.current.day <= 7"  # Only first Monday of the month
+  arguments:
+    frequency: "monthly"
