@@ -92,6 +92,12 @@ export default class extends Controller {
     }
   }
 
+  // Reset filters to match current page filters (called by "Sync Filters" button)
+  resetToCurrentFilters(event) {
+    if (event) event.preventDefault()
+    this.syncFiltersFromPage()
+  }
+
   // Hide the widget
   hide(event) {
     if (event) event.preventDefault()
