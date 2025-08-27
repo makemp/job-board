@@ -9,7 +9,9 @@
     title: "#{job_title} - DrillCrew - external job preview",
     description: job_description,
     url: job_offer_url(job_offer),
-    type: "article"
+    canonical: job_offer_url(job_offer),
+    type: "article",
+    noindex: true
   )
 %>
 

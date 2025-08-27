@@ -79,7 +79,7 @@ class Admin::ExportsController < ApplicationController
       content += "🌍 #{offer.region}"
       content += " - #{offer.subregion}" if offer.respond_to?(:subregion) && offer.subregion.present?
       content += "\n"
-      content += "🔗 [Apply Now](#{job_offer_url(offer)})\n\n"
+      content += "🔗 [Apply Now](#{the_job_offer_url(offer)})\n\n"
     end
 
     content += "#Mining #Drilling #Jobs #Career"
@@ -97,7 +97,7 @@ class Admin::ExportsController < ApplicationController
       offer_type = offer.respond_to?(:offer_type) ? offer.offer_type : "N/A"
       offer_type ||= "N/A"
 
-      content += "| #{offer.the_company_name} | #{offer.title} | #{location} | #{offer_type} | [Apply](#{job_offer_url(offer)}) |\n"
+      content += "| #{offer.the_company_name} | #{offer.title} | #{location} | #{offer_type} | [Apply](#{the_job_offer_url(offer)}) |\n"
     end
 
     content
@@ -111,7 +111,7 @@ class Admin::ExportsController < ApplicationController
       content += "   📍 Location: #{offer.region}"
       content += " - #{offer.subregion}" if offer.respond_to?(:subregion) && offer.subregion.present?
       content += "\n"
-      content += "   🔗 Apply: #{job_offer_url(offer)}\n\n"
+      content += "   🔗 Apply: #{the_job_offer_url(offer)}\n\n"
     end
 
     content += "Follow us for more opportunities! #Mining #Drilling #Jobs #Career #Opportunities"
@@ -131,7 +131,7 @@ class Admin::ExportsController < ApplicationController
       offer_type = offer.respond_to?(:offer_type) ? offer.offer_type : "N/A"
       offer_type ||= "N/A"
       content += "💼 Type: #{offer_type}\n"
-      content += "🔗 Apply Now: #{job_offer_url(offer)}\n\n"
+      content += "🔗 Apply Now: #{the_job_offer_url(offer)}\n\n"
       content += "---\n\n"
     end
 
@@ -156,7 +156,7 @@ class Admin::ExportsController < ApplicationController
       offer_type ||= "N/A"
       content += "**Type:** #{offer_type}\n"
       content += "**Created:** #{offer.created_at.strftime("%B %d, %Y")}\n"
-      content += "**Apply:** #{job_offer_url(offer)}\n\n"
+      content += "**Apply:** #{the_job_offer_url(offer)}\n\n"
       content += "---\n\n"
     end
 
@@ -164,7 +164,7 @@ class Admin::ExportsController < ApplicationController
   end
 
   # rubocop:disable Style/ClassEqualityComparison
-  def job_offer_url(offer)
+  def the_job_offer_url(offer)
     return Rails.application.routes.url_helpers.job_offer_url(offer, host: request.host_with_port) if offer.class == JobOffer
     return Rails.application.routes.url_helpers.job_offer_url(offer, host: request.host_with_port) if offer.application_type == JobOffer::APPLICATION_TYPE_FORM
     offer.application_destination

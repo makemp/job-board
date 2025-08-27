@@ -26,9 +26,12 @@
 ## Fly.io
 
 
-## Form guards for create job aleets
- javascript token
- latency thing.
- 
- maybe both forms, hm?
+
+To add
+/icon.png
+/icon.svg
+
+Site map?
+the sent job alert thing.
+no autofill for search region
  
