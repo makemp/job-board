@@ -5,6 +5,14 @@ class Voucher < ApplicationRecord
     options["price"]
   end
 
+  def num_of_usages
+    options["num_of_usages"] || 1
+  end
+
+  def usage_count
+    options["usage_count"] || 0
+  end
+
   # How many days the job offer is valid
   def offer_duration
     options["offer_duration"]
@@ -24,7 +32,7 @@ class Voucher < ApplicationRecord
 
   # How many days the voucher is valid
   def enabled?
-    enabled_till > Time.current
+    enabled_till > Time.current && (usage_count < num_of_usages)
   end
 
   alias_method :enable?, :enabled?
@@ -35,6 +43,7 @@ class Voucher < ApplicationRecord
     job_offer.update!(approved: !required_approval?)
     job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
       valid_till: Time.current + offer_duration)
+    update!(options: { usage_count: usage_count + 1 })
   end
 
   def soft_apply(job_offer_form)
