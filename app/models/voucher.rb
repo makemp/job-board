@@ -1,6 +1,12 @@
 class Voucher < ApplicationRecord
   DEFAULT_CODE = "STANDARD".freeze
 
+  def self.finish_apply!(order_placement)
+    return unless order_placement.voucher_code
+    voucher = find_by!(voucher_code: order_placement.voucher_code)
+    voucher.update!(options: {usage_count: voucher.usage_count + 1})
+  end
+
   def price
     options["price"]
   end
@@ -43,7 +49,6 @@ class Voucher < ApplicationRecord
     job_offer.update!(approved: !required_approval?)
     job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
       valid_till: Time.current + offer_duration)
-    update!(options: { usage_count: usage_count + 1 })
   end
 
   def soft_apply(job_offer_form)
