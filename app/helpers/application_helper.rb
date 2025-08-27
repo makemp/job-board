@@ -9,7 +9,7 @@ module ApplicationHelper
             .join)
   end
 
-  def set_meta_tags(title: nil, description: nil, image: nil, url: nil, type: "website", noindex: nil, canonical: nil)
+  def set_meta_tags(title: nil, description: nil, image: nil, url: nil, type: "website", noindex: nil, canonical: nil, follow: nil)
     content_for :meta_title, title || "DrillCrew - Find Your Next Drilling Job", flush: true
     content_for :meta_description, description || "Find the best drilling & mining and oil & gas job opportunities. Connect with top employers in the energy sector.", flush: true
     content_for :meta_image, image || asset_url("drillcrew-logo.png"), flush: true
@@ -17,6 +17,7 @@ module ApplicationHelper
     content_for :meta_type, type, flush: true
     content_for :meta_canonical, canonical, flush: true if canonical.present?
     content_for :meta_noindex, true, flush: true if noindex
+    content_for :meta_follow, true, flush: true if follow
   end
 
   def meta_title

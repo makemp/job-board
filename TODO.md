@@ -29,3 +29,5 @@
 
 the sent job alert thing.
  Voucher done right
+
+Privacy/terms and conditions done right
