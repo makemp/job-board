@@ -100,3 +100,4 @@ gem "rack-attack"
 gem "blazer"
 
 gem "dockerfile-rails", ">= 1.7", group: :development
+gem "sitemap_generator"

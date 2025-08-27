@@ -82,14 +82,13 @@ class Rack::Attack
     req.params.any? do |k, v|
       key = k.to_s
       val = v.is_a?(Hash) ? v.values.join : v.to_s
-      (key.match?(/given_name\]?$|family_name\]?$/)) && val.strip != ""
+      key.match?(/given_name\]?$|family_name\]?$/) && val.strip != ""
     end
   end
 
   blocklist("fail2ban-honeypot") do |req|
     Rack::Attack::Fail2Ban.filter("honeypot-#{remote_ip(req)}",
-                                  maxretry: 1, findtime: 10.minutes, bantime: 1.hour
-    ) do
+      maxretry: 1, findtime: 10.minutes, bantime: 1.hour) do
       %w[POST PUT PATCH].include?(req.request_method) && honeypot_present?(req)
     end
   end
@@ -98,9 +97,9 @@ class Rack::Attack
   self.throttled_responder = lambda do |env|
     path = env["PATH_INFO"].to_s
     if path.start_with?("/api")
-      [429, { "Content-Type" => "application/json" }, [ { error: "Too Many Requests" }.to_json ]]
+      [429, {"Content-Type" => "application/json"}, [{error: "Too Many Requests"}.to_json]]
     else
-      [429, { "Content-Type" => "text/plain" }, ["Too Many Requests"]]
+      [429, {"Content-Type" => "text/plain"}, ["Too Many Requests"]]
     end
   end
 

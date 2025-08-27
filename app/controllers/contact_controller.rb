@@ -25,7 +25,7 @@ class ContactController < ApplicationController
   private
 
   def contact_params
-    params.require(:contact).permit(:email, :message, :given_name, :family_name,  :anti_bot_token, :anti_bot_seed, :anti_bot_timestamp)
+    params.require(:contact).permit(:email, :message, :given_name, :family_name, :anti_bot_token, :anti_bot_seed, :anti_bot_timestamp)
   end
 
   def anti_bot_params
