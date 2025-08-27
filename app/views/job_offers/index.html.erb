@@ -37,7 +37,7 @@
         <%= select_tag :category,
             options_for_select(selectable_grouped_categories, params[:category]),
             include_blank: "All Categories",
-            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+            class: "w-full h-8 text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
       </div>
       
@@ -48,7 +48,7 @@
         <%= label_tag :per_page, 'Results per page', class: "block text-base sm:text-lg font-medium text-amber-800 mb-1" %>
         <%= select_tag :per_page,
             options_for_select([["10", 10], ["20", 20], ["50", 50]], selected: params[:per_page] || 20),
-            class: "w-full text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
+            class: "w-full h-8 text-base sm:text-lg rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-500 focus:ring-opacity-50 bg-white",
             data: { action: "change->filter#submit" } %>
       </div>
       
