@@ -79,6 +79,7 @@
                                            filter.region,
                             class: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm bg-white",
                             placeholder: "Search regions...",
+                            autocomplete: "off",
                             data: {
                               "searchable-select-target": "search",
                               action: "input->searchable-select#filterOptions focus->searchable-select#showDropdown blur->searchable-select#hideDropdownDelayed keydown->searchable-select#handleKeydown"
@@ -212,6 +213,7 @@
                                      @job_alert.job_alert_filters.build.region,
                     class: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm bg-white",
                     placeholder: "Search regions...",
+                    autocomplete: "off",
                     data: {
                       "searchable-select-target": "search",
                       action: "input->searchable-select#filterOptions focus->searchable-select#showDropdown blur->searchable-select#hideDropdownDelayed keydown->searchable-select#handleKeydown"

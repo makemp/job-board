@@ -26,12 +26,6 @@
 ## Fly.io
 
 
-
-To add
-/icon.png
-/icon.svg
-
 Site map?
 the sent job alert thing.
-no autofill for search region
  
