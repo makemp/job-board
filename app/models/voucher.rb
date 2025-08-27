@@ -2,7 +2,7 @@ class Voucher < ApplicationRecord
   DEFAULT_CODE = "STANDARD".freeze
 
   def self.finish_apply!(order_placement)
-    return unless order_placement.voucher_code
+    return unless order_placement&.voucher_code
     voucher = find_by!(voucher_code: order_placement.voucher_code)
     voucher.update!(options: {usage_count: voucher.usage_count + 1})
   end

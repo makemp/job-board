@@ -37,5 +37,5 @@ production:
       frequency: "monthly"
 
   sitemap_refresh:
-    command: "rake sitemap:refresh:no_ping"
+    command: "rake -s sitemap:refresh:no_ping"
     schedule: "at 2am every day"
