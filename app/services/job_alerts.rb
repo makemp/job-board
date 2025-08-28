@@ -13,9 +13,10 @@ class JobAlertsService
   end
 
   def call
-    result_job_offers = []
+    result_job_offers = {}
     job_alert_filters.each do |email, filters|
       next if email.blank? || filters.blank?
+      result_job_offers[email] = []
       filters.each do |filter|
         next unless proceed_with_filter_frequency?(filter)
 
@@ -24,11 +25,10 @@ class JobAlertsService
             job_offer.matches_category?(filter_.category) &&
             job_offer.region == filter_.region
         end
-        result_job_offers += job_offers.select { selector.call(it, filter) }
+        result_job_offers[email] += job_offers.select { selector.call(it, filter) }
       end
-      # JobAlertMailer.with(email: email, job_offers: result_job_offers.uniq).job_alert_email.deliver_later if result_job_offers.any?
-      result_job_offers = []
     end
+    result_job_offers
   end
 
   private
