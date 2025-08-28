@@ -50,6 +50,10 @@ class JobOffer < ApplicationRecord
     eager_load(:employer, :recent_action).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
   end
 
+  scope :valid_recent, -> do
+    valid.where("job_offer_actions.created_at >= ?", 30.days.ago)
+  end
+
   scope :paid, -> do
     eager_load(:order_placement).where.not(order_placements: {paid_on: nil})
   end
@@ -115,6 +119,11 @@ class JobOffer < ApplicationRecord
     else
       where(category: category)
     end
+  end
+
+  def matches_category?(foreign_category)
+    return true if category == foreign_category
+    true if CATEGORIES.categories_for(foreign_category).include? category
   end
 
   delegate :logo, to: :employer
