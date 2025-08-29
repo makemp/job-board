@@ -1,60 +1,37 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-      .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-      .header { background: #f59e0b; color: white; padding: 20px; text-align: center; }
-      .content { padding: 30px 20px; background: #fff; }
-      .button { display: inline-block; padding: 12px 24px; background: #f59e0b; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
-      .footer { padding: 20px; background: #f8f9fa; font-size: 12px; color: #666; }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <h1>DrillCrew Job Board</h1>
-        <p>Confirm Your Job Alert Filter</p>
-      </div>
+<div class="header">Confirm Your Job Alert Filter</div>
 
-      <div class="content">
-        <h2>Hello!</h2>
+<h2>Hello!</h2>
 
-        <p>You've requested to receive job alerts for <strong><%= @job_alert_filter.category %> in <%= @job_alert_filter.region %></strong>.</p>
+<p>You've requested to receive job alerts for <strong><%= @job_alert_filter.category %> in <%= @job_alert_filter.region %></strong>.</p>
 
-        <p>To start receiving <strong><%= @job_alert_filter.frequency %></strong> email notifications about matching job opportunities, please confirm this filter by clicking the button below:</p>
+<p>To start receiving <strong><%= @job_alert_filter.frequency %></strong> email notifications about matching job opportunities, please confirm this filter by clicking the button below:</p>
 
-        <div style="text-align: center;">
-          <a href="<%= @confirmation_url %>" class="button">Confirm This Job Alert Filter</a>
-        </div>
+<div style="text-align: center;">
+  <a href="<%= @confirmation_url %>" class="button">Confirm This Job Alert Filter</a>
+</div>
 
-        <p>Or copy and paste this link into your browser:</p>
-        <p style="word-break: break-all; color: #666;"><%= @confirmation_url %></p>
+<p>Or copy and paste this link into your browser:</p>
+<p style="word-break: break-all; color: #666;"><%= @confirmation_url %></p>
 
-        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin: 20px 0;">
-          <h4 style="margin: 0 0 10px 0; color: #495057;">Manage All Your Alert Filters</h4>
-          <p style="margin: 0; font-size: 14px; color: #6c757d;">
-            Bookmark this link to manage all your job alert filters or unsubscribe anytime:<br>
-            <a href="<%= @manage_url %>" style="color: #f59e0b; text-decoration: none;"><%= @manage_url %></a>
-          </p>
-        </div>
+<div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin: 20px 0;">
+  <h4 style="margin: 0 0 10px 0; color: #495057;">Manage All Your Alert Filters</h4>
+  <p style="margin: 0; font-size: 14px; color: #6c757d;">
+    Bookmark this link to manage all your job alert filters or unsubscribe anytime:<br>
+    <a href="<%= @manage_url %>" style="color: #f59e0b; text-decoration: none;"><%= @manage_url %></a>
+  </p>
+</div>
 
-        <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+<hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
 
-        <h3>This Filter Details:</h3>
-        <ul>
-          <li><strong>Frequency:</strong> <%= @job_alert_filter.frequency.capitalize %></li>
-          <li><strong>Category:</strong> <%= @job_alert_filter.category.present? ? @job_alert_filter.category : "All Categories" %></li>
-          <li><strong>Region:</strong> <%= @job_alert_filter.region.present? ? @job_alert_filter.region : "All Regions" %></li>
-        </ul>
-      </div>
+<h3>This Filter Details:</h3>
+<ul>
+  <li><strong>Frequency:</strong> <%= @job_alert_filter.frequency.capitalize %></li>
+  <li><strong>Category:</strong> <%= @job_alert_filter.category.present? ? @job_alert_filter.category : "All Categories" %></li>
+  <li><strong>Region:</strong> <%= @job_alert_filter.region.present? ? @job_alert_filter.region : "All Regions" %></li>
+</ul>
 
-      <div class="footer">
-        <p>If you didn't request this job alert, you can safely ignore this email.</p>
-        <p>© DrillCrew Job Board - Your premier destination for drilling, mining, and energy sector careers.</p>
-      </div>
-    </div>
-  </body>
-</html>
+<div style="margin-top: 30px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px; color: #856404;">
+  <p style="margin: 0; font-size: 14px;">
+    <strong>📧 Didn't request this?</strong> If you didn't request this job alert, you can safely ignore this email.
+  </p>
+</div>

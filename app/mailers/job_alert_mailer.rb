@@ -10,4 +10,13 @@ class JobAlertMailer < ApplicationMailer
       subject: "Confirm your job alert!"
     )
   end
+
+  def digest_email(job_alert, job_offers)
+    @job_offers = job_offers
+    @job_alert = job_alert
+    mail(
+      to: job_alert.email,
+      subject: "Your job alert - #{job_offers.count} new job#{"s" if job_offers.count > 1}!"
+    )
+  end
 end

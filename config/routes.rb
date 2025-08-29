@@ -99,6 +99,8 @@ Rails.application.routes.draw do
   if Rails.env.development?
     scope module: :dev_shortcuts do
       get "/job_offer_forms/new/dev", controller: "job_offer_forms", action: :new
+      get "/emails/job_alert_digest", controller: "email_previews", action: :digest_email
+      get "/emails/job_alert_confirmation", controller: "email_previews", action: :confirmation_email
     end
   end
 end
