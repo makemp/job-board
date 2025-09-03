@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/MaksJS/ratonvirus
+  remote: https://github.com/makemp/ratonvirus
   revision: 13e4cd2bc2ef066f40634344f756b45cda3ac105
   ref: 13e4cd2bc2ef066f40634344f756b45cda3ac105
   specs:
@@ -91,7 +91,7 @@ GEM
     bcrypt (3.1.20)
     bcrypt_pbkdf (1.1.1)
     benchmark (0.4.1)
-    bigdecimal (3.2.2)
+    bigdecimal (3.2.3)
     bindex (0.8.1)
     blazer (3.3.0)
       activerecord (>= 7.1)
@@ -155,6 +155,7 @@ GEM
       i18n (>= 1.8.11, < 2)
     ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
+    ffi (1.17.2-x86_64-linux-musl)
     fugit (1.11.2)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -168,6 +169,9 @@ GEM
       bigdecimal
       rake (>= 13)
     google-protobuf (4.32.0-x86_64-linux-gnu)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.32.0-x86_64-linux-musl)
       bigdecimal
       rake (>= 13)
     i18n (1.14.7)
@@ -239,6 +243,8 @@ GEM
     nokogiri (1.18.9-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.9-x86_64-linux-musl)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
@@ -372,6 +378,8 @@ GEM
       google-protobuf (~> 4.31)
     sass-embedded (1.92.0-x86_64-linux-gnu)
       google-protobuf (~> 4.31)
+    sass-embedded (1.92.0-x86_64-linux-musl)
+      google-protobuf (~> 4.31)
     securerandom (0.4.1)
     selenium-webdriver (4.35.0)
       base64 (~> 0.2)
@@ -404,6 +412,7 @@ GEM
     sqlite-ulid (0.2.1-x86_64-linux)
     sqlite3 (2.7.3-arm64-darwin)
     sqlite3 (2.7.3-x86_64-linux-gnu)
+    sqlite3 (2.7.3-x86_64-linux-musl)
     sshkit (1.24.0)
       base64
       logger
@@ -432,6 +441,7 @@ GEM
       tailwindcss-ruby (~> 4.0)
     tailwindcss-ruby (4.1.12-arm64-darwin)
     tailwindcss-ruby (4.1.12-x86_64-linux-gnu)
+    tailwindcss-ruby (4.1.12-x86_64-linux-musl)
     thor (1.4.0)
     thruster (0.1.15-arm64-darwin)
     thruster (0.1.15-x86_64-linux)
@@ -465,6 +475,8 @@ GEM
 PLATFORMS
   arm64-darwin-24
   x86_64-linux
+  x86_64-linux-gnu
+  x86_64-linux-musl
 
 DEPENDENCIES
   ahoy_matey (~> 5.3)
@@ -514,4 +526,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.6.6
+   2.7.1
