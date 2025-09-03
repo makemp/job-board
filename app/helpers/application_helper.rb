@@ -9,12 +9,15 @@ module ApplicationHelper
             .join)
   end
 
-  def set_meta_tags(title: nil, description: nil, image: nil, url: nil, type: "website")
-    content_for :meta_title, title || "DrillCrew - Find Your Next Drilling Job"
-    content_for :meta_description, description || "Find the best drilling & mining and oil & gas job opportunities. Connect with top employers in the energy sector."
-    content_for :meta_image, image || asset_url("drillcrew-logo.png")
-    content_for :meta_url, url || request.original_url
-    content_for :meta_type, type
+  def set_meta_tags(title: nil, description: nil, image: nil, url: nil, type: "website", noindex: nil, canonical: nil, follow: nil)
+    content_for :meta_title, title || "DrillCrew - Find Your Next Drilling Job", flush: true
+    content_for :meta_description, description || "Find the best drilling & mining and oil & gas job opportunities. Connect with top employers in the energy sector.", flush: true
+    content_for :meta_image, image || asset_url("drillcrew-logo.png"), flush: true
+    content_for :meta_url, url || request.original_url, flush: true
+    content_for :meta_type, type, flush: true
+    content_for :meta_canonical, canonical, flush: true if canonical.present?
+    content_for :meta_noindex, true, flush: true if noindex
+    content_for :meta_follow, true, flush: true if follow
   end
 
   def meta_title
@@ -35,6 +38,14 @@ module ApplicationHelper
 
   def meta_type
     content_for?(:meta_type) ? content_for(:meta_type) : "website"
+  end
+
+  def meta_canonical
+    content_for?(:meta_canonical) ? content_for(:meta_canonical) : nil
+  end
+
+  def meta_noindex?
+    content_for?(:meta_noindex)
   end
 
   # Ensure flash_class is available in all views

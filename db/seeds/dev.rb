@@ -2,8 +2,9 @@ require "index_manager"
 
 ActiveRecord::Tasks::DatabaseTasks.truncate_all
 
-Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 79, offer_duration: 60.days})
-FreeVoucher.create!(code: "FREE", options: {price: 0, offer_duration: 15.days})
+Voucher.create!(code: Voucher::DEFAULT_CODE, options: {price: 79, offer_duration: 60.days, num_of_usages: 9_999_999})
+FreeVoucher.create!(code: "FREE", options: {price: 0, offer_duration: 15.days, num_of_usages: 10_000})
+FreeVoucher.create!(code: "FREE_ONCE", options: {price: 0, offer_duration: 15.days})
 Voucher.create!(enabled_till: 3.days.ago, code: "DISCOUNT", options: {price: 199, offer_duration: 30.days})
 
 owl_labs = Employer.create!(company_name: "Owl Drills",
@@ -66,11 +67,12 @@ end
 
 Admin.create!(email: "admin@admin.com", password: "Abcd1234!")
 
-ExternalJobOffer.from_hash({
-  company: "University of Colorado Denver",
+ExternalJobOffer.create({
+  company_name: "University of Colorado Denver",
   title: "IELTS USA Examiner",
   region: "USA",
   application_destination: "https://minejobs.com/job-details/?title=IELTS_USA_Examiner&id=6308502",
   category: "Human Resources & Training",
-  overcategory: "Corporate & Support Services"
+  overcategory: "Corporate & Support Services",
+  employer: JobOffers::CreateExternalJobOffer.employer
 })

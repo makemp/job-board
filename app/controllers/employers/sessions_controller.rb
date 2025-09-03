@@ -1,4 +1,5 @@
 class Employers::SessionsController < Devise::SessionsController
+  include AntiBot
   def create
     email = params[:employer][:email]
     password = params[:employer][:password]
@@ -16,12 +17,18 @@ class Employers::SessionsController < Devise::SessionsController
       render turbo_stream: [
         turbo_stream.update("login_form", partial: "password_form", locals: {email: email}),
         turbo_stream.update("flash", partial: "layouts/flash")
-      ], status: :unprocessable_entity
+      ], status: :unprocessable_conten
     end
   end
 
   # POST /employers/process_email
   def process_email
+    unless valid_anti_bot_token?
+      render turbo_stream: turbo_stream.replace("login_form"),
+        partial: "shared/error_message",
+        locals: {message: "Security validation failed. Please try again.", job_offer: @job_offer}
+      return
+    end
     email = params[:employer][:email]
     @employer = Employer.find_by(email: email)
 
@@ -56,7 +63,7 @@ class Employers::SessionsController < Devise::SessionsController
       render turbo_stream: [
         turbo_stream.update("login_form", partial: "code_form", locals: {email: email}),
         turbo_stream.update("flash", partial: "layouts/flash")
-      ], status: :unprocessable_entity
+      ], status: :unprocessable_conten
     end
   end
 
@@ -74,6 +81,10 @@ class Employers::SessionsController < Devise::SessionsController
   end
 
   private
+
+  def anti_bot_params
+    @anti_bot_params ||= params[:employer].slice(*AntiBot::FIELDS)
+  end
 
   def send_login_code(employer)
     code = rand.to_s[2..8] # generate 7-digit code

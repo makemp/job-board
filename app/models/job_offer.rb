@@ -50,6 +50,10 @@ class JobOffer < ApplicationRecord
     eager_load(:employer, :recent_action).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
   end
 
+  scope :valid_recent, -> do
+    valid.where("job_offer_actions.created_at >= ?", 30.days.ago)
+  end
+
   scope :paid, -> do
     eager_load(:order_placement).where.not(order_placements: {paid_on: nil})
   end
@@ -57,7 +61,7 @@ class JobOffer < ApplicationRecord
   scope :sorted, -> do
     joins("INNER JOIN (SELECT job_offer_id, MAX(created_at) AS max_created_at
                                                    FROM job_offer_actions GROUP BY job_offer_id)
-    max_actions ON job_offers.id = max_actions.job_offer_id").order(featured: :desc, max_created_at: :desc)
+    max_actions ON job_offers.id = max_actions.job_offer_id").order(type: :asc, max_created_at: :desc)
   end
 
   has_rich_text :description
@@ -72,13 +76,17 @@ class JobOffer < ApplicationRecord
   end
 
   def slug_candidates
-    ["#{employer.company_name}-#{title}-#{region}-#{category}",
-      "#{employer.company_name}-#{title}",
-      "#{employer.company_name}-#{title}-#{Time.current.to_i}"]
+    ["#{the_company_name}-#{title}-#{region}-#{category}",
+      "#{the_company_name}-#{title}",
+      "#{the_company_name}-#{title}-#{Time.current.to_i}"]
   end
 
   def slug_value_changed?
     title_changed? || region_changed? || category_changed? || employer.company_name_changed?
+  end
+
+  def the_company_name
+    company_name.presence || employer&.company_name || "Unknown Company"
   end
 
   def expired?
@@ -101,7 +109,7 @@ class JobOffer < ApplicationRecord
   end
 
   def employer_company_name
-    employer.company_name
+    the_company_name
   end
 
   def self.filter_by_category(category)
@@ -111,6 +119,11 @@ class JobOffer < ApplicationRecord
     else
       where(category: category)
     end
+  end
+
+  def matches_category?(foreign_category)
+    return true if category == foreign_category
+    true if CATEGORIES.categories_for(foreign_category).include? category
   end
 
   delegate :logo, to: :employer

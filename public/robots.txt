@@ -3,6 +3,11 @@
 User-agent: *
 
 Disallow: /admin/
+Disallow: /amdg/
 Disallow: /cable
+Disallow: /employers/sign_in
 Disallow: /rails/active_storage/
 Disallow: /system/
+
+
+Sitemap: https://drillcrew.work/sitemap.xml.gz

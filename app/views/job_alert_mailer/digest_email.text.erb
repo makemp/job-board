@@ -1,0 +1,43 @@
+DrillCrew Job Board - Your Job Alert Digest
+==========================================
+
+New Job Opportunities
+----------------------
+We found <%= @job_offers.count %> new job<%= 's' if @job_offers.count > 1 %> that match your alert criteria.
+
+<% @job_offers.each_with_index do |job_offer, index| %>
+<%= index + 1 %>. <%= job_offer.title %>
+   Company: <%= job_offer.the_company_name %>
+   <% if job_offer.region.present? %>
+   Location: <%= job_offer.region %><%= job_offer.subregion.present? ? " - #{job_offer.subregion}" : "" %>
+   <% end %>
+   <% if job_offer.category.present? %>
+   Category: <%= job_offer.category %>
+   <% end %>
+   <% if job_offer.offer_type.present? %>
+   Type: <%= job_offer.offer_type %>
+   <% end %>
+   Posted: <%= job_offer.enlisted_recently_at.strftime("%B %d, %Y") %>
+
+   <% if job_offer.description.present? %>
+   <%= truncate(strip_tags(job_offer.description.to_s), length: 200) %>
+   <% end %>
+
+   View Details: <%= job_offer_url(job_offer) %>
+
+<% end %>
+
+Want to see more opportunities?
+-------------------------------
+Visit our job board to explore all available positions:
+<%= root_url %>
+
+Manage Your Job Alerts
+----------------------
+You can manage your job alert preferences or unsubscribe at any time by visiting your job alerts management page.
+
+---
+This email was sent because you have an active job alert on DrillCrew Job Board.
+If you no longer wish to receive these emails, you can manage your preferences or unsubscribe from your job alerts.
+
+© <%= Date.current.year %> DrillCrew Job Board. All rights reserved.

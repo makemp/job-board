@@ -8,7 +8,7 @@ export default class extends Controller {
 
     connect() {
         // This runs as soon as the controller is connected to the DOM
-        console.log("ToggleFields controller connected.");
+        //console.log("ToggleFields controller connected.");
         this.toggle(); // Call the toggle method on page load
     }
 

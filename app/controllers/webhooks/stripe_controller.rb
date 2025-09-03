@@ -60,16 +60,23 @@ module Webhooks
     def handle_checkout_session_completed(session, order_placement)
       raise "No order for #{session.id}" unless order_placement
       employer = order_placement.employer
-      order_placement.update!(paid_on: Time.current)
+      OrderPlacement.transaction do
+        Voucher.transaction do
+          Employer.transaction do
+            order_placement.update!(paid_on: Time.current)
+            Voucher.finish_apply!(order_placement) if order_placement.voucher_code.present?
 
-      hsh = {}
-      hsh[:stripe_customer_id] = session.customer if employer.stripe_customer_id.blank?
-      if employer.confirmed_at.blank?
-        hsh[:confirmed_at] = Time.current
-        hsh[:confirmation_token] = nil
+            hsh = {}
+            hsh[:stripe_customer_id] = session.customer if employer.stripe_customer_id.blank?
+            if employer.confirmed_at.blank?
+              hsh[:confirmed_at] = Time.current
+              hsh[:confirmation_token] = nil
+            end
+
+            employer.update!(hsh) if hsh.present?
+          end
+        end
       end
-
-      employer.update!(hsh) if hsh.present?
     end
   end
 end

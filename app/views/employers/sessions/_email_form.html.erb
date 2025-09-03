@@ -1,10 +1,23 @@
 <h3 class="text-xl font-medium mb-4 text-gray-800"></h3>
 <p class="text-gray-600 mb-4">Enter your email to continue.</p>
+<% anti_bot_seed = rand(1000) %>
+<div data-controller="anti-bot"
+     data-anti-bot-seed-value="<%= anti_bot_seed %>"
+     data-anti-bot-multiplier-value="11"
+     data-anti-bot-offset-value="34">
 <%= form_with url: employers_sessions_process_email_path, scope: :employer, local: false do |f| %>
   <div class="mb-4">
+    <%= f.hidden_field :anti_bot_token, data: { anti_bot_target: "hiddenField" } %>
+    <%= f.hidden_field :anti_bot_seed, value: anti_bot_seed %>
+
+    <div style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+      <%= f.text_field :given_name, tabindex: "-1", autocomplete: "new-password" %>
+      <%= f.text_field :family_name, tabindex: "-1", autocomplete: "new-password"%>
+    </div>
+
     <%= f.label :email, 'Email', class: "block text-gray-700" %>
     <%= f.email_field :email, required: true, class: "mt-1 block w-full border border-gray-300 rounded-md p-2" %>
   </div>
   <%= f.submit 'Continue', class: "w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors duration-300" %>
 <% end %>
-
+</div>

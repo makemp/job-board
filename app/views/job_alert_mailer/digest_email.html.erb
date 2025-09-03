@@ -1,0 +1,73 @@
+<style>
+  .job-card { border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 20px 0; background: #f8f9fa; }
+  .job-title { font-size: 18px; font-weight: bold; color: #333; margin: 0 0 10px 0; }
+  .company-name { font-size: 16px; color: #f59e0b; margin: 0 0 8px 0; }
+  .job-details { font-size: 14px; color: #666; margin: 5px 0; }
+  .view-button { display: inline-block; padding: 10px 20px; background: #fb923c; color: white; text-decoration: none; border-radius: 5px; margin: 15px 0 0 0; font-size: 14px; font-weight: bold; }
+  .summary { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 20px 0; border-radius: 5px; }
+  .browse-button { display: inline-block; padding: 12px 24px; background: #fb923c; color: white; text-decoration: none; border-radius: 5px; margin: 10px 0; font-weight: bold; }
+  .manage-section { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin: 20px 0; }
+  hr { margin: 30px 0; border: none; border-top: 1px solid #ddd; }
+</style>
+
+<div class="header">Your Job Alert Digest</div>
+
+<div class="summary">
+  <h2 style="margin: 0 0 10px 0; color: #1976d2;">📧 New Job Opportunities</h2>
+  <p style="margin: 0; font-size: 16px;">
+    We found <strong><%= @job_offers.count %></strong> new job<%= 's' if @job_offers.count > 1 %> that match your alert criteria.
+  </p>
+</div>
+
+<% @job_offers.each do |job_offer| %>
+  <div class="job-card">
+    <h3 class="job-title"><%= job_offer.title %></h3>
+    <div class="company-name"><%= job_offer.the_company_name %></div>
+
+    <div class="job-details">
+      <% if job_offer.region.present? %>
+        📍 <strong>Location:</strong> <%= job_offer.region %>
+        <% if job_offer.subregion.present? %>
+          - <%= job_offer.subregion %>
+        <% end %>
+        <br>
+      <% end %>
+
+      <% if job_offer.category.present? %>
+        🏷️ <strong>Category:</strong> <%= job_offer.category %><br>
+      <% end %>
+
+      <% if job_offer.offer_type.present? %>
+        💼 <strong>Type:</strong> <%= job_offer.offer_type %><br>
+      <% end %>
+
+      ⏰ <strong>Posted:</strong> <%= job_offer.enlisted_recently_at.strftime("%B %d, %Y") %>
+    </div>
+
+    <% if job_offer.description.present? %>
+      <div style="margin: 15px 0; font-size: 14px; color: #555;">
+        <%= truncate(strip_tags(job_offer.description.to_s), length: 200) %>
+      </div>
+    <% end %>
+
+    <a href="<%= job_offer_url(job_offer) %>" class="view-button">View Job Details</a>
+  </div>
+<% end %>
+
+<hr>
+
+<div style="text-align: center; margin: 30px 0;">
+  <h3>Want to see more opportunities?</h3>
+  <p>Visit our job board to explore all available positions:</p>
+  <a href="<%= root_url %>" class="browse-button">Browse All Jobs</a>
+</div>
+
+<div class="manage-section">
+  <h4 style="margin: 0 0 10px 0; color: #495057;">📧 Manage Your Job Alerts</h4>
+  <p style="margin: 0; font-size: 14px; color: #6c757d;">
+    You can manage your job alert preferences or unsubscribe at any time by visiting your job alerts management page:
+  </p>
+  <div style="text-align: center; margin: 15px 0;">
+    <a href="<%= manage_job_alert_url(management_token: @job_alert.management_token) %>" style="display: inline-block; padding: 10px 20px; background: #6c757d; color: white; text-decoration: none; border-radius: 5px; font-size: 14px; font-weight: bold;">Manage Job Alerts</a>
+  </div>
+</div>

@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Safety check: prevent running on production
+if [ "${RAILS_ENV:-}" = "production" ] && [ -z "${STAGING_ENV:-}" ]; then
+  echo "DO NOT RUN THIS SCRIPT ON PRODUCTION"
+  exit 1
+fi
+
 # remove old schema dump (change to schema.rb or structure.sql as needed)
 if [ -f db/schema.rb ]; then
   rm db/schema.rb

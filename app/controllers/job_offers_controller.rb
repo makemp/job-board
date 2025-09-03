@@ -1,4 +1,8 @@
 class JobOffersController < ApplicationController
+  include AntiBot
+  include SecurityHelper
+
+  MAX_PER_PAGE = 50
   before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview,
     :apply_for_external_offer]
 
@@ -11,20 +15,16 @@ class JobOffersController < ApplicationController
 
     # Handle pagination
     @per_page = if params[:per_page].present?
-      (params[:per_page] == "all") ? nil : params[:per_page].to_i
+      per_page_ = params[:per_page].to_i
+      (per_page_ > MAX_PER_PAGE) ? MAX_PER_PAGE : per_page_
     else
       20 # Default per page
     end
 
-    if @per_page.nil?
-      # Show all results
-      @pagy = nil
-    else
-      # Ensure page parameter is valid
-      page_param = params[:page].present? ? params[:page].to_i : 1
-      @pagy, @jobs = pagy(@jobs, limit: @per_page, page: page_param)
-      # raise @pagy.inspect
-    end
+    # Ensure page parameter is valid
+    page_param = params[:page].present? ? params[:page].to_i : 1
+    @pagy, @jobs = pagy(@jobs, limit: @per_page, page: page_param)
+    # raise @pagy.inspect
 
     # Respond to both HTML and Turbo requests
     respond_to do |format|
@@ -82,6 +82,13 @@ class JobOffersController < ApplicationController
   # POST /job_offers/:id/apply_with_form
   def apply_with_form
     @job_offer = JobOffer.find_by_slug(params[:id])
+
+    unless valid_anti_bot_token?
+      render turbo_stream: turbo_stream.update("job_offer_form_error-#{@job_offer.slug}"),
+        partial: "shared/error_message",
+        locals: {message: "Security validation failed. Please try again.", job_offer: @job_offer}
+      return
+    end
 
     if @job_offer.expired?
       render turbo_stream: turbo_stream.replace("job_offer_form-#{@job_offer.slug}"),
@@ -154,19 +161,34 @@ class JobOffersController < ApplicationController
       redirect_to job_offer_path(@job_offer) and return
     end
 
+    unless safe_redirect_url?(@job_offer.application_destination)
+      flash[:alert] = "Invalid application destination URL."
+      redirect_to job_offer_path(@job_offer) and return
+    end
+
     ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id
 
-    redirect_to @job_offer.application_destination, allow_other_host: true
+    redirect_to safe_url(@job_offer.application_destination), allow_other_host: true
   end
 
   def apply_for_external_offer
     @job_offer = ExternalJobOffer.find_by_slug(params[:id])
+
+    unless safe_redirect_url?(@job_offer.application_destination)
+      flash[:alert] = "Invalid application destination URL."
+      redirect_to root_path and return
+    end
+
     ahoy.track "apply_external_job_offer", job_offer_id: @job_offer.id
 
-    redirect_to @job_offer.application_destination, allow_other_host: true
+    redirect_to safe_url(@job_offer.application_destination), allow_other_host: true
   end
 
   private
+
+  def anti_bot_params
+    @anti_bot_params ||= params.slice(*AntiBot::FIELDS)
+  end
 
   def authenticate_employer!
     raise ActiveRecord::RecordNotFound unless job_offer.employer == current_employer

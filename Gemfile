@@ -24,7 +24,7 @@ gem "jbuilder"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[windows jruby]
+gem "tzinfo-data", platforms: %i[jruby]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
@@ -89,7 +89,7 @@ gem "geocoder", "~> 1.8"
 
 gem "geoip", "~> 1.6"
 
-gem "ratonvirus", git: "https://github.com/MaksJS/ratonvirus", branch: "feature/rails-8-upgrade"
+gem "ratonvirus", git: "https://github.com/MaksJS/ratonvirus", ref: "13e4cd2bc2ef066f40634344f756b45cda3ac105"
 gem "ratonvirus-clamby" # Adapter for ClamAV
 
 gem "sluggi"
@@ -100,3 +100,4 @@ gem "rack-attack"
 gem "blazer"
 
 gem "dockerfile-rails", ">= 1.7", group: :development
+gem "sitemap_generator"
