@@ -11,7 +11,7 @@ export default class extends Controller {
     }
 
     connect() {
-        console.log("AntiBot controller connected.");
+        //console.log("AntiBot controller connected.");
         this.calculateAndSetValue();
 
         // Find the form and add submit event listener
@@ -20,7 +20,7 @@ export default class extends Controller {
             form.addEventListener('submit', (event) => {
                 // Recalculate the token right before submission
                 this.calculateAndSetValue();
-                console.log("Token recalculated before form submission");
+                //console.log("Token recalculated before form submission");
             });
         }
     }
@@ -63,8 +63,8 @@ export default class extends Controller {
         }
         timestampField.value = timestamp;
 
-        console.log("Anti-bot value calculated and set:", calculation);
-        console.log("Using timestamp:", timestamp, "seed:", seed, "multiplier:", this.multiplierValue, "offset:", this.offsetValue);
+        //console.log("Anti-bot value calculated and set:", calculation);
+        //console.log("Using timestamp:", timestamp, "seed:", seed, "multiplier:", this.multiplierValue, "offset:", this.offsetValue);
     }
 
     // Method to recalculate if needed (e.g., if form is being resubmitted)

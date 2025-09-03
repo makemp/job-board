@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
-    console.log("Filter controller connected")
+    //console.log("Filter controller connected")
     
     // Listen for turbo:frame-render events
     document.addEventListener("turbo:frame-render", this.handleFrameRender)
