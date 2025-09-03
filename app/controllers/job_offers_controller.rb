@@ -1,5 +1,7 @@
 class JobOffersController < ApplicationController
   include AntiBot
+  include SecurityHelper
+
   MAX_PER_PAGE = 50
   before_action :authenticate_employer!, except: [:show, :index, :apply_with_form, :apply_with_url, :preview,
     :apply_for_external_offer]
@@ -159,6 +161,11 @@ class JobOffersController < ApplicationController
       redirect_to job_offer_path(@job_offer) and return
     end
 
+    unless safe_redirect_url?(@job_offer.application_destination)
+      flash[:alert] = "Invalid application destination URL."
+      redirect_to job_offer_path(@job_offer) and return
+    end
+
     ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id
 
     redirect_to @job_offer.application_destination, allow_other_host: true
@@ -166,6 +173,12 @@ class JobOffersController < ApplicationController
 
   def apply_for_external_offer
     @job_offer = ExternalJobOffer.find_by_slug(params[:id])
+
+    unless safe_redirect_url?(@job_offer.application_destination)
+      flash[:alert] = "Invalid application destination URL."
+      redirect_to root_path and return
+    end
+
     ahoy.track "apply_external_job_offer", job_offer_id: @job_offer.id
 
     redirect_to @job_offer.application_destination, allow_other_host: true

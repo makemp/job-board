@@ -54,7 +54,7 @@ jobs:
         run: bin/standardrb
 
       - name: Run Zeitwerk Check so all files are loaded
-        run: bin/zeitwerk_check
+        run: bin/zeitwerk_check.rb
 
   test:
     runs-on: ubuntu-latest
