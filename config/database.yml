@@ -89,3 +89,4 @@ production:
     database: storage/production_cable.sqlite3
     migrations_paths: db/cable_migrate
     url: <%= URI.parse(ENV["DATABASE_URL"]).tap { |url| url.path += "_cable" } if ENV["DATABASE_URL"] %>
+
