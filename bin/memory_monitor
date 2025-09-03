@@ -1,0 +1,94 @@
+#!/usr/bin/env ruby
+# Memory monitoring script for Rails application
+# Usage: bin/memory_monitor
+
+require_relative '../config/environment'
+require 'memory_profiler'
+require 'get_process_mem'
+
+class MemoryMonitor
+  def self.profile_request(path = "/")
+    puts "Profiling memory usage for request: #{path}"
+    puts "=" * 50
+
+    # Get initial memory usage
+    initial_memory = GetProcessMem.new.mb
+    puts "Initial memory usage: #{initial_memory} MB"
+
+    # Profile memory allocation during request simulation
+    report = MemoryProfiler.report do
+      # Simulate a typical request
+      app = Rails.application
+      env = Rack::MockRequest.env_for(path)
+      app.call(env)
+    end
+
+    # Get final memory usage
+    final_memory = GetProcessMem.new.mb
+    puts "Final memory usage: #{final_memory} MB"
+    puts "Memory difference: #{(final_memory - initial_memory).round(2)} MB"
+    puts "\n"
+
+    # Print top memory allocations
+    puts "Top 10 memory allocations:"
+    puts "-" * 30
+    report.pretty_print(scale_bytes: true, normalize_paths: true, to_file: 'tmp/memory_report.txt')
+
+    # Print summary
+    puts "\nMemory Report Summary:"
+    puts "Total allocated: #{report.total_allocated_memsize} bytes"
+    puts "Total retained: #{report.total_retained_memsize} bytes"
+    puts "Total allocated objects: #{report.total_allocated}"
+    puts "Total retained objects: #{report.total_retained}"
+    puts "\nDetailed report saved to: tmp/memory_report.txt"
+  end
+
+  def self.gc_stats
+    puts "Ruby Garbage Collection Statistics:"
+    puts "=" * 40
+    GC.stat.each do |key, value|
+      puts "#{key}: #{value}"
+    end
+    puts "\n"
+  end
+
+  def self.database_pool_stats
+    puts "Database Connection Pool Statistics:"
+    puts "=" * 40
+    ActiveRecord::Base.connection_pool.stat.each do |key, value|
+      puts "#{key}: #{value}"
+    end
+    puts "\n"
+  end
+
+  def self.full_report
+    puts "Full Memory Report for Rails Application"
+    puts "=" * 50
+    puts "Time: #{Time.current}"
+    puts "\n"
+
+    gc_stats
+    database_pool_stats
+    profile_request("/")
+    profile_request("/job_offers")
+  end
+end
+
+# Run the appropriate method based on command line arguments
+case ARGV[0]
+when "gc"
+  MemoryMonitor.gc_stats
+when "db"
+  MemoryMonitor.database_pool_stats
+when "profile"
+  path = ARGV[1] || "/"
+  MemoryMonitor.profile_request(path)
+when "full", nil
+  MemoryMonitor.full_report
+else
+  puts "Usage: bin/memory_monitor [gc|db|profile [path]|full]"
+  puts "  gc - Show garbage collection statistics"
+  puts "  db - Show database connection pool statistics"
+  puts "  profile [path] - Profile memory usage for a specific path (default: /)"
+  puts "  full - Generate full memory report (default)"
+end

@@ -13,7 +13,7 @@ primary: &primary
 
 analytics: &analytics
   adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 3 } %>
   timeout: 5000
   migrations_paths: db/analytics_migrate
 

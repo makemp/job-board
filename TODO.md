@@ -18,5 +18,8 @@
 
 
 
-the sent job alert thing.
+
 Privacy/terms and conditions done right
+
+Invoices sent from Stripe to email
+Niece checkout.

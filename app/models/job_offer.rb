@@ -46,8 +46,19 @@ class JobOffer < ApplicationRecord
     },
     class_name: "JobOfferAction", foreign_key: :job_offer_id
 
+  # Memory-optimized scope for index queries
+  scope :for_index, -> do
+    select(:id, :title, :company_name, :region, :subregion, :category, :overcategory, :created_at, :updated_at, :slug, :expired_on, :employer_id)
+      .includes(:employer, :order_placement)
+      .where(expired_on: nil)
+      .joins(:employer)
+      .where.not(users: {confirmed_at: nil})
+      .joins("LEFT JOIN order_placements ON order_placements.orderable_id = job_offers.id AND order_placements.orderable_type = 'JobOffer'")
+      .where.not(order_placements: {paid_on: nil})
+  end
+
   scope :valid, -> do
-    eager_load(:employer, :recent_action).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
+    includes(:employer, :recent_action).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
   end
 
   scope :valid_recent, -> do
@@ -55,7 +66,7 @@ class JobOffer < ApplicationRecord
   end
 
   scope :paid, -> do
-    eager_load(:order_placement).where.not(order_placements: {paid_on: nil})
+    includes(:order_placement).where.not(order_placements: {paid_on: nil})
   end
 
   scope :sorted, -> do
@@ -101,11 +112,12 @@ class JobOffer < ApplicationRecord
     recent_action&.created_at || Time.current
   end
 
-  # use select here to cache the result
+  # Memory-optimized method to avoid loading all job_offer_actions into memory
   def expires_at
+    # Use a single query instead of loading all actions into memory
     job_offer_actions
-      .select { JobOfferAction::TYPES_EXTENDING_EXPIRATION.include? it.action_type }
-      .max_by { it.valid_till }&.valid_till || Time.current # fallback just to prevent nil value but shouldn't happen
+      .where(action_type: JobOfferAction::TYPES_EXTENDING_EXPIRATION)
+      .maximum(:valid_till) || Time.current
   end
 
   def employer_company_name

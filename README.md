@@ -14,6 +14,8 @@ the command above will also print out the webhook secret which needs to be store
 EDITOR="vim" bin/rails credentials:edit --environment development
 ```
 
+Use RUBY_GC variables to play with garbage collector and stuff.
+
 For encryption:
 bin/rails db:encryption:init
 and store them:

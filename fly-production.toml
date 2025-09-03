@@ -48,7 +48,7 @@ console_command = '/rails/bin/rails console'
 
 
 [[vm]]
-  size = 'shared-cpu-4x'
+  size = 'shared-cpu-2x'
 
 [backup]
 # Enable automatic backups

@@ -43,6 +43,11 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
+# Memory optimization gems
+gem "memory_profiler", group: [:development, :test]
+gem "derailed_benchmarks", group: [:development, :test]
+gem "ruby-prof", group: [:development, :test]
+
 gem "faker"
 
 group :development, :test do

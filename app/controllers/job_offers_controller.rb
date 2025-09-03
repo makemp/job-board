@@ -7,7 +7,7 @@ class JobOffersController < ApplicationController
     :apply_for_external_offer]
 
   def index
-    @jobs = JobOffer.valid.paid.sorted.includes(:employer, :order_placement)
+    @jobs = JobOffer.for_index.sorted
 
     # Apply filters
     @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
