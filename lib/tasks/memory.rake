@@ -17,6 +17,10 @@ namespace :memory do
         code: -> { JobOffer.for_index.sorted.limit(20).to_a }
       },
       {
+        name: "Job expiration process (if any expired jobs exist)",
+        code: -> { JobOfferExpirationJob.new.perform }
+      },
+      {
         name: "Single job offer with associations",
         code: -> { JobOffer.includes(:employer, :order_placement, :job_offer_actions).first }
       },

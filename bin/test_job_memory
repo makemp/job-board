@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+# Simple memory test for JobOfferExpirationJob
+
+require_relative '../config/environment'
+require 'memory_profiler'
+require 'get_process_mem'
+
+puts "Testing JobOfferExpirationJob Memory Usage"
+puts "=" * 50
+
+# Force garbage collection before test
+GC.start
+memory_before = GetProcessMem.new.mb
+puts "Memory before job: #{memory_before} MB"
+
+# Profile the job execution
+report = MemoryProfiler.report do
+  JobOfferExpirationJob.new.perform
+end
+
+memory_after = GetProcessMem.new.mb
+puts "Memory after job: #{memory_after} MB"
+puts "Memory increase: #{(memory_after - memory_before).round(3)} MB"
+puts "\nMemory allocation details:"
+puts "Total allocated: #{report.total_allocated_memsize} bytes (#{(report.total_allocated_memsize / 1024.0 / 1024.0).round(2)} MB)"
+puts "Total retained: #{report.total_retained_memsize} bytes (#{(report.total_retained_memsize / 1024.0 / 1024.0).round(2)} MB)"
+puts "Objects allocated: #{report.total_allocated}"
+puts "Objects retained: #{report.total_retained}"
+
+puts "\nJob completed successfully!"
