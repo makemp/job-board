@@ -11,11 +11,14 @@
     <p class="text-lg text-amber-800 mb-2"><strong>Voucher Code:</strong> None</p>
   <% end %>
   <p class="text-lg text-amber-800 mb-2"><strong>Paid At:</strong> <%= @order_placement.paid_on ? l(@order_placement.paid_on, format: :long) : 'Not paid yet' %></p>
-  <p class="text-lg text-amber-800 mb-2"><strong>Invoice:</strong> <%= link_to 'Download here', @order_placement.invoice_url %></p>
+  <% if @order_placement.invoice_url.present? && safe_url(@order_placement.invoice_url) %>
+    <p class="text-lg text-amber-800 mb-2"><strong>Invoice:</strong> <%= link_to 'Download here', safe_url(@order_placement.invoice_url) %></p>
+  <% else %>
+    <p class="text-lg text-amber-800 mb-2"><strong>Invoice:</strong> Not available</p>
+  <% end %>
 
 
   <div class="mt-6">
     <%= link_to 'Back to Job Offers', job_offers_path, class: 'inline-block bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-700 transition-colors duration-300' %>
   </div>
 </div>
-

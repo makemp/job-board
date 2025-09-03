@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   encrypts :email, deterministic: true, downcase: true
 
+  # Associations
+  has_many :job_alerts, dependent: :destroy
+
   validate :password_complexity
 
   def password_complexity

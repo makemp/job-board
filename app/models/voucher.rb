@@ -1,8 +1,22 @@
 class Voucher < ApplicationRecord
   DEFAULT_CODE = "STANDARD".freeze
 
+  def self.finish_apply!(order_placement)
+    return unless order_placement&.voucher_code
+    voucher = find_by!(voucher_code: order_placement.voucher_code)
+    voucher.update!(options: {usage_count: voucher.usage_count + 1})
+  end
+
   def price
     options["price"]
+  end
+
+  def num_of_usages
+    options["num_of_usages"] || 1
+  end
+
+  def usage_count
+    options["usage_count"] || 0
   end
 
   # How many days the job offer is valid
@@ -24,7 +38,7 @@ class Voucher < ApplicationRecord
 
   # How many days the voucher is valid
   def enabled?
-    enabled_till > Time.current
+    enabled_till > Time.current && (usage_count < num_of_usages)
   end
 
   alias_method :enable?, :enabled?

@@ -29,6 +29,19 @@ Rails.application.routes.draw do
   resource :job_offer_forms, only: %i[new create] do
     patch :update, on: :collection
   end
+
+  # Job Alerts
+  resources :job_alerts, only: %i[index show new create edit update destroy] do
+    resources :job_alert_filters, only: %i[create], shallow: true
+  end
+  get "job_alerts/confirm/:id", to: "job_alerts#confirm", as: "confirm_job_alert"
+  get "job_alerts/manage/:management_token", to: "job_alerts#manage", as: "manage_job_alert"
+  get "job_alerts/unsubscribe/:management_token", to: "job_alerts#unsubscribe", as: "unsubscribe_job_alert"
+  # Job Alert Filter management via token
+  patch "job_alert_filters/:id/toggle/:management_token", to: "job_alert_filters#toggle", as: "toggle_job_alert_filter"
+  patch "job_alert_filters/:id/update/:management_token", to: "job_alert_filters#update", as: "update_job_alert_filter"
+  delete "job_alert_filters/:id/delete/:management_token", to: "job_alert_filters#destroy", as: "destroy_job_alert_filter"
+
   namespace :employers do
     get "dashboard", to: "dashboard#index", as: :dashboard
     patch "dashboard/password", to: "dashboard#update_password", as: :update_password
@@ -73,6 +86,12 @@ Rails.application.routes.draw do
     post "impersonate/:id", to: "admin#impersonate", as: :impersonate_employer
     delete "stop_impersonating", to: "admin#stop_impersonating", as: :stop_impersonating_employers
     resources :staging_tokens, only: [:create, :destroy], defaults: {format: :text}
+    resources :external_offers, only: [:create] do
+      post :check_url, on: :collection
+    end
+    resources :exports, only: [:index] do
+      post :generate, on: :collection
+    end
   end
 
   get "/staging_access/:token", to: "staging_access#create", as: :staging_access, constraints: {token: /[A-Za-z0-9]+/}
@@ -80,6 +99,8 @@ Rails.application.routes.draw do
   if Rails.env.development?
     scope module: :dev_shortcuts do
       get "/job_offer_forms/new/dev", controller: "job_offer_forms", action: :new
+      get "/emails/job_alert_digest", controller: "email_previews", action: :digest_email
+      get "/emails/job_alert_confirmation", controller: "email_previews", action: :confirmation_email
     end
   end
 end
