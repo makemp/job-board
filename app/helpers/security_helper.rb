@@ -39,4 +39,3 @@ module SecurityHelper
     end
   end
 end
-

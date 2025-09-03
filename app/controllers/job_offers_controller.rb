@@ -168,7 +168,7 @@ class JobOffersController < ApplicationController
 
     ahoy.track "apply_with_url_clicked", job_offer_id: @job_offer.id
 
-    redirect_to @job_offer.application_destination, allow_other_host: true
+    redirect_to safe_url(@job_offer.application_destination), allow_other_host: true
   end
 
   def apply_for_external_offer
@@ -181,7 +181,7 @@ class JobOffersController < ApplicationController
 
     ahoy.track "apply_external_job_offer", job_offer_id: @job_offer.id
 
-    redirect_to @job_offer.application_destination, allow_other_host: true
+    redirect_to safe_url(@job_offer.application_destination), allow_other_host: true
   end
 
   private
