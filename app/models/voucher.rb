@@ -3,8 +3,8 @@ class Voucher < ApplicationRecord
 
   def self.finish_apply!(order_placement)
     return unless order_placement&.voucher_code
-    voucher = find_by!(voucher_code: order_placement.voucher_code)
-    voucher.update!(options: {usage_count: voucher.usage_count + 1})
+    voucher = find_by!(code: order_placement.voucher_code)
+    voucher.update!(options: voucher.options.merge({usage_count: voucher.usage_count + 1}))
   end
 
   def price

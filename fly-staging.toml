@@ -21,7 +21,7 @@ console_command = '/rails/bin/rails console'
   SOLID_QUEUE_IN_PUMA = 'true'
 
 [[mounts]]
-  source = 'data'
+  source = 'data_stg'
   destination = '/data'
   auto_extend_size_threshold = 80
   auto_extend_size_increment = '1GB'

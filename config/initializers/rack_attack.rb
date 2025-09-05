@@ -36,7 +36,7 @@ class Rack::Attack
   # Rapid writes
   throttle("rapid_writes/ip", limit: 10, period: 1.minute) do |req|
     if %w[POST PUT PATCH DELETE].include?(req.request_method)
-      remote_ip(req)
+      remote_ip(req) unless req.path == "/stripe/webhook"
     end
   end
 
@@ -90,16 +90,6 @@ class Rack::Attack
     Rack::Attack::Fail2Ban.filter("honeypot-#{remote_ip(req)}",
       maxretry: 1, findtime: 10.minutes, bantime: 1.hour) do
       %w[POST PUT PATCH].include?(req.request_method) && honeypot_present?(req)
-    end
-  end
-
-  # Optional: custom 429 for API vs HTML
-  self.throttled_responder = lambda do |env|
-    path = env["PATH_INFO"].to_s
-    if path.start_with?("/api")
-      [429, {"Content-Type" => "application/json"}, [{error: "Too Many Requests"}.to_json]]
-    else
-      [429, {"Content-Type" => "text/plain"}, ["Too Many Requests"]]
     end
   end
 
