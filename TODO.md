@@ -15,11 +15,3 @@
 ## think about env variables -> staging or production email sender, setup the email
 ## RorVsWild
 ## Fly.io
-
-
-
-
-Privacy/terms and conditions done right
-
-Invoices sent from Stripe to email
-Niece checkout.
