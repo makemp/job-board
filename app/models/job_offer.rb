@@ -114,10 +114,9 @@ class JobOffer < ApplicationRecord
 
   # Memory-optimized method to avoid loading all job_offer_actions into memory
   def expires_at
-    # Use a single query instead of loading all actions into memory
     job_offer_actions
-      .where(action_type: JobOfferAction::TYPES_EXTENDING_EXPIRATION)
-      .maximum(:valid_till) || Time.current
+      .select { JobOfferAction::TYPES_EXTENDING_EXPIRATION.include? it.action_type }
+      .max_by { it.valid_till }&.valid_till || Time.current # fallback just to prevent nil value but shouldn't happen
   end
 
   def employer_company_name

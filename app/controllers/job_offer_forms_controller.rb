@@ -29,7 +29,7 @@ class JobOfferFormsController < ApplicationController
                      "submit",
                      partial: "submit",
                      locals: {job: @job}
-                   )], status: :unprocessable_conten
+                   )], status: :unprocessable_content
         else
           # voucher applied successfully: update both voucher UI (to show code)
           # and the submit button (to show the new price)
@@ -80,7 +80,7 @@ class JobOfferFormsController < ApplicationController
             "job_form",
             partial: "form",
             locals: {job: @job}
-          ), status: :unprocessable_conten
+          ), status: :unprocessable_content
         end
       end
     end

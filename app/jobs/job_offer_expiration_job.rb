@@ -7,7 +7,7 @@ class JobOfferExpirationJob < ApplicationJob
     # Memory-optimized approach: use a single SQL query with subquery instead of loading results into Ruby
     expired_job_offer_ids = JobOffer.joins(:job_offer_actions)
       .where(expired_on: nil)
-      .where(job_offer_actions: { action_type: JobOfferAction::TYPES_EXTENDING_EXPIRATION })
+      .where(job_offer_actions: {action_type: JobOfferAction::TYPES_EXTENDING_EXPIRATION})
       .group("job_offers.id")
       .having("MAX(job_offer_actions.valid_till) < ?", Time.current)
       .pluck(:id)
