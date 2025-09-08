@@ -19,6 +19,7 @@ console_command = '/rails/bin/rails console'
   RAILS_HOST = "0.0.0.0"
   PORT = '8080'
   SOLID_QUEUE_IN_PUMA = 'true'
+  RAILS_ASSET_HOST = 'https://jobboard-staging.fly.dev/'
 
 [[mounts]]
   source = 'data_stg'
