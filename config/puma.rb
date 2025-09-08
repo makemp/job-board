@@ -31,7 +31,7 @@ threads threads_count, threads_count
 port ENV.fetch("PORT", 8080)
 
 # Bind to all interfaces for containerized environments like Fly.io
-bind "tcp://#{ENV.fetch('RAILS_HOST', '0.0.0.0')}:#{ENV.fetch('PORT', 8080)}"
+bind "tcp://#{ENV.fetch("RAILS_HOST", "0.0.0.0")}:#{ENV.fetch("PORT", 8080)}"
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
