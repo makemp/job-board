@@ -3,7 +3,6 @@ class JobOfferApplication < ApplicationRecord
 
   has_one_attached :cv
 
-  validates :cv, antivirus: true
   def process
     # remove the CV file after 7 days from the job offer's valid till date at the moment it was created
     PurgeJobOfferApplicationFileJob.set(wait_until: determine_time).perform_later(id)

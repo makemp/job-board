@@ -94,9 +94,9 @@ gem "geocoder", "~> 1.8"
 
 gem "geoip", "~> 1.6"
 
-gem "ratonvirus", git: "https://github.com/makemp/ratonvirus", ref: "13e4cd2bc2ef066f40634344f756b45cda3ac105"
+# gem "ratonvirus", git: "https://github.com/makemp/ratonvirus", ref: "13e4cd2bc2ef066f40634344f756b45cda3ac105"
 
-gem "ratonvirus-clamby" # Adapter for ClamAV
+# gem "ratonvirus-clamby" # Adapter for ClamAV
 
 gem "sluggi"
 

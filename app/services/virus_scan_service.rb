@@ -1,6 +1,6 @@
 class VirusScanService
   def self.scan_file(file_path)
-    return {clean: true, message: "Virus scanning disabled"} if Rails.env.production?
+    return {clean: true, message: "Virus scanning disabled"} unless ENV["VIRUS_SCAN_ENABLED"] == "true"
     return {clean: false, message: "File not found"} unless File.exist?(file_path)
     return {clean: false, message: "File too large"} if File.size(file_path) > 32.megabytes
 
