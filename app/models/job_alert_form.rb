@@ -95,7 +95,7 @@ class JobAlertForm
 
         job_alert.update!(management_token: job_alert_filter.confirmation_token) if job_alert.management_token.blank?
 
-        JobAlertMailer.confirmation_email(job_alert_filter).deliver_later
+        JobAlertMailer.confirmation_email(job_alert_filter).deliver_now
       end
     end
     inst

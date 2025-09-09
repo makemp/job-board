@@ -67,9 +67,6 @@ RUN groupadd --system --gid 1000 rails && \
     chown -R rails:rails db log storage tmp
 USER 1000:1000
 
-# Fix the data storage directory ownership issue
-RUN mkdir -p /data/storage && chown -R rails:rails /data && chmod -R 755 /data
-
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 

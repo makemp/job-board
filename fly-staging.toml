@@ -22,7 +22,7 @@ console_command = '/rails/bin/rails console'
   RAILS_ASSET_HOST = 'https://jobboard-staging.fly.dev/'
 
 [[mounts]]
-  source = 'data_stg'
+  source = 'data_stg_2'
   destination = '/data'
   auto_extend_size_threshold = 80
   auto_extend_size_increment = '1GB'

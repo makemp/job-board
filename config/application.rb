@@ -34,6 +34,6 @@ module JobBoard
     config.autoload_paths << Rails.root.join("app/analyzers")
 
     # Configure Active Storage to use virus analyzer
-    config.active_storage.analyzers.prepend "VirusAnalyzer"
+    # config.active_storage.analyzers.prepend VirusAnalyzer
   end
 end
