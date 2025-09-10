@@ -49,4 +49,6 @@ console_command = '/rails/bin/rails console'
   X-Forwarded-Proto = 'https'
 
 [[vm]]
-  size = 'shared-cpu-8x'
+  memory_mb = 2048
+  cpu_kind = "shared"
+  cpus = 2
