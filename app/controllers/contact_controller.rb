@@ -15,7 +15,7 @@ class ContactController < ApplicationController
     end
 
     if @contact.valid?
-      ContactMailer.contact_email(@contact).deliver_now
+      ContactMailer.contact_email(@contact).deliver_later
       redirect_to contact_path, notice: "Your message has been sent."
     else
       render :index, status: :unprocessable_content
