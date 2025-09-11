@@ -25,9 +25,7 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
     RAILS_HOST="0.0.0.0" \
-    RAILS_WEB_URL="https://jobboard-staging.fly.dev" \
-    HTTP_PORT="8080" \
-    STAGING_ENV="true"
+    HTTP_PORT="8080"
 
 # Some env vars are build-time only, later they wil be picked up from the container runtime environment
 

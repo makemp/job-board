@@ -27,7 +27,7 @@ class JobOffer < ApplicationRecord
   APPLICATION_TYPE_FORM = "Form".freeze
   APPLICATION_TYPES = [APPLICATION_TYPE_FORM, APPLICATION_TYPE_LINK].freeze
 
-  normalizes :application_destination, with: -> { it.downcase.strip }
+  normalizes :application_destination, with: -> { it.strip }
 
   has_many :order_placements, as: :orderable
 

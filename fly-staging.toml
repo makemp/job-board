@@ -20,6 +20,9 @@ console_command = '/rails/bin/rails console'
   PORT = '8080'
   SOLID_QUEUE_IN_PUMA = 'true'
   RAILS_ASSET_HOST = 'https://jobboard-staging.fly.dev/'
+  STAGING_ENV="true"
+  RAILS_WEB_URL="https://jobboard-staging.fly.dev"
+  EMAIL_SENDER_ADDRESS='staging.noreply@drillcrew.work'
 
 [[mounts]]
   source = 'data_stg_2'
