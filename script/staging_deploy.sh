@@ -1,0 +1,1 @@
+fly deploy -c fly-staging.toml
