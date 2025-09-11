@@ -6,8 +6,10 @@
         <div class="flex items-center">
           <% if job.logo.attached? %>
             <%= image_tag job.logo, class: "h-12 w-12 sm:h-16 sm:w-16 object-contain mr-3 #{'opacity-50' if job.expired?}" %>
-            <% elsif job.custom_logo.present? %>
-             <%= job.custom_logo.html_safe %>
+          <% elsif job.custom_logo.present? %>
+            <div class="pr-4">
+              <%= job.custom_logo.html_safe %>
+            </div>
           <% end %>
           <div>
             <h2 class="text-lg sm:text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900' %>">
@@ -71,7 +73,9 @@
           <% if job.logo.attached? %>
             <%= image_tag job.logo, class: "h-16 w-16 object-contain mb-3 #{'opacity-50' if job.expired?}" %>
           <% elsif job.custom_logo.present? %>
-            <%= job.custom_logo.html_safe %>
+            <div>
+              <%= job.custom_logo.html_safe %>
+            </div>
           <% else %>
             <div class="h-16 w-16 mb-3 bg-transparent"></div>
           <% end %>
