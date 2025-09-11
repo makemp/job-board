@@ -18,7 +18,7 @@ production:
 # Job Alerts Cron Jobs
   job_alerts_daily:
     class: JobAlertsJob
-    schedule: every 5 minutes  # Every day at 1 AM except Monday (Tuesday-Sunday)
+    cron: "0 1 * * 2-7"  # Every day at 1 AM except Monday (Tuesday-Sunday)
     args:
       [{frequency: "daily"}]
 
