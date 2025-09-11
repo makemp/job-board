@@ -43,9 +43,9 @@
       </h1>
       <p class="text-lg sm:text-xl <%= job_offer.expired? ? 'text-gray-400' : 'text-orange-700' %>"><%= job_offer.company_name %></p>
     </div>
-    <% if job_offer.logo.attached? %>
-      <%= image_tag job_offer.logo, alt: job_offer.title, class: "h-16 w-16 sm:h-20 sm:w-20 object-contain rounded-lg self-center sm:self-start #{'opacity-50' if job_offer.expired?}" %>
-    <% end %>
+    <div class="flex justify-center w-full sm:w-auto">
+      <%= job_offer.custom_logo.html_safe %>
+    </div>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">

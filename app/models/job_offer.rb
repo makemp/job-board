@@ -48,7 +48,7 @@ class JobOffer < ApplicationRecord
 
   # Memory-optimized scope for index queries
   scope :for_index, -> do
-    select(:id, :title, :company_name, :region, :subregion, :category, :overcategory, :created_at, :updated_at, :slug, :expired_on, :employer_id)
+    select(:id, :title, :company_name, :region, :subregion, :category, :overcategory, :created_at, :updated_at, :slug, :expired_on, :employer_id, :custom_logo)
       .includes(:employer, :order_placement)
       .where(expired_on: nil)
       .joins(:employer)

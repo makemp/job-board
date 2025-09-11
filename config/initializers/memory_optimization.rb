@@ -13,20 +13,3 @@ if Rails.env.production?
   # Force more frequent garbage collection in production for memory optimization
   at_exit { GC.start }
 end
-
-# Force garbage collection after each request in development (not production)
-if Rails.env.development?
-  class GCMiddleware
-    def initialize(app)
-      @app = app
-    end
-
-    def call(env)
-      response = @app.call(env)
-      GC.start if rand < 0.1 # 10% chance to run GC
-      response
-    end
-  end
-
-  Rails.application.middleware.use(GCMiddleware)
-end
