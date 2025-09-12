@@ -1,4 +1,5 @@
-# fly.toml app configuration file generated
+# fly.toml app configuration file generated for jobboard-production on 2025-09-12T12:11:02+01:00
+#
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
@@ -9,18 +10,23 @@ console_command = '/rails/bin/rails console'
 [build]
   platform = 'amd64'
 
-[build.args]
-  RAILS_HOST = "0.0.0.0"
-  PORT = "8080"
+  [build.args]
+    RAILS_HOST = "0.0.0.0"
+    PORT = "8080"
 
 [env]
   DATABASE_URL = 'sqlite3:///data/production.sqlite3'
-  RAILS_HOST = "0.0.0.0"
+  EMAIL_SENDER_ADDRESS = 'noreply@drillcrew.work'
   PORT = '8080'
+  RAILS_ASSET_HOST = 'https://drillcrew.work'
+  RAILS_HOST = '0.0.0.0'
+  RAILS_WEB_URL = 'https://drillcrew.work'
   SOLID_QUEUE_IN_PUMA = 'true'
+  BLAZER_DATABASE_URL_MAIN='sqlite3:storage/production.sqlite3'
+  BLAZER_DATABASE_URL_ANALYTICS='sqlite3:storage/production_analytics.sqlite3'
 
 [[mounts]]
-  source = 'data'
+  source = 'production_data'
   destination = '/data'
   auto_extend_size_threshold = 80
   auto_extend_size_increment = '1GB'
@@ -31,27 +37,34 @@ console_command = '/rails/bin/rails console'
   force_https = true
   auto_start_machines = true
   min_machines_running = 1
+  max_machines_running = 1
   processes = ['app']
 
-[[http_service.checks]]
-  interval = '10s'
-  timeout = '2s'
-  grace_period = '5s'
-  method = 'GET'
-  path = '/up'
-  protocol = 'http'
-  tls_skip_verify = false
+  [[http_service.checks]]
+    interval = '10s'
+    timeout = '2s'
+    grace_period = '5s'
+    method = 'GET'
+    path = '/up'
+    protocol = 'http'
+    tls_skip_verify = false
 
-[http_service.checks.headers]
-  X-Forwarded-Proto = 'https'
+    [http_service.checks.headers]
+      X-Forwarded-Proto = 'https'
 
+  [[http_service.checks]]
+    interval = '10s'
+    timeout = '2s'
+    grace_period = '5s'
+    method = 'GET'
+    path = '/up'
+    protocol = 'http'
+    tls_skip_verify = false
+
+    [http_service.checks.headers]
+      X-Forwarded-Proto = 'https'
 
 [[vm]]
-  size = 'shared-cpu-2x'
-
-[backup]
-# Enable automatic backups
-  enabled = true
-  schedule = "0 3 * * *"
-# Retention policy - keep backups for 7 days
-  retention = "7d"
+  memory = '2gb'
+  cpu_kind = 'shared'
+  cpus = 2

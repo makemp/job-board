@@ -15,3 +15,21 @@
 ## think about env variables -> staging or production email sender, setup the email
 ## RorVsWild
 ## Fly.io
+
+
+https://drillcrew.work/stripe/webhook
+Stripe events used:
+
+charge.updated
+checkout.session.completed
+customer.created
+customer.updated
+customer.tax_id.created
+customer.tax_id.updated
+invoice_payment.paid
+invoice.created
+invoice.finalized
+invoice.paid
+invoice.payment_succeeded
+invoice.sent
+payment_intent.created

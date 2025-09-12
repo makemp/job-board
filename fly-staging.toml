@@ -23,6 +23,8 @@ console_command = '/rails/bin/rails console'
   STAGING_ENV="true"
   RAILS_WEB_URL="https://jobboard-staging.fly.dev"
   EMAIL_SENDER_ADDRESS='staging.noreply@drillcrew.work'
+  BLAZER_DATABASE_URL_MAIN='sqlite3:storage/staging.sqlite3'
+  BLAZER_DATABASE_URL_ANALYTICS='sqlite3:storage/staging_analytics.sqlite3'
 
 [[mounts]]
   source = 'data_stg_2'
@@ -37,6 +39,7 @@ console_command = '/rails/bin/rails console'
   auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 1
+  max_machines_running = 1
   processes = ['app']
 
 [[http_service.checks]]
