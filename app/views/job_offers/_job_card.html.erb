@@ -1,4 +1,9 @@
-<div class="job-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200 <%= 'opacity-50 grayscale' if job.expired? %>" data-job-id="<%= job.id %>">
+<div class="job-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-amber-200 <%= 'opacity-50 grayscale' if job.expired? %> <%= 'cursor-pointer' unless job.expired? %>"
+     data-job-id="<%= job.id %>"
+     <% unless job.expired? %>
+     data-action="click->job-preview#showPreview"
+     data-job-preview-job-id-param="<%= job.slug %>"
+     <% end %>>
   <div class="p-4 sm:p-6">
     <!-- Mobile layout - stacked vertically -->
     <div class="block md:hidden">
@@ -12,11 +17,7 @@
             </div>
           <% end %>
           <div>
-            <h2 class="text-lg sm:text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900 cursor-pointer hover:text-amber-700' %> transition-colors duration-300"
-                <% unless job.expired? %>
-                data-action="click->job-preview#showPreview"
-                data-job-preview-job-id-param="<%= job.slug %>"
-                <% end %>>
+            <h2 class="text-lg sm:text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900' %> transition-colors duration-300">
               <%= job.title %>
               <% if job.expired? %>
                 <span class="text-xs sm:text-sm text-red-500 block">(EXPIRED)</span>
@@ -25,15 +26,9 @@
           </div>
         </div>
         <% if job.expired? %>
-          <button class="bg-gray-400 text-gray-600 px-3 py-1 text-sm rounded-full cursor-not-allowed" disabled>
+          <div class="bg-gray-400 text-gray-600 px-3 py-1 text-sm rounded-full">
             Expired
-          </button>
-        <% else %>
-          <button class="bg-amber-800 text-white px-3 py-1 text-sm rounded-full hover:bg-amber-700 transition-colors duration-300"
-                  data-action="click->job-preview#showPreview"
-                  data-job-preview-job-id-param="<%= job.slug %>">
-            See more
-          </button>
+          </div>
         <% end %>
       </div>
 
@@ -85,7 +80,7 @@
           <% end %>
 
           <div class="space-y-2">
-            <h2 class="text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900 cursor-pointer hover:text-amber-700' %> leading-tight transition-colors duration-300"
+            <h2 class="text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900' %> leading-tight transition-colors duration-300"
                 <% unless job.expired? %>
                 data-action="click->job-preview#showPreview"
                 data-job-preview-job-id-param="<%= job.slug %>"
@@ -118,21 +113,6 @@
               </span>
             </div>
           </div>
-        </div>
-
-        <!-- Right side content - Button only -->
-        <div class="flex-shrink-0">
-          <% if job.expired? %>
-            <button class="bg-gray-400 text-gray-600 px-6 py-2 rounded-full cursor-not-allowed" disabled>
-              Expired
-            </button>
-          <% else %>
-            <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300 cursor-pointer"
-                    data-action="click->job-preview#showPreview"
-                    data-job-preview-job-id-param="<%= job.slug %>">
-              See more
-            </button>
-          <% end %>
         </div>
 
         <!-- Timestamp at absolute right corner -->
