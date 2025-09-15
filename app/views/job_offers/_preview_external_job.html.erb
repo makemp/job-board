@@ -71,26 +71,30 @@
     </div>
 
     <!-- Job meta information -->
-    <div class="space-y-4 mb-6">
+    <div class="mb-6">
       <div class="<%= job_offer.expired? ? 'bg-gray-100' : 'bg-orange-50' %> p-4 rounded-lg">
-        <p class="text-sm font-semibold <%= job_offer.expired? ? 'text-gray-600' : 'text-orange-800' %>">Region</p>
-        <p class="text-sm <%= job_offer.expired? ? 'text-gray-500' : 'text-orange-700' %>"><%= job_offer_location(job_offer) %></p>
-      </div>
-      <div class="<%= job_offer.expired? ? 'bg-gray-100' : 'bg-orange-50' %> p-4 rounded-lg">
-        <p class="text-sm font-semibold <%= job_offer.expired? ? 'text-gray-600' : 'text-orange-800' %>">Category</p>
-        <p class="text-sm <%= job_offer.expired? ? 'text-gray-500' : 'text-orange-700' %>"><%= job_offer.category %></p>
-      </div>
-      <div class="<%= job_offer.expired? ? 'bg-gray-100' : 'bg-orange-50' %> p-4 rounded-lg">
-        <p class="text-sm font-semibold <%= job_offer.expired? ? 'text-gray-600' : 'text-orange-800' %>">
-          <%= job_offer.expired? ? 'Expired' : 'Posted' %>
-        </p>
-        <p class="text-sm <%= job_offer.expired? ? 'text-gray-500' : 'text-orange-700' %>">
-          <%= if job_offer.expired?
-                time_ago_in_words(job_offer.expired_on) + " ago"
-              else
-                time_ago_in_words(job_offer.created_at) + " ago"
-              end %>
-        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <p class="text-sm font-semibold <%= job_offer.expired? ? 'text-gray-600' : 'text-orange-800' %>">Region</p>
+            <p class="text-sm <%= job_offer.expired? ? 'text-gray-500' : 'text-orange-700' %>"><%= job_offer_location(job_offer) %></p>
+          </div>
+          <div>
+            <p class="text-sm font-semibold <%= job_offer.expired? ? 'text-gray-600' : 'text-orange-800' %>">Category</p>
+            <p class="text-sm <%= job_offer.expired? ? 'text-gray-500' : 'text-orange-700' %>"><%= job_offer.category %></p>
+          </div>
+          <div>
+            <p class="text-sm font-semibold <%= job_offer.expired? ? 'text-gray-600' : 'text-orange-800' %>">
+              <%= job_offer.expired? ? 'Expired' : 'Posted' %>
+            </p>
+            <p class="text-sm <%= job_offer.expired? ? 'text-gray-500' : 'text-orange-700' %>">
+              <%= if job_offer.expired?
+                    time_ago_in_words(job_offer.expired_on) + " ago"
+                  else
+                    time_ago_in_words(job_offer.created_at) + " ago"
+                  end %>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
