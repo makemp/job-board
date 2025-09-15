@@ -44,6 +44,6 @@ TotalEnergies, https://careers.totalenergies.com/en
 Schlumberger (SLB), https://careers.slb.com/
 Halliburton, https://jobs.halliburton.com/
 Baker Hughes, https://careers.bakerhughes.com/
-BHP, https://www.bhp.com/careers/job-openings
+BHP, https://careers.bhp.com/search/?createNewAlert=false&q=&optionsFacetsDD_location=&optionsFacetsDD_customfield1=&optionsFacetsDD_title=&optionsFacetsDD_customfield4=
 Rio Tinto, https://www.riotinto.com/careers
 Glencore, https://www.glencore.com/careers/career-opportunities

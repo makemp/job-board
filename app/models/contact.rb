@@ -5,4 +5,11 @@ class Contact
 
   validates :email, presence: true, format: {with: URI::MailTo::EMAIL_REGEXP}
   validates :message, presence: true
+
+  def to_h
+    {
+      email:,
+      message:
+    }
+  end
 end
