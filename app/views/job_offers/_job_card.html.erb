@@ -12,7 +12,11 @@
             </div>
           <% end %>
           <div>
-            <h2 class="text-lg sm:text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900' %>">
+            <h2 class="text-lg sm:text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900 cursor-pointer hover:text-amber-700' %> transition-colors duration-300"
+                <% unless job.expired? %>
+                data-action="click->job-preview#showPreview"
+                data-job-preview-job-id-param="<%= job.slug %>"
+                <% end %>>
               <%= job.title %>
               <% if job.expired? %>
                 <span class="text-xs sm:text-sm text-red-500 block">(EXPIRED)</span>
@@ -81,7 +85,11 @@
           <% end %>
 
           <div class="space-y-2">
-            <h2 class="text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900' %> leading-tight">
+            <h2 class="text-xl font-semibold <%= job.expired? ? 'text-gray-500' : 'text-amber-900 cursor-pointer hover:text-amber-700' %> leading-tight transition-colors duration-300"
+                <% unless job.expired? %>
+                data-action="click->job-preview#showPreview"
+                data-job-preview-job-id-param="<%= job.slug %>"
+                <% end %>>
               <%= job.title %>
               <% if job.expired? %>
                 <span class="text-sm text-red-500 ml-2">(EXPIRED)</span>
