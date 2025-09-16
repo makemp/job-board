@@ -4,7 +4,38 @@
     <!-- Flash messages will appear here -->
   </div>
 
-  <h2 class="text-xl font-semibold mb-4">Add External Offer</h2>
+  <div class="flex items-center gap-3 mb-4">
+    <h2 class="text-xl font-semibold">Add External Offer</h2>
+
+    <!-- Info button with toggle functionality -->
+    <div data-controller="toggle">
+      <button type="button"
+              data-action="click->toggle#toggle"
+              class="inline-flex items-center justify-center w-6 h-6 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-full transition-colors duration-200"
+              title="Show company URLs">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+
+      <!-- Company URLs text box (hidden by default) -->
+      <div data-toggle-target="content" class="hidden mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-700 mb-2">Company Career Pages:</h3>
+        <div class="text-sm text-gray-600 space-y-1">
+          <div><strong>Shell:</strong> <a href="https://jobs.shell.com/" target="_blank" class="text-blue-600 hover:underline">https://jobs.shell.com/</a></div>
+          <div><strong>ExxonMobil:</strong> <a href="https://jobs.exxonmobil.com/" target="_blank" class="text-blue-600 hover:underline">https://jobs.exxonmobil.com/</a></div>
+          <div><strong>Chevron:</strong> <a href="https://careers.chevron.com/" target="_blank" class="text-blue-600 hover:underline">https://careers.chevron.com/</a></div>
+          <div><strong>TotalEnergies:</strong> <a href="https://careers.totalenergies.com/en" target="_blank" class="text-blue-600 hover:underline">https://careers.totalenergies.com/en</a></div>
+          <div><strong>Schlumberger (SLB):</strong> <a href="https://careers.slb.com/" target="_blank" class="text-blue-600 hover:underline">https://careers.slb.com/</a></div>
+          <div><strong>Halliburton:</strong> <a href="https://jobs.halliburton.com/" target="_blank" class="text-blue-600 hover:underline">https://jobs.halliburton.com/</a></div>
+          <div><strong>Baker Hughes:</strong> <a href="https://careers.bakerhughes.com/" target="_blank" class="text-blue-600 hover:underline">https://careers.bakerhughes.com/</a></div>
+          <div><strong>BHP:</strong> <a href="https://careers.bhp.com/search/?createNewAlert=false&q=&optionsFacetsDD_location=&optionsFacetsDD_customfield1=&optionsFacetsDD_title=&optionsFacetsDD_customfield4=" target="_blank" class="text-blue-600 hover:underline">https://careers.bhp.com/search/</a></div>
+          <div><strong>Rio Tinto:</strong> <a href="https://www.riotinto.com/careers" target="_blank" class="text-blue-600 hover:underline">https://www.riotinto.com/careers</a></div>
+          <div><strong>Glencore:</strong> <a href="https://www.glencore.com/careers/career-opportunities" target="_blank" class="text-blue-600 hover:underline">https://www.glencore.com/careers/career-opportunities</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <%= form_with url: admin_external_offers_path, method: :post, data: {
     "external-offer-target": "form",
