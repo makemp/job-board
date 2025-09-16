@@ -1,0 +1,25 @@
+# Use the official clamav-rest image as our base.
+FROM ajilaag/clamav-rest:20250913
+
+# Switch to the root user to install packages
+USER root
+
+# Install NGINX and gettext (for envsubst).
+RUN apk add --no-cache nginx gettext
+
+
+RUN chown -R clamav:clamav /etc/nginx /var/lib/nginx /var/log/nginx /run/nginx/
+
+RUN mkdir -p /var/lib/clamav && \
+    chown -R clamav:clamav /var/lib/clamav
+
+# Copy our custom NGINX config and our new entrypoint script
+COPY microservices/antivirus/nginx.conf /etc/nginx/nginx.conf.template
+COPY microservices/antivirus/entrypoint.sh /custom-entrypoint.sh
+RUN chmod +x /custom-entrypoint.sh
+
+# Revert to the non-root user from the base image
+USER clamav
+
+# Set our custom script as the new entrypoint
+ENTRYPOINT ["/custom-entrypoint.sh"]

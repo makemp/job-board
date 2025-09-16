@@ -1,92 +1,49 @@
 class VirusScanService
-  def self.scan_file(file_path)
-    return {clean: true, message: "Virus scanning disabled"} unless ENV["VIRUS_SCAN_ENABLED"] == "true"
-    return {clean: false, message: "File not found"} unless File.exist?(file_path)
-    return {clean: false, message: "File too large"} if File.size(file_path) > 32.megabytes
+  SCANNER_URL = "https://antivirus-staging.fly.dev/v2/scan".freeze
 
-    api_key = Rails.application.credentials.virustotal_api_key
-    return {clean: true, message: "No API key configured"} unless api_key
-
-    begin
-      # Upload file for scanning
-      response = post("/file/scan", {
-        body: {
-          apikey: api_key,
-          file: File.open(file_path)
-        }
-      })
-
-      if response.success?
-        resource = response.parsed_response["resource"]
-
-        # Wait a moment then check results
-        sleep(2)
-
-        # Get scan report
-        report_response = get("/file/report", {
-          query: {
-            apikey: api_key,
-            resource: resource
-          }
-        })
-
-        if report_response.success?
-          result = report_response.parsed_response
-
-          if result["response_code"] == 1
-            positives = result["positives"] || 0
-            total = result["total"] || 0
-
-            if positives > 0
-              {
-                clean: false,
-                message: "Virus detected (#{positives}/#{total} engines)",
-                details: result["scans"]
-              }
-            else
-              {
-                clean: true,
-                message: "File is clean (#{total} engines checked)"
-              }
-            end
-          else
-            # Still processing or not found
-            {clean: true, message: "Scan in progress, allowing upload"}
-          end
-        else
-          {clean: true, message: "Unable to get scan results"}
-        end
-      else
-        {clean: true, message: "Upload to scanner failed"}
-      end
-    rescue => e
-      Rails.logger.error "Virus scan failed: #{e.message}"
-      {clean: true, message: "Scan service unavailable"}
-    end
+  def initialize(file_path)
+    @file_path = file_path
   end
 
-  def self.scan_url(url)
-    return {clean: true, message: "Virus scanning disabled"} unless Rails.env.production?
-
-    api_key = Rails.application.credentials.virustotal_api_key
-    return {clean: true, message: "No API key configured"} unless api_key
-
-    begin
-      response = post("/url/scan", {
-        body: {
-          apikey: api_key,
-          url: url
-        }
-      })
-
-      if response.success?
-        {clean: true, message: "URL scan initiated"}
-      else
-        {clean: true, message: "URL scan failed"}
-      end
-    rescue => e
-      Rails.logger.error "URL virus scan failed: #{e.message}"
-      {clean: true, message: "URL scan service unavailable"}
+  def call(retries: 5)
+    unless File.exist?(file_path)
+      Rails.logger.warn("File not found: #{file_path}. Skipping virus scan.")
+      return true
     end
+
+    uri = URI.parse(SCANNER_URL)
+    request = Net::HTTP::Post.new(uri)
+
+    api_key = ENV["ANTIVIRUS_API_KEY"]
+    unless api_key
+      Rails.logger.warn("Virus scan API key is not set. Skipping virus scan.")
+      return true
+    end
+    request["Authorization"] = "Bearer #{api_key}"
+
+    file = File.open(file_path)
+    form_data = {"file" => file}
+    request.set_form(form_data, "multipart/form-data")
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https", read_timeout: 30) do |http|
+      http.request(request)
+    end
+
+    results = JSON.parse(response.body)
+
+    return true if results["Status"] == "OK"
+
+    Rails.logger.warn("Virus scan failed: #{results["Description"]}")
+    false
+  rescue Timeout::Error, Errno::ECONNREFUSED => e
+    Rails.logger.warn("error" => "Failed to connect to scan service", "details" => e.message)
+    true
+  rescue JSON::ParserError
+    Rails.logger.warn("error" => "Failed to parse response from scan service: #{response.body}")
+    return true if retries < 1
+    sleep(5.seconds)
+    call(retries: retries - 1)
+  ensure
+    file&.close
   end
 end

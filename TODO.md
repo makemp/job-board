@@ -33,3 +33,8 @@ invoice.paid
 invoice.payment_succeeded
 invoice.sent
 payment_intent.created
+
+
+
+Many instances of sqlite:
+https://fly.io/docs/litefs/getting-started-fly/
