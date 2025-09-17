@@ -15,27 +15,29 @@ production:
     class: JobOfferExpirationJob
     schedule: every 1 hour
 
-# Job Alerts Cron Jobs
+  # Job Alerts Cron Jobs
   job_alerts_daily:
     class: JobAlertsJob
-    cron: "0 1 * * 2-7"  # Every day at 1 AM except Monday (Tuesday-Sunday)
+    schedule: "0 1 * * 2-7"  # Every day at 1 AM except Monday (Tuesday-Sunday)
     args:
-      [{frequency: "daily"}]
+      - frequency: "daily"
 
   job_alerts_weekly:
     class: JobAlertsJob
-    cron: "0 1 * * 1"  # Every Monday at 1 AM
-    guard: "Date.current.day > 7"  # Skip first Monday of the month
+    # Runs every Monday at 1 AM, but only on days 8-31 of the month.
+    # This effectively skips the first Monday of the month.
+    schedule: "0 1 8-31 * 1"
     args:
-      [frequency: "weekly"]
+      - frequency: "weekly"
 
   job_alerts_monthly:
     class: JobAlertsJob
-    cron: "0 1 * * 1"  # Monday at 1 AM
-    guard: "Date.current.day <= 7"  # Only first Monday of the month
+    # Runs every Monday at 1 AM, but only on days 1-7 of the month.
+    # This effectively runs only on the first Monday of the month.
+    schedule: "0 1 1-7 * 1"
     args:
-      [frequency: "monthly"]
+      - frequency: "monthly"
 
-  sitemap_refresh:
-    command: "rake -s sitemap:refresh:no_ping"
-    schedule: "at 2am every day"
+sitemap_refresh:
+  class: SitemapRefreshJob
+  schedule: "at 2am every day"
