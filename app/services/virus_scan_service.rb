@@ -41,7 +41,7 @@ class VirusScanService
   rescue JSON::ParserError
     Rails.logger.warn("error" => "Failed to parse response from scan service: #{response.body}")
     return true if retries < 1
-    sleep(5.seconds)
+    sleep(10.seconds)
     call(retries: retries - 1)
   ensure
     file&.close
