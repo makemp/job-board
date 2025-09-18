@@ -26,30 +26,23 @@ RSpec.describe JobAlerts::FetchDataService do
     # Job Offers
     let!(:daily_offer) do
       create(:job_offer, employer: employer, region: "Canada", category: "Engineering").tap do |offer|
-        allow(offer).to receive(:recent_action).and_return(instance_double(JobOfferAction, created_at: 20.hours.ago))
+        create(:job_offer_action, job_offer: offer, created_at: 20.hours.ago)
       end
     end
     let!(:weekly_offer) do
       create(:job_offer, employer: employer, region: "USA", category: "Sales").tap do |offer|
-        allow(offer).to receive(:recent_action).and_return(instance_double(JobOfferAction, created_at: 5.days.ago))
+        create(:job_offer_action, job_offer: offer, created_at: 5.days.ago)
       end
     end
     let!(:monthly_offer) do
       create(:job_offer, employer: employer, region: "Australia", category: "Marketing").tap do |offer|
-        allow(offer).to receive(:recent_action).and_return(instance_double(JobOfferAction, created_at: 20.days.ago))
+        create(:job_offer_action, job_offer: offer, created_at: 20.days.ago)
       end
     end
     let!(:old_offer) do
       create(:job_offer, employer: employer, region: "Canada", category: "Engineering").tap do |offer|
-        allow(offer).to receive(:recent_action).and_return(instance_double(JobOfferAction, created_at: 2.months.ago))
+        create(:job_offer_action, job_offer: offer, created_at: 2.months.ago)
       end
-    end
-
-    before do
-      # Mock JobOffer.valid_recent to return our test offers
-      allow(JobOffer).to receive(:valid_recent).and_return(
-        [daily_offer, weekly_offer, monthly_offer, old_offer]
-      )
     end
 
     context "when frequency is :daily" do
@@ -99,6 +92,52 @@ RSpec.describe JobAlerts::FetchDataService do
 
       it "includes the job offer for each matching filter" do
         expect(call_service[job_alert.id]).to contain_exactly(daily_offer, daily_offer, weekly_offer)
+      end
+    end
+
+    context "when matching categories" do
+      subject(:call_service) { described_class.new(:daily).call }
+
+      let(:overcategory) { "Engineering & Project Management" }
+      let(:subcategory) { "Mining Engineering" }
+
+      context "when filter has an overcategory" do
+        let!(:offer_with_subcategory) do
+          create(:job_offer, employer: employer, region: "Canada", category: subcategory).tap do |offer|
+            create(:job_offer_action, job_offer: offer, created_at: 20.hours.ago)
+          end
+        end
+        let!(:filter_with_overcategory) { create(:job_alert_filter, job_alert: job_alert, frequency: :daily, region: "Canada", category: overcategory, enabled: true) }
+
+        it "returns job offers that are within the overcategory" do
+          expect(call_service[job_alert.id]).to contain_exactly(daily_offer, offer_with_subcategory)
+        end
+      end
+
+      context "when filter has an exact category" do
+        let!(:offer_with_category) do
+          create(:job_offer, employer: employer, region: "Canada", category: subcategory).tap do |offer|
+            create(:job_offer_action, job_offer: offer, created_at: 20.hours.ago)
+          end
+        end
+        let!(:filter_with_category) { create(:job_alert_filter, job_alert: job_alert, frequency: :daily, region: "Canada", category: subcategory, enabled: true) }
+
+        it "returns job offers that match the category exactly" do
+          expect(call_service[job_alert.id]).to contain_exactly(daily_offer, offer_with_category)
+        end
+      end
+
+      context "when category does not match" do
+        let!(:offer_with_category) do
+          create(:job_offer, employer: employer, region: "Canada", category: "Sales").tap do |offer|
+            create(:job_offer_action, job_offer: offer, created_at: 20.hours.ago)
+          end
+        end
+        let!(:filter_with_different_category) { create(:job_alert_filter, job_alert: job_alert, frequency: :daily, region: "Canada", category: "Marketing", enabled: true) }
+
+        it "does not return job offers that do not match the category" do
+          expect(call_service[job_alert.id]).to contain_exactly(daily_offer)
+        end
       end
     end
   end
