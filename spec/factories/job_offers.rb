@@ -6,8 +6,6 @@ FactoryBot.define do
     overcategory { JobOffer::CATEGORIES.overcategories_names.sample }
     category { |job_offer| JobOffer::CATEGORIES.categories_for(job_offer.overcategory).sample }
     approved { true }
-    apply_with_job_board { true }
-    featured { false }
     association :employer
   end
 end
