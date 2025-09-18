@@ -4,12 +4,18 @@ class JobOfferApplication < ApplicationRecord
   has_one_attached :cv
 
   def process
+    return unless cv.attached?
     # remove the CV file after 7 days from the job offer's valid till date at the moment it was created
     PurgeJobOfferApplicationFileJob.set(wait_until: determine_time).perform_later(id)
+    return unless VirusScanService.new(cv_path).call
     JobApplicationMailer.application_email(job_offer_application_id: id).deliver_later
   end
 
   private
+
+  def cv_path
+    ActiveStorage::Blob.service.path_for(cv.key)
+  end
 
   def determine_time
     job_offer.expires_at + 7.days

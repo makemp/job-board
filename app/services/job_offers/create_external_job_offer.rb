@@ -8,20 +8,20 @@ module JobOffers
         "Shell"
       when /exxonmobil\.com/
         "ExxonMobil"
-      when /chevron\.com/
-        "Chevron"
+      when /angloamerican\.com/
+        "Anglo American plc"
       when /totalenergies\.com/
         "TotalEnergies"
-      when /slb\.com/
-        "Schlumberger"
+      when /bp\.com/
+        "BP"
       when /halliburton\.com/
         "Halliburton"
       when /bakerhughes\.com/
         "Baker Hughes"
-      when /bhp\.com/
-        "BHP"
-      when /riotinto\.com/
-        "Rio Tinto"
+      when /conocophillips\.com/
+        "ConocoPhillips"
+      when /newmont\.com/
+        "Newmont"
       when /glencore\.com/
         "Glencore"
       end

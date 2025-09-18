@@ -6,6 +6,12 @@ class VirusScanService
   end
 
   def call(retries: 5)
+    api_key = ENV["ANTIVIRUS_API_KEY"]
+    unless api_key
+      Rails.logger.warn("Virus scan API key is not set. Skipping virus scan.")
+      return true
+    end
+
     unless File.exist?(file_path)
       Rails.logger.warn("File not found: #{file_path}. Skipping virus scan.")
       return true
@@ -14,11 +20,6 @@ class VirusScanService
     uri = URI.parse(SCANNER_URL)
     request = Net::HTTP::Post.new(uri)
 
-    api_key = ENV["ANTIVIRUS_API_KEY"]
-    unless api_key
-      Rails.logger.warn("Virus scan API key is not set. Skipping virus scan.")
-      return true
-    end
     request["Authorization"] = "Bearer #{api_key}"
 
     file = File.open(file_path)
@@ -46,4 +47,8 @@ class VirusScanService
   ensure
     file&.close
   end
+
+  private
+
+  attr_reader :file_path
 end

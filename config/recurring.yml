@@ -18,7 +18,7 @@ production:
   # Job Alerts Cron Jobs
   job_alerts_daily:
     class: JobAlertsJob
-    schedule: "0 1 * * 2-7"  # Every day at 1 AM except Monday (Tuesday-Sunday)
+    schedule: "0 1 * * *"  # Every day at 1 AM except Monday (Tuesday-Sunday)
     args:
       - frequency: "daily"
 
@@ -26,7 +26,7 @@ production:
     class: JobAlertsJob
     # Runs every Monday at 1 AM, but only on days 8-31 of the month.
     # This effectively skips the first Monday of the month.
-    schedule: "0 1 8-31 * 1"
+    schedule: "0 1 * * 1"
     args:
       - frequency: "weekly"
 
@@ -34,7 +34,7 @@ production:
     class: JobAlertsJob
     # Runs every Monday at 1 AM, but only on days 1-7 of the month.
     # This effectively runs only on the first Monday of the month.
-    schedule: "0 1 1-7 * 1"
+    schedule: "0 1 1 * *"
     args:
       - frequency: "monthly"
 
