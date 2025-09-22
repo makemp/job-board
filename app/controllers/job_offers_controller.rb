@@ -34,7 +34,9 @@ class JobOffersController < ApplicationController
   end
 
   def show
-    job_offer
+    return job_offer if job_offer
+
+    render file: Rails.root.join("public", "404.html").to_s, layout: false, status: :not_found
   end
 
   def preview

@@ -34,6 +34,6 @@ production:
     args:
       - frequency: "monthly"
 
-sitemap_refresh:
-  class: SitemapRefreshJob
-  schedule: "at 2am every day"
+  sitemap_refresh:
+    class: SitemapRefreshJob
+    schedule: "0 2 * * *"  # or use: every day at 2am
