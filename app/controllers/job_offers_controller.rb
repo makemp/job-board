@@ -13,6 +13,10 @@ class JobOffersController < ApplicationController
     @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
     @jobs = @jobs.where(region: params[:region]) if params[:region].present?
 
+    if params[:category].present? || params[:region].present?
+      ahoy.track "using_filters", category: params[:category], region: params[:region]
+    end
+
     # Handle pagination
     @per_page = if params[:per_page].present?
       per_page_ = params[:per_page].to_i
@@ -41,6 +45,7 @@ class JobOffersController < ApplicationController
 
   def preview
     job_offer
+    ahoy.track "preview_job_offer", job_offer_id: job_offer.id
     render layout: false
   end
 
