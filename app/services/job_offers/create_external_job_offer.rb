@@ -8,8 +8,6 @@ module JobOffers
         "Shell"
       when /exxonmobil\.com/
         "ExxonMobil"
-      when /angloamerican\.com/
-        "Anglo American plc"
       when /totalenergies\.com/
         "TotalEnergies"
       when /bp\.com/
@@ -18,8 +16,6 @@ module JobOffers
         "Halliburton"
       when /bakerhughes\.com/
         "Baker Hughes"
-      when /conocophillips\.com/
-        "ConocoPhillips"
       when /newmont\.com/
         "Newmont"
       when /glencore\.com/
