@@ -38,7 +38,10 @@ class JobOffersController < ApplicationController
   end
 
   def show
-    return job_offer if job_offer
+    if job_offer
+      ahoy.track "show_job_offer", job_offer_id: job_offer.id
+      return job_offer
+    end
 
     render file: Rails.root.join("public", "404.html").to_s, layout: false, status: :not_found
   end

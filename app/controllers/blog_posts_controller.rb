@@ -2,10 +2,12 @@ class BlogPostsController < ApplicationController
   before_action :set_blog_post, only: [:show]
 
   def index
+    ahoy.track "Viewed Blog Posts Index"
     @blog_posts = BlogPost.published.recent
   end
 
   def show
+    ahoy.track "Viewed Blog Post", title: @blog_post.title
   end
 
   private
