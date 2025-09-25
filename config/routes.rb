@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "job_offers#index"
+
+  # Blog routes for public access
+  resources :blog_posts, only: [:index, :show], path: "blog"
+
   resources :job_offers, only: %i[index show edit update destroy] do
     post "apply_with_form", on: :member
     get "apply_with_url", on: :member
@@ -92,6 +96,8 @@ Rails.application.routes.draw do
     resources :exports, only: [:index] do
       post :generate, on: :collection
     end
+    # Blog post management for admins
+    resources :blog_posts
   end
 
   get "/staging_access/:token", to: "staging_access#create", as: :staging_access, constraints: {token: /[A-Za-z0-9]+/}

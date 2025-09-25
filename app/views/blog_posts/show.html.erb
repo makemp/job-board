@@ -1,0 +1,47 @@
+<% content_for :title, @blog_post.title %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <nav class="mb-6">
+      <%= link_to "← Back to Blog", blog_posts_path, class: "text-amber-600 hover:text-amber-800 no-underline" %>
+    </nav>
+
+    <article class="bg-white rounded-lg shadow-md p-8 border border-gray-200">
+      <header class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4"><%= @blog_post.title %></h1>
+        <div class="text-gray-600">
+          Published on <%= @blog_post.created_at.strftime("%B %d, %Y") %>
+        </div>
+      </header>
+
+      <div class="prose prose-lg max-w-none blog-content">
+        <%= render_blog_content_with_youtube(@blog_post.body) %>
+      </div>
+    </article>
+  </div>
+</div>
+
+<style>
+  .blog-content p {
+    margin-bottom: 1em;
+    line-height: 1.6;
+  }
+
+  .youtube-embed {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    margin: 20px 0;
+    background-color: #000;
+  }
+
+  .youtube-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

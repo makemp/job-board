@@ -69,7 +69,9 @@ FOREIGN KEY ("job_alert_id")
   REFERENCES "job_alerts" ("id")
 );
 CREATE INDEX "index_job_alert_filters_on_job_alert_id" ON "job_alert_filters" ("job_alert_id") /*application='JobBoard'*/;
+CREATE TABLE IF NOT EXISTS "blog_posts" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "body" text, "published" boolean, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 INSERT INTO "schema_migrations" (version) VALUES
+('20250924223653'),
 ('20250911000002'),
 ('20250818201246'),
 ('20250818185045'),
