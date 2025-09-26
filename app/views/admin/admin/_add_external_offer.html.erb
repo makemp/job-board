@@ -95,17 +95,3 @@
   <% end %>
 </div>
 
-ffmpeg \
--i finals/mono_full_video.mp4 \
--loop 1 -framerate 24 -t 3 -i icon_720x720.png \
--filter_complex \
-"color=c=black@0.0:s=720x720:d=103.856,fps=24[blank]; \
-[1:v]fade=t=in:st=0:d=1:alpha=1,fps=24[logo_faded]; \
-[blank][logo_faded]concat=n=2:v=1:a=0[overlay_track]; \
-[0:v][overlay_track]overlay=(W-w)/2:(H-h)/2,format=yuv420p[outv]; \
-[0:a]asetpts=PTS-STARTPTS[outa]" \
--map "[outv]" -map "[outa]" -c:v libx264 -crf 23 \
-finals/final_video_with_logo_and_sound.mp4
-
-
-ffmpeg -i finals/final_video_with_logo_and_sound.mp4 -c:v libx264 -preset slow -crf 20 -c:a aac -b:a 384k -ar 48000 -pix_fmt yuv420p -movflags +faststart mono_youtube.mp4

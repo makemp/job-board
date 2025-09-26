@@ -13,8 +13,9 @@ class BlogPostsController < ApplicationController
   private
 
   def set_blog_post
-    @blog_post = BlogPost.published.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to blog_posts_path, alert: "Blog post not found."
+    @blog_post = BlogPost.published.find_by_slug(params[:id])
+    unless @blog_post
+      redirect_to blog_posts_path, alert: "Blog post not found."
+    end
   end
 end

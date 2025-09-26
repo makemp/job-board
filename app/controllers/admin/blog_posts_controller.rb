@@ -19,7 +19,7 @@ class Admin::BlogPostsController < ApplicationController
     if @blog_post.save
       redirect_to admin_blog_post_path(@blog_post), notice: "Blog post was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -30,7 +30,7 @@ class Admin::BlogPostsController < ApplicationController
     if @blog_post.update(blog_post_params)
       redirect_to admin_blog_post_path(@blog_post), notice: "Blog post was successfully updated."
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

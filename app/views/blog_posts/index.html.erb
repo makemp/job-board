@@ -9,7 +9,7 @@
         <% @blog_posts.each do |blog_post| %>
           <article class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
             <h2 class="text-2xl font-semibold text-gray-900 mb-3">
-              <%= link_to blog_post.title, blog_post_path(blog_post), class: "text-amber-600 hover:text-amber-800 no-underline" %>
+              <%= link_to blog_post.title, blog_post_path(blog_post.slug), class: "text-amber-600 hover:text-amber-800 no-underline" %>
             </h2>
 
             <div class="text-gray-600 text-sm mb-4">
@@ -20,7 +20,7 @@
               <%= blog_post.excerpt %>
             </div>
 
-            <%= link_to "Read more", blog_post_path(blog_post), class: "inline-block bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700 no-underline" %>
+            <%= link_to "Read more", blog_post_path(blog_post.slug), class: "inline-block bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700 no-underline" %>
           </article>
         <% end %>
       </div>

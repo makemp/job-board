@@ -17,7 +17,7 @@ class Employers::SessionsController < Devise::SessionsController
       render turbo_stream: [
         turbo_stream.update("login_form", partial: "password_form", locals: {email: email}),
         turbo_stream.update("flash", partial: "layouts/flash")
-      ], status: :unprocessable_conten
+      ], status: :unprocessable_content
     end
   end
 
@@ -63,7 +63,7 @@ class Employers::SessionsController < Devise::SessionsController
       render turbo_stream: [
         turbo_stream.update("login_form", partial: "code_form", locals: {email: email}),
         turbo_stream.update("flash", partial: "layouts/flash")
-      ], status: :unprocessable_conten
+      ], status: :unprocessable_content
     end
   end
 

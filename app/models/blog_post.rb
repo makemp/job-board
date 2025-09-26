@@ -1,4 +1,5 @@
 class BlogPost < ApplicationRecord
+  include Sluggi::Slugged
   validates :title, presence: true, length: {maximum: 255}
   validates :body, presence: true
 
@@ -16,7 +17,7 @@ class BlogPost < ApplicationRecord
 
     processed_body.gsub!(youtube_regex) do |match|
       video_id = $1
-      %(
+      @youtube_video = %(
 <div class="video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 20px 0;">
   <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
           src="https://www.youtube.com/embed/#{video_id}"
@@ -32,9 +33,19 @@ class BlogPost < ApplicationRecord
   end
 
   def excerpt(limit = 150)
+    body_with_youtube_embeds
     text = ActionView::Base.full_sanitizer.sanitize(body)
     intro = text.split("\n").first
     # Remove HTML tags and get plain text excerpt
-    intro.truncate(limit)
+    text_ = intro.truncate(limit)
+    @youtube_video ? "#{text_} #{@youtube_video}".html_safe : text_
+  end
+
+  def slug_candidates
+    [title, "#{title}-#{Time.current.to_i}"]
+  end
+
+  def slug_value_changed?
+    title_changed?
   end
 end
