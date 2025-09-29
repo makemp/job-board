@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: vouchers
+#
+#  id           :ulid             not null, primary key
+#  code         :string           not null
+#  enabled_till :datetime         default(2225-09-11 17:53:07.328950000 UTC +00:00)
+#  options      :json
+#  type         :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
 class Voucher < ApplicationRecord
   DEFAULT_CODE = "STANDARD".freeze
 

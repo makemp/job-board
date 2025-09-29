@@ -78,6 +78,9 @@ GEM
       activesupport (>= 7.1)
       device_detector (>= 1)
       safely_block (>= 0.4)
+    annotaterb (4.19.0)
+      activerecord (>= 6.0.0)
+      activesupport (>= 6.0.0)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.20)
@@ -499,6 +502,7 @@ PLATFORMS
 
 DEPENDENCIES
   ahoy_matey (~> 5.3)
+  annotaterb
   blazer
   bootsnap
   brakeman

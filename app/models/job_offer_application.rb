@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: job_offer_applications
+#
+#  id           :ulid             not null, primary key
+#  comments     :text             not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  job_offer_id :ulid             not null
+#
+# Indexes
+#
+#  index_job_offer_applications_on_job_offer_id  (job_offer_id)
+#
+# Foreign Keys
+#
+#  job_offer_id  (job_offer_id => job_offers.id)
+#
 class JobOfferApplication < ApplicationRecord
   belongs_to :job_offer
 
