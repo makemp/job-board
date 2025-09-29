@@ -93,6 +93,10 @@ Rails.application.routes.draw do
     resources :external_offers, only: [:create] do
       post :check_url, on: :collection
     end
+    resources :external_job_offers, only: [:index] do
+      patch :approve, on: :member
+      patch :hide, on: :member
+    end
     resources :exports, only: [:index] do
       post :generate, on: :collection
     end

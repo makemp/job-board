@@ -1,0 +1,82 @@
+<div class="pending-offers-container">
+  <% if external_job_offers.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% external_job_offers.each do |external_job_offer| %>
+        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6" id="<%= dom_id(external_job_offer) %>">
+          <!-- Job Title -->
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            <%= external_job_offer.title %>
+          </h3>
+
+          <!-- Company Name -->
+          <div class="flex items-center mb-3">
+            <p class="text-gray-700 font-medium">
+              <%= external_job_offer.the_company_name %>
+            </p>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold text-gray-600 mb-2">Description:</h4>
+            <div class="text-gray-600 text-sm">
+              <% if external_job_offer.description.present? %>
+                <%= truncate(strip_tags(external_job_offer.description.to_s), length: 150) %>
+              <% else %>
+                <em class="text-gray-400">No description available</em>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Explanation -->
+          <% if external_job_offer.explanation.present? %>
+            <div class="mb-4">
+              <h4 class="text-sm font-semibold text-gray-600 mb-2">Explanation:</h4>
+              <p class="text-gray-600 text-sm">
+                <%= truncate(external_job_offer.explanation, length: 1000) %>
+              </p>
+            </div>
+          <% end %>
+
+            <!-- Additional Info -->
+          <div class="mb-4 text-xs text-gray-500">
+            <div class="flex justify-between">
+              <span>Region: <%= external_job_offer.region %></span>
+              <span>Category: <%= external_job_offer.category %></span>
+            </div>
+            <div class="mt-1">
+              Application: <a href="<%= external_job_offer.application_destination %>" target="_blank" class="text-blue-600 hover:underline">View</a>
+            </div>
+          </div>
+
+          <div class="flex space-x-3 mt-4">
+            <%= link_to approve_admin_external_job_offer_path(external_job_offer),
+                        data: { turbo_method: :patch, turbo_stream: true },
+                        class: "flex-1 inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" do %>
+              <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Approve
+            <% end %>
+
+            <%= link_to hide_admin_external_job_offer_path(external_job_offer),
+                        data: { turbo_method: :patch, turbo_stream: true },
+                        class: "flex-1 inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" do %>
+              <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              Hide
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No pending external job offers</h3>
+      <p class="text-sm text-gray-500">All external job offers have been processed.</p>
+    </div>
+  <% end %>
+</div>

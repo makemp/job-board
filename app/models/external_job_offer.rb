@@ -41,18 +41,14 @@ class ExternalJobOffer < JobOffer
 
   HIDDEN_TYPE = "hidden".freeze
 
-  scope :in_pending_queue, -> { where.not(type: HIDDEN_TYPE).joins(:order_placements).where(order_placements: {paid_on: nil}) }
+  scope :in_pending_queue, -> { where.not(offer_type: HIDDEN_TYPE).joins(:order_placements).where(order_placements: {paid_on: nil}) }
 
   def employer_company_name
     the_company_name
   end
 
-  def logo
-    @logo ||= SvgLogoDecorator.new(custom_logo)
-  end
-
   def hide!
-    update!(type: HIDDEN_TYPE)
+    update!(offer_type: HIDDEN_TYPE)
   end
 
   private

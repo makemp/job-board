@@ -6,6 +6,7 @@ class Admin::AdminController < ApplicationController
   # Admin dashboard
   def index
     @employers = Employer.valid.order(:company_name)
+    @external_job_offers = ExternalJobOffer.in_pending_queue
   end
 
   # Impersonate an employer
