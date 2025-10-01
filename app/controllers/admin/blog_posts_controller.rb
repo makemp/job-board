@@ -42,7 +42,7 @@ class Admin::BlogPostsController < ApplicationController
   private
 
   def set_blog_post
-    @blog_post = BlogPost.find(params[:id])
+    @blog_post = BlogPost.find_by_slug(params[:id])
   end
 
   def blog_post_params
