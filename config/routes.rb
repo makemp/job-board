@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", :as => :rails_health_check
   get "/contact", to: "contact#index", as: :contact
   post "/contact", to: "contact#create"
-  get "/job_offers_directory", to: "job_offer_dirs#index", as: :job_offers
+  get "/job_offers_directory", to: "job_offer_dirs#index", as: :job_offers_directory
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
