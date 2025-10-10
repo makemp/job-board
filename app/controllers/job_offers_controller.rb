@@ -13,8 +13,8 @@ class JobOffersController < ApplicationController
     @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
     @jobs = @jobs.where(region: params[:region]) if params[:region].present?
 
-    if params[:category].present? || params[:region].present?
-      ahoy.track "using_filters", category: params[:category], region: params[:region]
+    if params[:category].present? || params[:region].present? || params[:per_page].present? || params[:page].present?
+      ahoy.track "using_filters", category: params[:category], region: params[:region], per_page: params[:per_page], page: params[:page]
     end
 
     # Handle pagination

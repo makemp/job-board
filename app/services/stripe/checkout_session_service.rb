@@ -24,7 +24,6 @@ module Stripe
 
     def checkout_params
       {
-        payment_method_types: %w[card],
         line_items: [{
           price_data: {
             currency: Rails.configuration.stripe[:currency],
@@ -41,6 +40,16 @@ module Stripe
         },
 
         mode: "payment",
+
+        payment_method_options: {
+          customer_balance: {
+            funding_type: "bank_transfer",
+            bank_transfer: {
+              type: "gb_bank_transfer"
+            }
+          }
+        },
+
         invoice_creation: {
           enabled: true,
           invoice_data: {

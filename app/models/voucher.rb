@@ -17,6 +17,10 @@ class Voucher < ApplicationRecord
     return unless order_placement&.voucher_code
     voucher = find_by!(code: order_placement.voucher_code)
     voucher.update!(options: voucher.options.merge({usage_count: voucher.usage_count + 1}))
+    job_offer = order_placement.orderable
+    return unless job_offer
+    job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
+      valid_till: Time.current + voucher.offer_duration)
   end
 
   def price
@@ -59,8 +63,6 @@ class Voucher < ApplicationRecord
   def apply(order_placement:, job_offer:)
     order_placement.update!(voucher_code: code, price: price, free_order: free_voucher?, ready_to_be_placed: true)
     job_offer.update!(approved: !required_approval?)
-    job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
-      valid_till: Time.current + offer_duration)
   end
 
   def soft_apply(job_offer_form)

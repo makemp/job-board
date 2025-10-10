@@ -33,6 +33,8 @@ SQLITE on prod: https://fly.io/docs/rails/advanced-guides/sqlite3/
 Gemini important thigs for this project:
 https://gemini.google.com/app/084680b9db528fd8
 
+Topics:
+https://gemini.google.com/app/c6b7c1b566e92fc1
 
 SEO: compactkeywords.com
 
