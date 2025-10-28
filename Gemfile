@@ -108,3 +108,5 @@ gem "blazer"
 
 gem "dockerfile-rails", ">= 1.7", group: :development
 gem "sitemap_generator"
+
+gem 'rack', '~> 3.2.2'
