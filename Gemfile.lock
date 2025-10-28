@@ -527,7 +527,7 @@ DEPENDENCIES
   pagy
   propshaft
   puma (>= 5.0)
-  rack (~> 3.2.2)
+  rack (>= 3.2.3)
   rack-attack
   rails (~> 8.0.2)
   rspec-rails
