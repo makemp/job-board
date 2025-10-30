@@ -39,7 +39,7 @@ module Webhooks
             event_object.payment_intent,
             expand: "payment_method" # Expand should be an array, not a hash
           )
-          payment_method_type = (payment_intent["next_action"]["display_bank_transfer_instructions"] and "bank_transfer")
+          payment_method_type = (payment_intent.next_action&.display_bank_transfer_instructions and "bank_transfer")
         else
           payment_method_type = "N/A"
         end
@@ -55,12 +55,12 @@ module Webhooks
       case event_type
       when "payment_intent.succeeded"
         Rails.logger.info "Stripe webhook received payment_intent.succeeded, payment method type: #{payment_method_type}, order_placement_id: #{client_reference_id}"
-        return if payment_method_type[/bank_transfer/].blank?
+        return if payment_method_type.to_s[/bank_transfer/].blank?
         handle_checkout_session_completed(event_object, order_placement)
         DelayedPaymentMail.paid_intent_succeeded(order_placement).deliver_later
       when "checkout.session.completed"
         Rails.logger.info "Stripe webhook received checkout.session.completed, payment method type: #{payment_method_type}, order_placement_id: #{client_reference_id}"
-        return if payment_method_type[/bank_transfer/].present?
+        return if payment_method_type.to_s[/bank_transfer/].present?
         handle_checkout_session_completed(event_object, order_placement)
       when "payment_intent.requires_action"
         DelayedPaymentMail.paid_intent_created(order_placement, event_object.to_hash).deliver_now
