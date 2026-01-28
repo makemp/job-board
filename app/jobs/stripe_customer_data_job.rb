@@ -10,7 +10,7 @@ class StripeCustomerDataJob < ApplicationJob
     order_placement = customer.latest_order_placement
     order_placement.update!(stripe_payload: order_placement.stripe_payload.merge({event_type => data.deep_symbolize_keys}))
   rescue => e
-    Rails.logger.error "StripeCustomerDataJob #{event_type} data: #{data}, error: #{e.message}"
+    Rails.logger.error "StripeCustomerDataJob processing error #{event_type} data: #{data}, error: #{e.message}"
     raise e
   end
 

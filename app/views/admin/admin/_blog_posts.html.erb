@@ -1,0 +1,50 @@
+<div class="bg-white">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold text-gray-900">Blog Posts Management</h2>
+    <%= link_to "New Blog Post", new_admin_blog_post_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 no-underline" %>
+  </div>
+
+  <div class="mb-4">
+    <%= link_to "View All Blog Posts", admin_blog_posts_path, class: "text-blue-600 hover:text-blue-800 no-underline" %>
+  </div>
+
+  <% recent_posts = BlogPost.recent.limit(5) %>
+  <% if recent_posts.any? %>
+    <div class="bg-gray-50 rounded-lg p-4">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">Recent Blog Posts</h3>
+      <div class="space-y-3">
+        <% recent_posts.each do |blog_post| %>
+          <div class="flex justify-between items-center py-2 px-3 bg-white rounded border">
+            <div class="flex-1">
+              <div class="flex items-center space-x-3">
+                <h4 class="font-medium text-gray-900"><%= blog_post.title %></h4>
+                <% if blog_post.published? %>
+                  <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                    Published
+                  </span>
+                <% else %>
+                  <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                    Draft
+                  </span>
+                <% end %>
+              </div>
+              <p class="text-sm text-gray-600 mt-1">
+                Created: <%= blog_post.created_at.strftime("%m/%d/%Y") %>
+              </p>
+            </div>
+            <div class="flex space-x-2">
+              <%= link_to "View", admin_blog_post_path(blog_post), class: "text-blue-600 hover:text-blue-900 text-sm" %>
+              <%= link_to "Edit", edit_admin_blog_post_path(blog_post), class: "text-indigo-600 hover:text-indigo-900 text-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="text-center py-8 bg-gray-50 rounded-lg">
+      <p class="text-gray-600 mb-4">No blog posts created yet.</p>
+      <%= link_to "Create your first blog post", new_admin_blog_post_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 no-underline" %>
+    </div>
+  <% end %>
+</div>
+

@@ -29,5 +29,11 @@ module JobBoard
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Ensure analyzers directory is autoloaded
+    # config.autoload_paths << Rails.root.join("app/analyzers")
+
+    # Configure Active Storage to use virus analyzer
+    # config.active_storage.analyzers.prepend VirusAnalyzer
   end
 end

@@ -19,7 +19,7 @@ Rails.application.configure do
   config.public_file_server.headers = {"cache-control" => "public, max-age=#{1.year.to_i}"}
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.asset_host = "http://assets.example.com"
+  config.asset_host = ENV["RAILS_ASSET_HOST"] || "https://drilljobs.work"
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
@@ -28,6 +28,8 @@ Rails.application.configure do
   config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # Enable direct uploads and better URL handling
+  config.active_storage.draw_routes = true
   config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
@@ -48,6 +50,9 @@ Rails.application.configure do
 
   # Replace the default in-process memory cache store with a durable alternative.
   config.cache_store = :solid_cache_store
+
+  # Memory optimization settings
+  config.active_record.belongs_to_required_by_default = false
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   config.active_job.queue_adapter = :solid_queue

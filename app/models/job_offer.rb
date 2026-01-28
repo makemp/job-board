@@ -1,3 +1,39 @@
+# == Schema Information
+#
+# Table name: job_offers
+#
+#  id                      :ulid             not null, primary key
+#  application_destination :string
+#  application_type        :string
+#  approved                :boolean          default(FALSE), not null
+#  category                :string
+#  company_name            :string
+#  custom_logo             :text
+#  expired_manually        :datetime
+#  expired_on              :datetime
+#  offer_type              :string
+#  options                 :json
+#  overcategory            :string
+#  region                  :string
+#  slug                    :string
+#  subregion               :string
+#  terms_and_conditions    :boolean          default(FALSE)
+#  title                   :string
+#  type                    :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  employer_id             :ulid             not null
+#
+# Indexes
+#
+#  idx_job_offers_expired_on        (expired_on)
+#  index_job_offers_on_employer_id  (employer_id)
+#  index_job_offers_on_slug         (slug) UNIQUE
+#
+# Foreign Keys
+#
+#  employer_id  (employer_id => users.id)
+#
 class JobOffer < ApplicationRecord
   include Sluggi::Slugged
 
@@ -27,7 +63,7 @@ class JobOffer < ApplicationRecord
   APPLICATION_TYPE_FORM = "Form".freeze
   APPLICATION_TYPES = [APPLICATION_TYPE_FORM, APPLICATION_TYPE_LINK].freeze
 
-  normalizes :application_destination, with: -> { it.downcase.strip }
+  normalizes :application_destination, with: -> { it.strip }
 
   has_many :order_placements, as: :orderable
 
@@ -46,8 +82,19 @@ class JobOffer < ApplicationRecord
     },
     class_name: "JobOfferAction", foreign_key: :job_offer_id
 
+  # Memory-optimized scope for index queries
+  scope :for_index, -> do
+    select(:id, :title, :company_name, :region, :subregion, :category, :overcategory, :created_at, :updated_at, :slug, :expired_on, :employer_id, :custom_logo)
+      .includes(:employer, :order_placement)
+      .where(expired_on: nil)
+      .joins(:employer)
+      .where.not(users: {confirmed_at: nil})
+      .joins("LEFT JOIN order_placements ON order_placements.orderable_id = job_offers.id AND order_placements.orderable_type = 'JobOffer'")
+      .where.not(order_placements: {paid_on: nil})
+  end
+
   scope :valid, -> do
-    eager_load(:employer, :recent_action).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
+    includes(:employer, :recent_action).where.not(users: {confirmed_at: nil}).where(expired_on: nil)
   end
 
   scope :valid_recent, -> do
@@ -55,7 +102,7 @@ class JobOffer < ApplicationRecord
   end
 
   scope :paid, -> do
-    eager_load(:order_placement).where.not(order_placements: {paid_on: nil})
+    includes(:order_placement).where.not(order_placements: {paid_on: nil})
   end
 
   scope :sorted, -> do
@@ -101,7 +148,7 @@ class JobOffer < ApplicationRecord
     recent_action&.created_at || Time.current
   end
 
-  # use select here to cache the result
+  # Memory-optimized method to avoid loading all job_offer_actions into memory
   def expires_at
     job_offer_actions
       .select { JobOfferAction::TYPES_EXTENDING_EXPIRATION.include? it.action_type }
@@ -124,6 +171,10 @@ class JobOffer < ApplicationRecord
   def matches_category?(foreign_category)
     return true if category == foreign_category
     true if CATEGORIES.categories_for(foreign_category).include? category
+  end
+
+  def explanation
+    options && options["explanation"].presence
   end
 
   delegate :logo, to: :employer

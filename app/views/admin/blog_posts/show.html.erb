@@ -1,0 +1,73 @@
+<% content_for :title, @blog_post.title %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <nav class="mb-6">
+      <%= link_to "← Back to Blog Posts", admin_blog_posts_path, class: "text-amber-600 hover:text-blue-800 no-underline" %>
+    </nav>
+
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2"><%= @blog_post.title %></h1>
+        <div class="text-gray-600">
+          Created: <%= @blog_post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+          <% if @blog_post.updated_at != @blog_post.created_at %>
+            | Updated: <%= @blog_post.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+          <% end %>
+        </div>
+        <div class="mt-2">
+          <% if @blog_post.published? %>
+            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+              Published
+            </span>
+          <% else %>
+            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+              Draft
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="flex space-x-3">
+        <% if @blog_post.published? %>
+          <%= link_to "View Public", blog_post_path(@blog_post), target: "_blank", class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 no-underline" %>
+        <% end %>
+        <%= link_to "Edit", edit_admin_blog_post_path(@blog_post), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 no-underline" %>
+        <%= link_to "Delete", admin_blog_post_path(@blog_post), method: :delete,
+            confirm: "Are you sure you want to delete this blog post?",
+            class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 no-underline" %>
+      </div>
+    </div>
+
+    <article class="bg-white rounded-lg shadow-md p-8 border border-gray-200">
+      <div class="prose prose-lg max-w-none blog-content">
+        <%= raw(simple_format(@blog_post.body_with_youtube_embeds)) %>
+      </div>
+    </article>
+  </div>
+</div>
+
+<style>
+  .blog-content p {
+    margin-bottom: 1em;
+    line-height: 1.6;
+  }
+
+  .youtube-embed {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    margin: 20px 0;
+    background-color: #000;
+  }
+
+  .youtube-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+  }
+</style>

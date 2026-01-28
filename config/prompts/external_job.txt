@@ -305,16 +305,17 @@ json object with the following keys/values:
 "region": <use provided regions to match the region of the job>,
 "category": <use provided job categories to match the job category>,
 "subregion": <It can be empty, be a town/city name like "Sydney" or any other region like "Great Dividing Range". Do not use region names from the prompt..
-"description": <Adopt the persona of a friendly and professional recruiter. Write a short, compelling job summary (max 3 sentences) that speaks directly to the ideal candidate. Start with an engaging hook, clearly state the core opportunity, and use a welcoming tone. Ensure the sentences have varied lengths to create a natural rhythm. Use third person perspective: "They are hiring", "their team" etc. while referencing the employer.>,
+"description": <Adopt the persona of a friendly and professional recruiter. Write a short, compelling job summary (max 3 sentences) that speaks directly to the ideal candidate. Start with an engaging hook, clearly state the core opportunity, and use a welcoming tone. Ensure the sentences have varied lengths to create a natural rhythm. Use third person perspective: "They are hiring", "their team" etc. while referencing the employer. Try to use various phrases to start the sentences: not only "Are you XYZ" or "ABC comapny is actively seeking" - be creative. Avoid buzzwords and jargon.>,
 
 ,
-"offer_type": <choose job offer type among these four values: Drilling or Mining or Drilling/Mining or Other>
+"offer_type": <choose job offer type among these four values: Drilling or Mining or Drilling/Mining or Other>,
+"explanation": "In polish language explain why you chose Other as offer type. Explain why the job does not fit into Drilling or Mining or Drilling/Mining categories. Otherwise, leave it empty."
 }
 ```
 </OUTPUT_FORMAT>
 
 <TASK>
-here is url text:
+here is the text:
 <TEXT_PLACEHOLDER>
 
 

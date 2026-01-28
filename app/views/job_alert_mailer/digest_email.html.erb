@@ -37,10 +37,6 @@
         🏷️ <strong>Category:</strong> <%= job_offer.category %><br>
       <% end %>
 
-      <% if job_offer.offer_type.present? %>
-        💼 <strong>Type:</strong> <%= job_offer.offer_type %><br>
-      <% end %>
-
       ⏰ <strong>Posted:</strong> <%= job_offer.enlisted_recently_at.strftime("%B %d, %Y") %>
     </div>
 

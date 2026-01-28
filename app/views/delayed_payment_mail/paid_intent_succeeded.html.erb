@@ -1,0 +1,28 @@
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+  <tr>
+    <td align="center">
+      <div class="container">
+        <p class="header">Payment Confirmed!</p>
+        <p>Hello <%= @employer.company_name || @employer.email %>,</p>
+        <p>
+          Great news! Your invoice has been paid and your job offer is now live and visible to candidates.
+        </p>
+        <% if @job_offer %>
+        <p>
+          <strong>Job Offer:</strong> <%= @job_offer.title %><br>
+          <strong>Company:</strong> <%= @job_offer.the_company_name %>
+        </p>
+        <p style="text-align: center;">
+          <a href="<%= @job_offer_url %>" class="button">View Your Job Offer</a>
+        </p>
+        <% end %>
+        <p>
+          Your job posting is now active and will start attracting qualified candidates.
+          You'll receive notifications when candidates apply.
+        </p>
+        <p class="footer">Thank you for choosing our platform to find great talent!</p>
+      </div>
+    </td>
+  </tr>
+</table>
+

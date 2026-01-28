@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", :as => :rails_health_check
   get "/contact", to: "contact#index", as: :contact
   post "/contact", to: "contact#create"
+  get "/job_offers_directory", to: "job_offer_dirs#index", as: :job_offers_directory
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
@@ -20,6 +21,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "job_offers#index"
+
+  # Blog routes for public access
+  resources :blog_posts, only: [:index, :show], path: "blog"
+
   resources :job_offers, only: %i[index show edit update destroy] do
     post "apply_with_form", on: :member
     get "apply_with_url", on: :member
@@ -89,9 +94,15 @@ Rails.application.routes.draw do
     resources :external_offers, only: [:create] do
       post :check_url, on: :collection
     end
+    resources :external_job_offers, only: [:index] do
+      patch :approve, on: :member
+      patch :hide, on: :member
+    end
     resources :exports, only: [:index] do
       post :generate, on: :collection
     end
+    # Blog post management for admins
+    resources :blog_posts
   end
 
   get "/staging_access/:token", to: "staging_access#create", as: :staging_access, constraints: {token: /[A-Za-z0-9]+/}

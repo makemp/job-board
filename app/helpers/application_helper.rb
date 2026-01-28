@@ -20,6 +20,28 @@ module ApplicationHelper
     content_for :meta_follow, true, flush: true if follow
   end
 
+  def render_blog_content_with_youtube(text)
+    return "" unless text.present?
+
+    # First apply simple_format for paragraphs
+    formatted_text = simple_format(text)
+
+    # Then replace YouTube URLs with embedded videos
+    youtube_regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?:[&\?]\S*)?/
+
+    formatted_text.gsub(youtube_regex) do |match|
+      video_id = $1
+      content_tag(:div, class: "youtube-embed") do
+        content_tag(:iframe, "",
+          src: "https://www.youtube.com/embed/#{video_id}",
+          width: "560",
+          height: "315",
+          frameborder: "0",
+          allowfullscreen: true)
+      end
+    end.html_safe
+  end
+
   def meta_title
     content_for?(:meta_title) ? content_for(:meta_title) : "DrillCrew - Find Your Next Drilling Job"
   end

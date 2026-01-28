@@ -43,6 +43,11 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
+# Memory optimization gems
+gem "memory_profiler", group: [:development, :test]
+gem "derailed_benchmarks", group: [:development, :test]
+gem "ruby-prof", group: [:development, :test]
+
 gem "faker"
 
 group :development, :test do
@@ -64,6 +69,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "standard", ">= 1.35.1"
+  gem "annotaterb"
 end
 
 group :test do
@@ -89,9 +95,9 @@ gem "geocoder", "~> 1.8"
 
 gem "geoip", "~> 1.6"
 
-gem "ratonvirus", git: "https://github.com/makemp/ratonvirus", ref: "13e4cd2bc2ef066f40634344f756b45cda3ac105"
+# gem "ratonvirus", git: "https://github.com/makemp/ratonvirus", ref: "13e4cd2bc2ef066f40634344f756b45cda3ac105"
 
-gem "ratonvirus-clamby" # Adapter for ClamAV
+# gem "ratonvirus-clamby" # Adapter for ClamAV
 
 gem "sluggi"
 
@@ -102,3 +108,5 @@ gem "blazer"
 
 gem "dockerfile-rails", ">= 1.7", group: :development
 gem "sitemap_generator"
+
+gem 'rack', '>= 3.2.3'

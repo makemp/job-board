@@ -4,7 +4,7 @@ class JobAlertsController < ApplicationController
   def index
     # Since there's no user authentication, redirect to root or show empty state
     @job_alerts = JobAlert.none
-    redirect_to root_path, notice: "Job alerts require account creation (coming soon)"
+    redirect_to root_path, notice: "Job alerts created. Required confirmation."
   end
 
   def show

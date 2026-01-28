@@ -7,11 +7,15 @@ class JobOffersController < ApplicationController
     :apply_for_external_offer]
 
   def index
-    @jobs = JobOffer.valid.paid.sorted.includes(:employer, :order_placement)
+    @jobs = JobOffer.for_index.sorted
 
     # Apply filters
     @jobs = @jobs.filter_by_category(params[:category]) if params[:category].present?
     @jobs = @jobs.where(region: params[:region]) if params[:region].present?
+
+    if params[:category].present? || params[:region].present? || params[:per_page].present? || params[:page].present?
+      ahoy.track "using_filters", category: params[:category], region: params[:region], per_page: params[:per_page], page: params[:page]
+    end
 
     # Handle pagination
     @per_page = if params[:per_page].present?
@@ -34,11 +38,17 @@ class JobOffersController < ApplicationController
   end
 
   def show
-    job_offer
+    if job_offer
+      ahoy.track "show_job_offer", job_offer_id: job_offer.id
+      return job_offer
+    end
+
+    render file: Rails.root.join("public", "404.html").to_s, layout: false, status: :not_found
   end
 
   def preview
     job_offer
+    ahoy.track "preview_job_offer", job_offer_id: job_offer.id
     render layout: false
   end
 

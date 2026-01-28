@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# Fix for macOS fork() crash with Objective-C runtime
+ENV['OBJC_DISABLE_INITIALIZE_FORK_SAFETY'] = 'YES'
+
 require_relative "../config/environment"
 require "solid_queue/cli"
 

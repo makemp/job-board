@@ -1,0 +1,35 @@
+<table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+  <tr>
+    <td align="center">
+      <div class="container">
+        <p class="header">Payment Required</p>
+        <p>Hello <%= @employer.company_name || @employer.email %>,</p>
+        <p>
+          Thank you for submitting your job offer! To publish your job posting and make it visible to candidates,
+          we need to process your payment.
+        </p>
+        <% if @job_offer_title %>
+        <p>
+          <strong>Job Offer:</strong> <%= @job_offer_title %><br>
+          <strong>Company:</strong> <%= @employer.company_name %>
+        </p>
+        <% end %>
+        <p>
+          We've prepared payment instructions for you. Please follow the link below to complete your payment:
+        </p>
+        <p style="text-align: center;">
+          <a href="<%= @instructions_url %>" class="button">Complete Payment</a>
+        </p>
+        <p>
+          <strong>Important:</strong> Your job offer will remain in draft status until payment is completed.
+          Once payment is confirmed, your job posting will go live immediately and start attracting qualified candidates.
+        </p>
+        <p>
+          If you have any questions about the payment process, please don't hesitate to contact our support team.
+        </p>
+        <p class="footer">Thank you for choosing our platform to find great talent!</p>
+      </div>
+    </td>
+  </tr>
+</table>
+

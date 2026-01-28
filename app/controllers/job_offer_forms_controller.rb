@@ -8,6 +8,7 @@ class JobOfferFormsController < ApplicationController
       @job = JobOfferForm.new(params_)
       @job.logo = params_[:logo]
     else
+      ahoy.track "displays_new_job_offer_form"
       @job = JobOfferForm.new(application_type: "Form")
     end
   end
@@ -29,7 +30,7 @@ class JobOfferFormsController < ApplicationController
                      "submit",
                      partial: "submit",
                      locals: {job: @job}
-                   )], status: :unprocessable_conten
+                   )], status: :unprocessable_content
         else
           # voucher applied successfully: update both voucher UI (to show code)
           # and the submit button (to show the new price)
@@ -80,7 +81,7 @@ class JobOfferFormsController < ApplicationController
             "job_form",
             partial: "form",
             locals: {job: @job}
-          ), status: :unprocessable_conten
+          ), status: :unprocessable_content
         end
       end
     end

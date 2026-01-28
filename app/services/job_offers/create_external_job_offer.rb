@@ -8,20 +8,16 @@ module JobOffers
         "Shell"
       when /exxonmobil\.com/
         "ExxonMobil"
-      when /chevron\.com/
-        "Chevron"
       when /totalenergies\.com/
         "TotalEnergies"
-      when /slb\.com/
-        "Schlumberger"
+      when /bp\.com/
+        "BP"
       when /halliburton\.com/
         "Halliburton"
       when /bakerhughes\.com/
         "Baker Hughes"
-      when /bhp\.com/
-        "BHP"
-      when /riotinto\.com/
-        "Rio Tinto"
+      when /newmont\.com/
+        "Newmont"
       when /glencore\.com/
         "Glencore"
       end
@@ -50,7 +46,8 @@ module JobOffers
 
     def call
       job_offer = ExternalJobOffer.create!(params)
-      job_offer.order_placements.create!(paid_on: Time.current)
+      Rails.logger.debug("The params are: #{params.inspect}")
+      job_offer.order_placements.create!(paid_on: params[:options][:explanation].blank? ? Time.current : nil)
       job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
         valid_till: Time.current + Voucher.default_offer_duration)
     end
@@ -58,6 +55,7 @@ module JobOffers
     private
 
     def params
+      return @params if defined? @params
       params_ = job_offer_params.is_a?(Hash) ? job_offer_params : JSON.parse(job_offer_params)
       params_.merge!(employer: self.class.employer, application_destination: url,
         overcategory: JobOffer::CATEGORIES.overcategory_for(job_offer_params["category"]))
@@ -65,7 +63,10 @@ module JobOffers
       if known_company_name.present?
         params_["company_name"] = known_company_name
       end
-      params_
+      params_[:options] ||= {}
+      params_[:options][:explanation] = params_.delete("explanation")
+
+      @params = params_
     end
 
     attr_reader :job_offer_params, :url

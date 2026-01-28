@@ -1,10 +1,26 @@
+# == Schema Information
+#
+# Table name: vouchers
+#
+#  id           :ulid             not null, primary key
+#  code         :string           not null
+#  enabled_till :datetime         default(2225-09-29 10:22:39.845463000 UTC +00:00)
+#  options      :json
+#  type         :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
 class Voucher < ApplicationRecord
   DEFAULT_CODE = "STANDARD".freeze
 
   def self.finish_apply!(order_placement)
     return unless order_placement&.voucher_code
-    voucher = find_by!(voucher_code: order_placement.voucher_code)
-    voucher.update!(options: {usage_count: voucher.usage_count + 1})
+    voucher = find_by!(code: order_placement.voucher_code)
+    voucher.update!(options: voucher.options.merge({usage_count: voucher.usage_count + 1}))
+    job_offer = order_placement.orderable
+    return unless job_offer
+    job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
+      valid_till: Time.current + voucher.offer_duration)
   end
 
   def price
@@ -47,8 +63,6 @@ class Voucher < ApplicationRecord
   def apply(order_placement:, job_offer:)
     order_placement.update!(voucher_code: code, price: price, free_order: free_voucher?, ready_to_be_placed: true)
     job_offer.update!(approved: !required_approval?)
-    job_offer.job_offer_actions.create!(action_type: JobOfferAction::CREATED_TYPE,
-      valid_till: Time.current + offer_duration)
   end
 
   def soft_apply(job_offer_form)

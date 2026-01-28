@@ -1,7 +1,7 @@
 <% if jobs.any? %>
   <div class="grid gap-6">
     <% jobs.each do |job| %>
-       <%if job.is_a?(ExternalJobOffer)  %>
+       <%if job.custom_logo.present?  %>
         <%= render 'external_job_card', job: job %>
       <% else %>
         <%= render 'job_card', job: job %>

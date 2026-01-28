@@ -1,0 +1,34 @@
+# fly.toml app configuration file generated for antivirus-staging on 2025-09-16T13:10:44+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+# fly.toml for your antivirus-staging app
+
+app = 'antivirus-staging'
+primary_region = 'dfw'
+
+[build]
+# Tell the builder to use the Dockerfile located at './docker/antivirus.Dockerfile'
+dockerfile = "Dockerfile.antivirus"
+
+# Define the VM resources for all processes.
+# Note: This is [vm] (singular), not [[vm]].
+[vm]
+memory = '4gb'
+cpu_kind = 'shared'
+cpus = 2
+
+[mounts]
+source = "clamav_data_staging"
+destination = "/clamav/data/"
+
+[http_service]
+internal_port = 8080
+force_https = true
+auto_stop_machines = true # Use boolean `true` for clarity
+auto_start_machines = true
+min_machines_running = 0
+max_machines_running = 1
+processes = ['app']
+grace_period = "60s"

@@ -17,6 +17,24 @@
 ## Fly.io
 
 
+https://drillcrew.work/stripe/webhook
+Stripe events used:
 
-the sent job alert thing.
-Privacy/terms and conditions done right
+charge.updated
+checkout.session.completed
+customer.created
+customer.updated
+customer.tax_id.created
+customer.tax_id.updated
+invoice_payment.paid
+invoice.created
+invoice.finalized
+invoice.paid
+invoice.payment_succeeded
+invoice.sent
+payment_intent.created
+
+
+
+Many instances of sqlite:
+https://fly.io/docs/litefs/getting-started-fly/
