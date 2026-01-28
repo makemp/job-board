@@ -1,5 +1,6 @@
 class Employers::SessionsController < Devise::SessionsController
   include AntiBot
+
   def create
     email = params[:employer][:email]
     password = params[:employer][:password]

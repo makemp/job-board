@@ -1,5 +1,6 @@
 class JobOfferFormsController < ApplicationController
   include AntiBot
+
   def new
     if params[:job_offer_form]
       @job = JobOfferForm.new(job_offer_form_params)

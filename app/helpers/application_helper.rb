@@ -27,7 +27,7 @@ module ApplicationHelper
     formatted_text = simple_format(text)
 
     # Then replace YouTube URLs with embedded videos
-    youtube_regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?:[&\?]\S*)?/
+    youtube_regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?:[&?]\S*)?/
 
     formatted_text.gsub(youtube_regex) do |match|
       video_id = $1

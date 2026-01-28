@@ -1,5 +1,6 @@
 class ContactController < ApplicationController
   include AntiBot
+
   def index
     @contact = Contact.new
   end
