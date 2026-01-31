@@ -10,5 +10,5 @@ It is already deployed and you can visit it at https://drillcrew.work/
 - Nice front-end using Hotwire(Stimulus + Turbo) and TailwindCSS
 - Hosted using fly.io
 - Sqlite database for production use (https://fly.io/ruby-dispatch/sqlite-and-rails-in-production/)
-- ActionCable for real-time updates and ActionJobs for background processing
+- ActionCable for real-time updates and ActiveJobs for background processing
 - Integration with mailing provider
